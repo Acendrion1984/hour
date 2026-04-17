@@ -393,6 +393,49 @@ font-weight: 500;
 .empty-hint { text-align: center; padding: 60px 20px; color: var(–ink-dim); font-family: ‘Inter’, sans-serif; font-size: 13px; }
 .empty-hint em { font-family: ‘Inter’, sans-serif; font-style: normal; font-size: 22px; display: block; margin-bottom: 12px; color: var(–ink); font-weight: 600; }
 
+/* ============ GITHUB SYNC ============ */
+.sync-status {
+display: flex; align-items: center; gap: 6px;
+font-family: ‘JetBrains Mono’, monospace; font-size: 11px;
+padding: 4px 10px; border: 1px solid var(–border-line);
+background: #fff; color: var(–ink-mid);
+cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.sync-status:hover { border-color: var(–schaeffler-green); }
+.sync-status .dot {
+width: 8px; height: 8px; border-radius: 50%;
+background: var(–ink-mute); flex-shrink: 0;
+}
+.sync-status.synced .dot { background: var(–schaeffler-green); }
+.sync-status.syncing .dot { background: #b8860b; animation: pulse 1s ease-in-out infinite; }
+.sync-status.error .dot { background: var(–c-regel); }
+.sync-status.offline .dot { background: var(–ink-mute); }
+@keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.3; }
+}
+
+.sync-modal-form { display: flex; flex-direction: column; gap: 12px; }
+.sync-modal-form .form-row label { font-size: 11px; }
+.sync-modal-form input {
+background: #fff; border: 1px solid var(–border-line);
+padding: 9px 11px; font-size: 13px; font-family: ‘Inter’, sans-serif;
+outline: none; transition: border-color 0.15s; color: var(–ink);
+}
+.sync-modal-form input:focus { border-color: var(–schaeffler-green); }
+.sync-help {
+background: var(–bg-soft); border: 1px solid var(–border-line);
+padding: 12px 14px; font-size: 12px; line-height: 1.5; color: var(–ink-mid);
+margin-top: 8px;
+}
+.sync-help a { color: var(–schaeffler-green-dark); }
+.sync-help code {
+background: #fff; padding: 1px 5px; border: 1px solid var(–border-line);
+font-family: ‘JetBrains Mono’, monospace; font-size: 11px;
+}
+.sync-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.sync-actions .btn { flex: 1; min-width: 100px; }
+
 ::selection { background: var(–schaeffler-green); color: #fff; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(–bg-soft); }
@@ -705,6 +748,10 @@ margin-left: 8px;
       <button class="year-btn" id="yearNext">›</button>
     </div>
     <div class="header-actions">
+      <div class="sync-status offline" id="syncStatus" title="Klicken für GitHub-Sync-Einstellungen">
+        <span class="dot"></span>
+        <span id="syncStatusText">Sync aus</span>
+      </div>
       <button class="btn btn-ghost" id="btnTemplate" title="Excel-Vorlage zum Eintragen herunterladen">Vorlage</button>
       <button class="btn btn-ghost" id="btnImportXlsx">Excel-Import</button>
       <input type="file" id="fileImportXlsx" accept=".xlsx,.xls" style="display:none">
@@ -897,6 +944,52 @@ margin-left: 8px;
   </div>
 </div>
 
+<div class="modal-overlay" id="syncModalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">GitHub-Sync</div>
+      <button class="modal-close" id="syncModalClose">✕</button>
+    </div>
+    <div class="modal-date">Auto-Sync mit privatem GitHub-Repo</div>
+    <div class="sync-modal-form" style="margin-top:18px;">
+      <div class="form-row">
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="sync-token" placeholder="ghp_..." autocomplete="off">
+      </div>
+      <div class="form-row">
+        <label>Owner (dein GitHub-Username oder Org)</label>
+        <input type="text" id="sync-owner" placeholder="z.B. max-mustermann">
+      </div>
+      <div class="form-row">
+        <label>Repository-Name</label>
+        <input type="text" id="sync-repo" placeholder="z.B. jahresplan-data">
+      </div>
+      <div class="form-row">
+        <label>Branch <span style="color:var(--ink-mute);font-weight:400;">(optional, default: main)</span></label>
+        <input type="text" id="sync-branch" placeholder="main" value="main">
+      </div>
+      <div class="form-row">
+        <label>Dateipfad <span style="color:var(--ink-mute);font-weight:400;">(im Repo)</span></label>
+        <input type="text" id="sync-path" placeholder="jahresplan.json" value="jahresplan.json">
+      </div>
+      <div class="sync-help">
+        <strong>So legst du das Repo an:</strong><br>
+        1. Erstelle auf <a href="https://github.com/new" target="_blank">github.com/new</a> ein <strong>privates</strong> Repository (z.B. <code>jahresplan-data</code>). Setze einen Haken bei "Add a README" damit der Branch existiert.<br>
+        2. Erstelle einen Personal Access Token unter <a href="https://github.com/settings/tokens?type=beta" target="_blank">Settings → Tokens (fine-grained)</a> mit Zugriff <strong>nur auf dieses Repo</strong> und Permission <strong>Contents: Read and write</strong>.<br>
+        3. Token hier einfügen, Repo + Owner eintragen, Speichern. Die App lädt dann beim Start automatisch und sichert nach jeder Änderung.
+        <br><br>
+        <strong>Sicherheitshinweis:</strong> Der Token wird unverschlüsselt im Browser-Speicher (localStorage) abgelegt. Verwende die App nur auf vertrauenswürdigen Geräten. Bei Verlust den Token in den GitHub-Settings sofort widerrufen.
+      </div>
+      <div class="sync-actions">
+        <button class="btn" id="syncTestBtn">Verbindung testen</button>
+        <button class="btn" id="syncDisableBtn" style="color:var(--c-regel);border-color:var(--c-regel);">Sync deaktivieren</button>
+        <button class="btn btn-primary" id="syncSaveBtn">Speichern & aktivieren</button>
+      </div>
+      <div id="syncTestResult" style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:12px;"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 const SEGMENTS = [
   { id: 4 }, { id: 6 }, { id: 7 }, { id: 11 }, { id: 12 }, { id: 14 }, { id: 15 }
@@ -977,6 +1070,8 @@ async function loadState() {
 async function saveState() {
   try { await storage.set(STORAGE_KEY, JSON.stringify({ events: state.events, vacations: state.vacations })); }
   catch(e) { console.error('Save failed', e); }
+  // Auto-Push wenn GitHub-Sync aktiv
+  if (typeof scheduleGithubPush === 'function') scheduleGithubPush();
 }
 function uid() { return 'e_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
@@ -1912,7 +2007,315 @@ function renderAll() {
   renderSideSegments();
   updateFormVisibility();
   renderAll();
+  // GitHub-Sync initialisieren (Pull beim Start, falls konfiguriert)
+  if (typeof initGithubSync === 'function') initGithubSync();
 })();
+
+// ============================================================
+// GITHUB SYNC
+// ============================================================
+const GH_CONFIG_KEY = 'jahresplan.gh.config';
+
+let ghConfig = null; // {token, owner, repo, branch, path}
+let ghFileSha = null; // SHA der zuletzt bekannten Remote-Datei (für Konflikt-Erkennung)
+let ghPushTimer = null;
+let ghIsSyncing = false;
+
+function setSyncStatus(state, text) {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  el.classList.remove('synced','syncing','error','offline');
+  el.classList.add(state);
+  document.getElementById('syncStatusText').textContent = text;
+}
+
+async function loadGhConfig() {
+  try {
+    const raw = localStorage.getItem(GH_CONFIG_KEY);
+    if (raw) ghConfig = JSON.parse(raw);
+  } catch(e) { ghConfig = null; }
+}
+function saveGhConfig(cfg) {
+  ghConfig = cfg;
+  if (cfg) localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg));
+  else localStorage.removeItem(GH_CONFIG_KEY);
+}
+
+function ghHeaders() {
+  return {
+    'Authorization': 'Bearer ' + ghConfig.token,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  };
+}
+
+function ghContentUrl() {
+  const branch = ghConfig.branch || 'main';
+  return 'https://api.github.com/repos/' + encodeURIComponent(ghConfig.owner) +
+         '/' + encodeURIComponent(ghConfig.repo) +
+         '/contents/' + ghConfig.path.split('/').map(encodeURIComponent).join('/') +
+         '?ref=' + encodeURIComponent(branch);
+}
+
+// UTF-8-sicheres Base64 (für Umlaute)
+function utf8ToBase64(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function base64ToUtf8(b64) {
+  return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+}
+
+async function ghPull(opts) {
+  opts = opts || {};
+  if (!ghConfig) return { ok: false, reason: 'no-config' };
+  setSyncStatus('syncing', 'Lade …');
+  try {
+    const res = await fetch(ghContentUrl(), { headers: ghHeaders() });
+    if (res.status === 404) {
+      // Datei existiert noch nicht im Repo — kein Fehler, wir pushen später
+      ghFileSha = null;
+      setSyncStatus('synced', 'Sync aktiv (leer)');
+      return { ok: true, empty: true };
+    }
+    if (!res.ok) {
+      const errText = await res.text().catch(() => '');
+      setSyncStatus('error', 'Fehler ' + res.status);
+      return { ok: false, status: res.status, body: errText };
+    }
+    const data = await res.json();
+    ghFileSha = data.sha;
+    let parsed;
+    try {
+      const content = base64ToUtf8(data.content);
+      parsed = JSON.parse(content);
+    } catch(e) {
+      setSyncStatus('error', 'JSON kaputt');
+      return { ok: false, reason: 'invalid-json' };
+    }
+    // Daten übernehmen
+    if (Array.isArray(parsed.events)) state.events = parsed.events;
+    if (Array.isArray(parsed.vacations)) state.vacations = parsed.vacations;
+    // lokal auch speichern (ohne erneuten Push)
+    try { await storage.set(STORAGE_KEY, JSON.stringify({ events: state.events, vacations: state.vacations })); } catch(e){}
+    setSyncStatus('synced', 'Sync aktiv');
+    if (!opts.silent) renderAll();
+    return { ok: true };
+  } catch(e) {
+    setSyncStatus('error', 'Offline?');
+    return { ok: false, reason: 'network', error: String(e) };
+  }
+}
+
+async function ghPush() {
+  if (!ghConfig || ghIsSyncing) return { ok: false, reason: 'busy-or-no-config' };
+  ghIsSyncing = true;
+  setSyncStatus('syncing', 'Sichere …');
+  try {
+    const payload = {
+      events: state.events,
+      vacations: state.vacations,
+      _meta: { lastModified: new Date().toISOString(), source: 'jahresplan-app' }
+    };
+    const body = {
+      message: 'Update jahresplan ' + new Date().toISOString().replace('T',' ').slice(0,16),
+      content: utf8ToBase64(JSON.stringify(payload, null, 2)),
+      branch: ghConfig.branch || 'main'
+    };
+    if (ghFileSha) body.sha = ghFileSha;
+
+    const url = 'https://api.github.com/repos/' + encodeURIComponent(ghConfig.owner) +
+                '/' + encodeURIComponent(ghConfig.repo) +
+                '/contents/' + ghConfig.path.split('/').map(encodeURIComponent).join('/');
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (res.status === 409 || res.status === 422) {
+      // Konflikt: Remote wurde fremd geändert. Wir pullen, mergen NICHT, sondern überschreiben mit aktuellem lokalen Stand.
+      // Sicherer Weg: User informieren und remote als Quelle der Wahrheit nehmen, lokale Änderung als JSON anbieten.
+      ghIsSyncing = false;
+      setSyncStatus('error', 'Konflikt');
+      const wantsOverwrite = confirm('GitHub-Konflikt: Die Remote-Datei wurde von außen geändert.\n\n' +
+        'OK = Remote-Version übernehmen (lokale ungesicherte Änderungen gehen verloren — exportiere vorher per JSON Export!)\n' +
+        'Abbrechen = Lokale Version trotzdem hochladen (überschreibt Remote)');
+      if (wantsOverwrite) {
+        await ghPull();
+        return { ok: false, reason: 'conflict-pulled' };
+      } else {
+        // Remote-SHA holen und überschreiben
+        const headRes = await fetch(ghContentUrl(), { headers: ghHeaders() });
+        if (headRes.ok) {
+          const headData = await headRes.json();
+          ghFileSha = headData.sha;
+          // Erneut pushen
+          ghIsSyncing = false;
+          return ghPush();
+        }
+        setSyncStatus('error', 'Konflikt-Fehler');
+        return { ok: false, reason: 'conflict-resolve-failed' };
+      }
+    }
+
+    if (!res.ok) {
+      const errText = await res.text().catch(() => '');
+      ghIsSyncing = false;
+      setSyncStatus('error', 'Fehler ' + res.status);
+      console.error('GitHub push error', res.status, errText);
+      return { ok: false, status: res.status, body: errText };
+    }
+
+    const data = await res.json();
+    if (data.content && data.content.sha) ghFileSha = data.content.sha;
+    ghIsSyncing = false;
+    setSyncStatus('synced', 'Sync aktiv');
+    return { ok: true };
+  } catch(e) {
+    ghIsSyncing = false;
+    setSyncStatus('error', 'Offline?');
+    console.error('GitHub push exception', e);
+    return { ok: false, reason: 'network', error: String(e) };
+  }
+}
+
+// Debounced Push: Bei mehreren Änderungen kurz hintereinander wird nur einmal gepusht
+function scheduleGithubPush() {
+  if (!ghConfig) return;
+  if (ghPushTimer) clearTimeout(ghPushTimer);
+  setSyncStatus('syncing', 'Wartet …');
+  ghPushTimer = setTimeout(() => {
+    ghPushTimer = null;
+    ghPush();
+  }, 1500);
+}
+
+async function initGithubSync() {
+  await loadGhConfig();
+  if (!ghConfig || !ghConfig.token || !ghConfig.owner || !ghConfig.repo) {
+    setSyncStatus('offline', 'Sync aus');
+    return;
+  }
+  // Initial-Pull
+  await ghPull();
+}
+
+// ============ SYNC MODAL UI ============
+function openSyncModal() {
+  // Felder vorausfüllen
+  if (ghConfig) {
+    document.getElementById('sync-token').value = ghConfig.token || '';
+    document.getElementById('sync-owner').value = ghConfig.owner || '';
+    document.getElementById('sync-repo').value = ghConfig.repo || '';
+    document.getElementById('sync-branch').value = ghConfig.branch || 'main';
+    document.getElementById('sync-path').value = ghConfig.path || 'jahresplan.json';
+  }
+  document.getElementById('syncTestResult').textContent = '';
+  document.getElementById('syncModalOverlay').classList.add('active');
+}
+function closeSyncModal() { document.getElementById('syncModalOverlay').classList.remove('active'); }
+
+document.getElementById('syncStatus').onclick = openSyncModal;
+document.getElementById('syncModalClose').onclick = closeSyncModal;
+document.getElementById('syncModalOverlay').onclick = e => {
+  if (e.target.id === 'syncModalOverlay') closeSyncModal();
+};
+
+function readSyncForm() {
+  return {
+    token: document.getElementById('sync-token').value.trim(),
+    owner: document.getElementById('sync-owner').value.trim(),
+    repo: document.getElementById('sync-repo').value.trim(),
+    branch: document.getElementById('sync-branch').value.trim() || 'main',
+    path: document.getElementById('sync-path').value.trim() || 'jahresplan.json'
+  };
+}
+
+document.getElementById('syncTestBtn').onclick = async () => {
+  const cfg = readSyncForm();
+  const result = document.getElementById('syncTestResult');
+  if (!cfg.token || !cfg.owner || !cfg.repo) {
+    result.style.color = 'var(--c-regel)';
+    result.textContent = 'Token, Owner und Repo sind Pflicht.';
+    return;
+  }
+  result.style.color = 'var(--ink-mid)';
+  result.textContent = 'Teste …';
+  try {
+    const url = 'https://api.github.com/repos/' + encodeURIComponent(cfg.owner) + '/' + encodeURIComponent(cfg.repo);
+    const res = await fetch(url, {
+      headers: {
+        'Authorization': 'Bearer ' + cfg.token,
+        'Accept': 'application/vnd.github+json'
+      }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      result.style.color = 'var(--schaeffler-green-dark)';
+      result.textContent = '✓ OK — Repo "' + data.full_name + '"' + (data.private ? ' (privat)' : ' (ÖFFENTLICH!)');
+    } else if (res.status === 401) {
+      result.style.color = 'var(--c-regel)';
+      result.textContent = '✗ 401 — Token ungültig oder abgelaufen.';
+    } else if (res.status === 404) {
+      result.style.color = 'var(--c-regel)';
+      result.textContent = '✗ 404 — Repo nicht gefunden oder Token hat keinen Zugriff.';
+    } else {
+      result.style.color = 'var(--c-regel)';
+      result.textContent = '✗ Fehler ' + res.status;
+    }
+  } catch(e) {
+    result.style.color = 'var(--c-regel)';
+    result.textContent = '✗ Netzwerk-Fehler: ' + e.message;
+  }
+};
+
+document.getElementById('syncSaveBtn').onclick = async () => {
+  const cfg = readSyncForm();
+  const result = document.getElementById('syncTestResult');
+  if (!cfg.token || !cfg.owner || !cfg.repo) {
+    result.style.color = 'var(--c-regel)';
+    result.textContent = 'Token, Owner und Repo sind Pflicht.';
+    return;
+  }
+  saveGhConfig(cfg);
+  result.style.color = 'var(--ink-mid)';
+  result.textContent = 'Speichere und führe Initial-Sync durch …';
+  // Erst Pull versuchen — falls Datei existiert, übernehmen wir die remote Version
+  const pullResult = await ghPull();
+  if (pullResult.ok && !pullResult.empty) {
+    result.style.color = 'var(--schaeffler-green-dark)';
+    result.textContent = '✓ Sync aktiviert. Daten aus GitHub geladen.';
+    setTimeout(closeSyncModal, 1500);
+  } else if (pullResult.ok && pullResult.empty) {
+    // Datei existiert nicht — wir pushen lokale Daten zum ersten Mal
+    result.textContent = 'Lege Datei im Repo an …';
+    const pushResult = await ghPush();
+    if (pushResult.ok) {
+      result.style.color = 'var(--schaeffler-green-dark)';
+      result.textContent = '✓ Sync aktiviert. Datei im Repo angelegt.';
+      setTimeout(closeSyncModal, 1500);
+    } else {
+      result.style.color = 'var(--c-regel)';
+      result.textContent = '✗ Initial-Push fehlgeschlagen.';
+    }
+  } else {
+    result.style.color = 'var(--c-regel)';
+    result.textContent = '✗ Sync-Aktivierung fehlgeschlagen. Prüfe Token/Repo.';
+  }
+};
+
+document.getElementById('syncDisableBtn').onclick = () => {
+  if (!confirm('GitHub-Sync wirklich deaktivieren? Lokale Daten bleiben erhalten, Remote wird nicht mehr aktualisiert.')) return;
+  saveGhConfig(null);
+  ghFileSha = null;
+  if (ghPushTimer) { clearTimeout(ghPushTimer); ghPushTimer = null; }
+  setSyncStatus('offline', 'Sync aus');
+  document.getElementById('sync-token').value = '';
+  document.getElementById('sync-owner').value = '';
+  document.getElementById('sync-repo').value = '';
+  document.getElementById('syncTestResult').textContent = 'Sync deaktiviert.';
+  setTimeout(closeSyncModal, 800);
+};
 
 </script>
 
