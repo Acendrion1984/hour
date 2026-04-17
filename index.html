@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jahresplanung — Prüfwerker · Kalibrierung · Regeltermine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  :root {
+    /* Schaeffler Corporate Design */
+    --bg: #ffffff;
+    --bg-elev: #ffffff;
+    --bg-elev-2: #f5f5f3;
+    --bg-soft: #fafaf9;
+    --border-line: #e1e1de;
+    --border-strong: #c7c7c2;
+    --ink: #1a1a1a;
+    --ink-mid: #4a4a4a;
+    --ink-dim: #707070;
+    --ink-mute: #a0a09a;
+    --schaeffler-green: #00893D;
+    --schaeffler-green-dark: #006e31;
+    --schaeffler-green-light: #e6f3ec;
+    --accent: #00893D;
+    --accent-dim: #006e31;
+    /* Typ-Farben gedämpft, geschäftlich */
+    --c-schulung: #1a4d8c;
+    --c-kalibrierung: #00893D;
+    --c-regel: #c75300;
+    /* Segment-Farben — gedeckt, professionell */
+    --seg-4:  #00893D;
+    --seg-6:  #c75300;
+    --seg-7:  #1a4d8c;
+    --seg-11: #6b3fa0;
+    --seg-12: #b8860b;
+    --seg-14: #00756b;
+    --seg-15: #a8324a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased; font-feature-settings: "ss01", "cv11";
+  }
+  body { min-height: 100vh; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ============ HEADER ============ */
+header {
+border-bottom: 1px solid var(–border-line);
+padding: 0;
+position: relative; z-index: 10;
+background: #fff;
+}
+/* Schaeffler-grüner Akzentstreifen */
+.accent-bar {
+height: 4px;
+background: var(–schaeffler-green);
+}
+.header-inner {
+padding: 18px 32px;
+display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand-logo {
+display: flex; align-items: center; gap: 10px;
+padding-right: 16px; border-right: 1px solid var(–border-line);
+}
+.brand-logo-mark {
+width: 36px; height: 36px;
+background: var(–schaeffler-green);
+color: #fff;
+display: flex; align-items: center; justify-content: center;
+font-weight: 800; font-size: 18px;
+letter-spacing: -0.02em;
+}
+.brand-logo-text {
+font-weight: 700; font-size: 18px; color: var(–ink);
+letter-spacing: -0.01em;
+}
+.brand-text { display: flex; flex-direction: column; gap: 2px; }
+.brand-text-1 {
+font-size: 11px; letter-spacing: 0.12em; color: var(–ink-dim);
+text-transform: uppercase; font-weight: 500;
+}
+.brand-text-2 {
+font-size: 15px; font-weight: 600; color: var(–ink);
+letter-spacing: -0.01em;
+}
+
+.year-control { display: flex; align-items: center; gap: 8px; }
+.year-btn {
+background: #fff; border: 1px solid var(–border-line); color: var(–ink-mid);
+width: 32px; height: 32px; cursor: pointer; font-family: ‘Inter’, sans-serif;
+font-size: 16px; font-weight: 500; transition: all 0.15s;
+display: flex; align-items: center; justify-content: center;
+}
+.year-btn:hover { border-color: var(–schaeffler-green); color: var(–schaeffler-green); }
+.year-display {
+font-family: ‘Inter’, sans-serif; font-weight: 700; font-size: 22px;
+letter-spacing: -0.02em; min-width: 80px; text-align: center; color: var(–ink);
+}
+
+.header-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.btn {
+font-family: ‘Inter’, sans-serif; font-size: 12px; letter-spacing: 0.02em;
+font-weight: 500; padding: 8px 14px; border: 1px solid var(–border-line);
+background: #fff; color: var(–ink-mid); cursor: pointer; transition: all 0.15s;
+}
+.btn:hover { border-color: var(–schaeffler-green); color: var(–schaeffler-green); background: var(–schaeffler-green-light); }
+.btn-primary { background: var(–schaeffler-green); color: #fff; border-color: var(–schaeffler-green); font-weight: 600; }
+.btn-primary:hover { background: var(–schaeffler-green-dark); border-color: var(–schaeffler-green-dark); color: #fff; }
+.btn-ghost { background: transparent; }
+
+/* ============ LAYOUT ============ */
+.layout {
+display: grid; grid-template-columns: 1fr 400px;
+min-height: calc(100vh - 73px);
+}
+.main { padding: 28px 32px; border-right: 1px solid var(–border-line); min-width: 0; background: var(–bg-soft); }
+.side { padding: 28px 24px; background: #fff; max-height: calc(100vh - 73px); overflow-y: auto; }
+
+/* ============ TABS ============ */
+.view-tabs { display: flex; gap: 0; margin-bottom: 24px; border-bottom: 2px solid var(–border-line); }
+.view-tab {
+font-family: ‘Inter’, sans-serif; font-size: 13px; letter-spacing: 0;
+font-weight: 500; padding: 12px 20px; background: transparent; border: none;
+color: var(–ink-dim); cursor: pointer; border-bottom: 2px solid transparent;
+margin-bottom: -2px; transition: all 0.15s;
+}
+.view-tab:hover { color: var(–ink); }
+.view-tab.active { color: var(–schaeffler-green); border-bottom-color: var(–schaeffler-green); font-weight: 600; }
+
+/* ============ YEAR CALENDAR ============ */
+.year-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 1400px) { .year-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1100px) {
+.year-grid { grid-template-columns: repeat(2, 1fr); }
+.layout { grid-template-columns: 1fr; }
+.side { border-top: 1px solid var(–border-line); max-height:none; }
+}
+@media (max-width: 700px) { .year-grid { grid-template-columns: 1fr; } }
+
+.month {
+background: #fff;
+border: 1px solid var(–border-line);
+padding: 14px;
+transition: border-color 0.15s, box-shadow 0.15s;
+}
+.month:hover { border-color: var(–schaeffler-green); box-shadow: 0 2px 8px rgba(0,137,61,0.06); }
+.month-head {
+display: flex; justify-content: space-between; align-items: baseline;
+padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(–border-line);
+}
+.month-name {
+font-family: ‘Inter’, sans-serif; font-weight: 600; font-size: 16px;
+color: var(–ink); letter-spacing: -0.01em;
+}
+.month-num { font-family: ‘JetBrains Mono’, monospace; font-size: 10px; color: var(–ink-mute); letter-spacing: 0.08em; }
+.weekdays {
+display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;
+font-family: ‘Inter’, sans-serif; font-size: 10px; color: var(–ink-mute);
+text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;
+font-weight: 500;
+}
+.weekdays > div { text-align: center; padding: 2px 0; }
+.days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.day {
+aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+padding: 3px 2px 2px;
+font-family: ‘JetBrains Mono’, monospace; font-size: 10px;
+color: var(–ink-mid); cursor: pointer;
+background: var(–bg-elev-2);
+border: 1px solid transparent;
+position: relative; transition: all 0.1s; min-height: 28px;
+}
+.day:hover { background: var(–schaeffler-green-light); color: var(–schaeffler-green-dark); border-color: var(–schaeffler-green); }
+.day.empty { background: transparent; cursor: default; }
+.day.weekend { color: var(–ink-mute); background: #ededea; }
+.day.today {
+background: var(–schaeffler-green); color: #fff;
+font-weight: 700; border-color: var(–schaeffler-green-dark);
+}
+.day-num { line-height: 1; }
+.day-dots { display: flex; gap: 2px; margin-top: auto; padding-bottom: 1px; flex-wrap: wrap; justify-content: center; }
+.day-dot { width: 5px; height: 5px; border-radius: 50%; }
+
+/* ============ SIDE PANEL ============ */
+.side h3 {
+font-family: ‘Inter’, sans-serif; font-size: 11px; letter-spacing: 0.1em;
+text-transform: uppercase; color: var(–ink-dim); margin-bottom: 14px;
+padding-bottom: 8px; border-bottom: 2px solid var(–schaeffler-green);
+font-weight: 600;
+}
+.side-section { margin-bottom: 28px; }
+.form-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.form-row label {
+font-family: ‘Inter’, sans-serif; font-size: 11px; letter-spacing: 0;
+color: var(–ink-mid); font-weight: 500;
+}
+.form-row input, .form-row select, .form-row textarea {
+background: #fff; border: 1px solid var(–border-line);
+color: var(–ink); padding: 9px 11px; font-family: ‘Inter’, sans-serif;
+font-size: 13px; outline: none; transition: border-color 0.15s;
+}
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+border-color: var(–schaeffler-green);
+box-shadow: 0 0 0 3px rgba(0,137,61,0.1);
+}
+.form-row textarea { resize: vertical; min-height: 50px; font-size: 12px; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-row-2 > .form-row { margin-bottom: 0; }
+
+.hours-preview {
+background: var(–schaeffler-green-light);
+border: 1px solid var(–schaeffler-green);
+border-left-width: 4px;
+padding: 10px 12px; font-family: ‘Inter’, sans-serif;
+color: var(–schaeffler-green-dark);
+display: flex; justify-content: space-between; align-items: center;
+margin-bottom: 12px;
+}
+.hours-preview .lbl { color: var(–ink-mid); font-size: 11px; font-weight: 500; }
+.hours-preview .val { font-size: 18px; font-weight: 700; font-family: ‘JetBrains Mono’, monospace; }
+
+.hidden { display: none !important; }
+
+/* ============ SEGMENT PICKER (Multi-Select Pills) ============ */
+.seg-picker {
+display: flex; flex-wrap: wrap; gap: 6px;
+padding: 8px; background: var(–bg-elev-2);
+border: 1px solid var(–border-line);
+min-height: 42px;
+}
+.seg-pill {
+font-family: ‘JetBrains Mono’, monospace; font-size: 11px; font-weight: 600;
+padding: 5px 10px; background: #fff; border: 1.5px solid var(–border-line);
+color: var(–ink-mid); cursor: pointer; transition: all 0.12s;
+user-select: none; letter-spacing: 0.02em;
+}
+.seg-pill:hover { border-color: var(–ink-mid); }
+.seg-pill.active {
+background: var(–seg-color, var(–schaeffler-green));
+border-color: var(–seg-color, var(–schaeffler-green));
+color: #fff;
+}
+.seg-pill.active:hover { opacity: 0.9; }
+.seg-list-inline {
+display: inline-flex; gap: 3px; flex-wrap: wrap;
+}
+.seg-mini {
+font-family: ‘JetBrains Mono’, monospace; font-size: 10px;
+padding: 2px 6px; border: 1px solid; font-weight: 600;
+letter-spacing: 0.02em;
+}
+
+.legend { display: flex; flex-direction: column; gap: 7px; }
+.legend-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(–ink-mid); }
+.legend-dot { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ============ ANALYTICS ============ */
+.analytics { display: none; } .analytics.active { display: block; }
+.year-view.active { display: block; } .year-view { display: none; }
+.list-view { display: none; } .list-view.active { display: block; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.stat-card {
+background: #fff; border: 1px solid var(–border-line);
+padding: 20px; position: relative; overflow: hidden;
+}
+.stat-card::before {
+content: “”; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+background: var(–schaeffler-green);
+}
+.stat-card.blue::before { background: var(–c-schulung); }
+.stat-card.orange::before { background: var(–c-regel); }
+.stat-label {
+font-family: ‘Inter’, sans-serif; font-size: 11px; letter-spacing: 0.05em;
+text-transform: uppercase; color: var(–ink-dim); margin-bottom: 8px; font-weight: 500;
+}
+.stat-value {
+font-family: ‘Inter’, sans-serif; font-size: 32px; font-weight: 700;
+letter-spacing: -0.03em; color: var(–ink); line-height: 1;
+}
+.stat-unit { font-size: 14px; color: var(–ink-dim); margin-left: 6px; font-weight: 500; }
+.stat-sub { font-size: 12px; color: var(–ink-dim); margin-top: 6px; font-family: ‘JetBrains Mono’, monospace; }
+
+.analytics-section { margin-bottom: 32px; }
+.analytics-section h2 {
+font-family: ‘Inter’, sans-serif; font-size: 22px; font-weight: 700;
+color: var(–ink); margin-bottom: 4px; letter-spacing: -0.02em;
+}
+.analytics-section .sub {
+font-family: ‘Inter’, sans-serif; font-size: 12px; color: var(–ink-dim);
+letter-spacing: 0; margin-bottom: 20px;
+}
+
+.matrix-wrap { overflow-x: auto; border: 1px solid var(–border-line); background: #fff; }
+table.matrix { width: 100%; border-collapse: collapse; font-family: ‘JetBrains Mono’, monospace; font-size: 12px; min-width: 800px; }
+table.matrix th, table.matrix td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(–border-line); border-right: 1px solid var(–border-line); }
+table.matrix th { background: var(–bg-elev-2); color: var(–ink-mid); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 10px; font-family: ‘Inter’, sans-serif; }
+table.matrix th:first-child, table.matrix td:first-child { text-align: left; position: sticky; left: 0; background: #fff; }
+table.matrix th:first-child { background: var(–bg-elev-2); }
+table.matrix td.total { font-weight: 700; color: var(–schaeffler-green); background: var(–schaeffler-green-light); }
+table.matrix tr.total-row td { background: var(–bg-elev-2); font-weight: 700; color: var(–ink); border-top: 2px solid var(–border-strong); }
+table.matrix td.zero { color: var(–ink-mute); }
+
+/* ============ BAR CHART ============ */
+.bar-chart { background: #fff; border: 1px solid var(–border-line); padding: 24px; }
+.bars { display: flex; align-items: flex-end; gap: 8px; height: 240px; padding: 0 4px; border-bottom: 1px solid var(–border-line); position: relative; }
+.bars::before, .bars::after { content: “”; position: absolute; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.04); }
+.bars::before { top: 33%; } .bars::after { top: 66%; }
+.bar-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 1px; position: relative; min-width: 0; }
+.bar-col:hover .bar-tip { opacity: 1; }
+.bar-seg { width: 100%; transition: opacity 0.15s; min-height: 1px; }
+.bar-seg:hover { opacity: 0.85; }
+.bar-tip {
+position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+background: var(–ink); color: #fff; border: none; padding: 8px 12px; font-size: 11px;
+white-space: nowrap; opacity: 0; pointer-events: none; z-index: 10; margin-bottom: 6px;
+font-family: ‘Inter’, sans-serif;
+}
+.bar-labels { display: flex; gap: 8px; padding: 10px 4px 0; }
+.bar-label { flex: 1; text-align: center; font-family: ‘Inter’, sans-serif; font-size: 11px; color: var(–ink-dim); font-weight: 500; }
+.bar-total { text-align: center; font-family: ‘JetBrains Mono’, monospace; font-size: 11px; color: var(–ink); margin-top: 4px; font-weight: 700; }
+
+/* ============ LIST ============ */
+.list-filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+.list-filters select, .list-filters input {
+background: #fff; border: 1px solid var(–border-line); color: var(–ink);
+padding: 8px 12px; font-family: ‘Inter’, sans-serif; font-size: 12px; outline: none;
+}
+.list-filters select:focus, .list-filters input:focus { border-color: var(–schaeffler-green); }
+table.list { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid var(–border-line); background: #fff; }
+table.list th, table.list td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(–border-line); }
+table.list th {
+background: var(–bg-elev-2); font-family: ‘Inter’, sans-serif; font-weight: 600;
+font-size: 11px; color: var(–ink-mid); letter-spacing: 0.05em; text-transform: uppercase;
+}
+table.list td.mono { font-family: ‘JetBrains Mono’, monospace; font-size: 12px; }
+table.list tr:hover td { background: var(–bg-soft); }
+table.list .type-badge {
+display: inline-block; padding: 3px 9px; font-family: ‘Inter’, sans-serif;
+font-size: 11px; letter-spacing: 0; font-weight: 600; border: 1px solid;
+}
+.type-schulung { color: var(–c-schulung); border-color: var(–c-schulung); background: rgba(26,77,140,0.06); }
+.type-kalibrierung { color: var(–c-kalibrierung); border-color: var(–c-kalibrierung); background: var(–schaeffler-green-light); }
+.type-regel { color: var(–c-regel); border-color: var(–c-regel); background: rgba(199,83,0,0.06); }
+.seg-badge {
+display: inline-block; font-family: ‘JetBrains Mono’, monospace; font-size: 10px;
+padding: 3px 8px; background: #fff; border: 1px solid; letter-spacing: 0.02em; font-weight: 600;
+}
+.row-del { background: transparent; border: none; color: var(–ink-mute); cursor: pointer; font-size: 14px; padding: 0 4px; }
+.row-del:hover { color: var(–c-regel); }
+
+/* ============ MODAL ============ */
+.modal-overlay {
+position: fixed; inset: 0; background: rgba(26,26,26,0.5); backdrop-filter: blur(2px);
+display: none; align-items: center; justify-content: center; z-index: 100;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+background: #fff; border: 1px solid var(–border-line);
+border-top: 4px solid var(–schaeffler-green);
+width: 560px; max-width: 92vw; max-height: 90vh; overflow-y: auto; padding: 28px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.modal-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(–border-line); }
+.modal-title {
+font-family: ‘Inter’, sans-serif; font-size: 22px; font-weight: 700;
+color: var(–ink); letter-spacing: -0.02em;
+}
+.modal-date { font-family: ‘JetBrains Mono’, monospace; font-size: 12px; color: var(–ink-dim); letter-spacing: 0.05em; text-transform: uppercase; }
+.modal-close { background: transparent; border: none; color: var(–ink-dim); font-size: 22px; cursor: pointer; line-height: 1; }
+.modal-close:hover { color: var(–ink); }
+.modal-events { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.modal-event {
+display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+background: var(–bg-soft); border-left: 3px solid var(–schaeffler-green);
+font-size: 13px;
+}
+.modal-event-type {
+font-family: ‘Inter’, sans-serif; font-size: 11px; color: var(–ink-dim);
+font-weight: 500;
+}
+.modal-event-title { flex: 1; font-weight: 500; color: var(–ink); }
+.modal-event-hours { font-family: ‘JetBrains Mono’, monospace; font-size: 13px; color: var(–schaeffler-green); font-weight: 700; }
+
+.empty-hint { text-align: center; padding: 60px 20px; color: var(–ink-dim); font-family: ‘Inter’, sans-serif; font-size: 13px; }
+.empty-hint em { font-family: ‘Inter’, sans-serif; font-style: normal; font-size: 22px; display: block; margin-bottom: 12px; color: var(–ink); font-weight: 600; }
+
+::selection { background: var(–schaeffler-green); color: #fff; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(–bg-soft); }
+::-webkit-scrollbar-thumb { background: var(–border-strong); }
+::-webkit-scrollbar-thumb:hover { background: var(–ink-mute); }
+
+/* ============ MOBILE OPTIMIERUNG ============ */
+
+/* Tablet quer */
+@media (max-width: 1100px) {
+.header-inner { padding: 14px 18px; }
+.main { padding: 20px 18px; }
+.side { padding: 22px 18px; }
+}
+
+/* Tablet hoch & große Phones */
+@media (max-width: 820px) {
+/* Header in 2 Zeilen */
+.header-inner {
+grid-template-columns: 1fr auto;
+grid-template-rows: auto auto;
+gap: 10px 14px;
+padding: 12px 14px;
+}
+.brand { grid-column: 1; grid-row: 1; gap: 10px; }
+.brand-logo { padding-right: 12px; gap: 8px; }
+.brand-logo-mark { width: 32px; height: 32px; font-size: 16px; }
+.brand-logo-text { font-size: 16px; }
+.brand-text-1 { font-size: 10px; }
+.brand-text-2 { font-size: 13px; line-height: 1.25; }
+.year-control { grid-column: 2; grid-row: 1; }
+.header-actions {
+grid-column: 1 / -1; grid-row: 2;
+justify-content: flex-start;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+padding-bottom: 2px;
+flex-wrap: nowrap;
+}
+.header-actions::-webkit-scrollbar { height: 4px; }
+.btn { font-size: 11px; padding: 7px 11px; white-space: nowrap; flex-shrink: 0; }
+}
+
+/* Phone */
+@media (max-width: 700px) {
+body { font-size: 14px; }
+
+```
+/* Layout: Sidebar wird zu Bottom-Sheet */
+.layout {
+  grid-template-columns: 1fr;
+  min-height: auto;
+}
+.main {
+  padding: 14px 12px;
+  border-right: none;
+  border-bottom: 1px solid var(--border-line);
+  padding-bottom: 80px; /* Platz für FAB */
+}
+.side {
+  padding: 18px 14px;
+  max-height: none;
+  border-top: 6px solid var(--schaeffler-green);
+}
+
+/* Brand kompakter */
+.brand-logo { display: none; } /* nur Marker und Text raus, "S" + "SCHAEFFLER" wegnehmen */
+.brand { gap: 0; }
+.brand-text-1 { display: none; }
+.brand-text-2 { font-size: 14px; font-weight: 700; }
+
+/* Year display */
+.year-display { font-size: 18px; min-width: 60px; }
+.year-btn { width: 36px; height: 36px; font-size: 18px; }
+
+/* Tabs scrollbar */
+.view-tabs {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-wrap: nowrap;
+  margin-bottom: 16px;
+}
+.view-tabs::-webkit-scrollbar { height: 0; }
+.view-tab {
+  padding: 12px 14px;
+  font-size: 13px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Year-Kalender: 1 Spalte, Monate mit größeren Tagen */
+.year-grid { grid-template-columns: 1fr; gap: 14px; }
+.month { padding: 12px; }
+.month-name { font-size: 18px; }
+.day {
+  font-size: 12px;
+  min-height: 36px;
+  padding: 4px 2px 3px;
+}
+.day-num { font-size: 12px; font-weight: 500; }
+.day-dot { width: 6px; height: 6px; }
+.weekdays { font-size: 10px; }
+.weekdays > div { padding: 4px 0; }
+
+/* Side Panel: Inputs größer für Touch */
+.form-row label { font-size: 12px; }
+.form-row input, .form-row select, .form-row textarea {
+  padding: 12px 12px;
+  font-size: 16px; /* verhindert iOS-Auto-Zoom */
+}
+.form-row-2 { grid-template-columns: 1fr; gap: 0; }
+.form-row-2 > .form-row { margin-bottom: 12px; }
+
+/* Segment-Pills größer und besser tappbar */
+.seg-picker { padding: 10px; gap: 8px; }
+.seg-pill { padding: 10px 14px; font-size: 13px; min-width: 64px; text-align: center; }
+
+/* Hours Preview prominenter */
+.hours-preview {
+  padding: 14px 14px;
+  border-left-width: 5px;
+}
+.hours-preview .val { font-size: 22px; }
+
+/* Buttons full-width */
+.btn { padding: 10px 14px; font-size: 12px; }
+.btn-primary { padding: 14px 16px; font-size: 14px; min-height: 48px; }
+
+/* Stats horizontal scrollbar */
+.stats-grid {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+}
+.stats-grid::-webkit-scrollbar { height: 4px; }
+.stat-card {
+  min-width: 220px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  padding: 16px;
+}
+.stat-value { font-size: 26px; }
+
+/* Analytics-Sections kompakter */
+.analytics-section h2 { font-size: 18px; }
+.analytics-section .sub { font-size: 11px; margin-bottom: 14px; }
+.matrix-wrap { font-size: 11px; }
+table.matrix th, table.matrix td { padding: 8px 8px; font-size: 11px; }
+.bar-chart { padding: 16px 12px; }
+.bars { height: 180px; gap: 4px; }
+.bar-label { font-size: 9px; }
+.bar-total { font-size: 10px; }
+
+/* Liste — mobile als Cards statt Tabelle */
+.list-filters { gap: 6px; }
+.list-filters select, .list-filters input {
+  padding: 10px 12px; font-size: 14px; flex: 1; min-width: 0;
+}
+table.list { display: none; }
+#listMobile { display: flex; flex-direction: column; gap: 10px; }
+
+/* Modal full-width-bottom */
+.modal-overlay { align-items: flex-end; padding: 0; }
+.modal {
+  width: 100%; max-width: 100%; max-height: 85vh;
+  border-top: 4px solid var(--schaeffler-green);
+  border-left: none; border-right: none; border-bottom: none;
+  padding: 22px 18px;
+}
+.modal-title { font-size: 18px; }
+.modal-event { padding: 14px 12px; flex-wrap: wrap; gap: 6px; }
+.modal-event-type { width: 100%; font-size: 10px; }
+.modal-event-title { font-size: 13px; }
+.modal-event-hours { font-size: 14px; }
+
+/* Vacation-Form vertikal */
+.vac-item { padding: 10px 12px; }
+.vac-item-range { font-size: 12px; }
+```
+
+}
+
+/* sehr kleine Geräte — alles noch enger */
+@media (max-width: 380px) {
+.header-inner { padding: 10px 10px; }
+.main { padding: 10px 8px; }
+.side { padding: 16px 10px; }
+.brand-text-2 { font-size: 12px; }
+.year-display { font-size: 16px; min-width: 52px; }
+.seg-pill { padding: 9px 10px; font-size: 12px; min-width: 54px; }
+.stat-card { min-width: 200px; }
+}
+
+/* Karten-Liste für Mobil (vom JS gefüllt) */
+#listMobile { display: none; }
+.list-card {
+background: #fff;
+border: 1px solid var(–border-line);
+border-left: 4px solid var(–schaeffler-green);
+padding: 12px 14px;
+display: flex; flex-direction: column; gap: 6px;
+}
+.list-card.cancelled { opacity: 0.65; }
+.list-card.cancelled .list-card-title { text-decoration: line-through; color: var(–ink-dim); }
+.list-card-row1 { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.list-card-date { font-family: ‘JetBrains Mono’, monospace; font-size: 12px; color: var(–ink-mid); font-weight: 600; }
+.list-card-hours { font-family: ‘JetBrains Mono’, monospace; font-size: 16px; font-weight: 700; color: var(–schaeffler-green); }
+.list-card-title { font-size: 14px; font-weight: 500; color: var(–ink); line-height: 1.3; }
+.list-card-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 11px; }
+.list-card-meta .seg-badge { font-size: 10px; padding: 2px 7px; }
+.list-card-meta .type-badge { padding: 2px 7px; font-size: 10px; }
+.list-card-actions { display: flex; justify-content: flex-end; }
+.list-card-actions .row-del { font-size: 18px; padding: 4px 8px; }
+
+/* ============ SEGMENT PICKER ============ */
+.seg-picker {
+display: flex; flex-wrap: wrap; gap: 6px;
+padding: 8px; background: var(–bg-soft); border: 1px solid var(–border-line);
+}
+.seg-pill {
+font-family: ‘JetBrains Mono’, monospace; font-size: 11px; font-weight: 600;
+padding: 6px 11px; cursor: pointer; user-select: none;
+background: #fff; border: 1.5px solid var(–border-line); color: var(–ink-mid);
+transition: all 0.1s; letter-spacing: 0.02em;
+}
+.seg-pill:hover { border-color: var(–ink-dim); }
+.seg-pill.active {
+background: var(–seg-bg, var(–schaeffler-green));
+color: #fff; border-color: var(–seg-bg, var(–schaeffler-green));
+}
+.seg-info {
+margin-top: 6px; font-family: ‘JetBrains Mono’, monospace; font-size: 11px;
+color: var(–ink-dim); min-height: 16px;
+}
+.seg-info strong { color: var(–schaeffler-green-dark); }
+
+/* Multi-segment-Badge in Liste/Modal */
+.seg-badges-multi { display: inline-flex; flex-wrap: wrap; gap: 3px; }
+
+/* ============ URLAUBE ============ */
+.vac-item {
+display: flex; align-items: center; gap: 10px;
+background: var(–bg-soft);
+border-left: 3px solid #b8860b;
+padding: 8px 10px; font-size: 12px;
+}
+.vac-item-info { flex: 1; min-width: 0; }
+.vac-item-range { font-family: ‘JetBrains Mono’, monospace; font-size: 11px; color: var(–ink); font-weight: 600; }
+.vac-item-label { font-size: 11px; color: var(–ink-dim); margin-top: 2px; }
+.vac-item-del { background: transparent; border: none; color: var(–ink-mute); cursor: pointer; font-size: 14px; padding: 0 4px; }
+.vac-item-del:hover { color: var(–c-regel); }
+
+/* Tage mit Urlaub im Kalender markieren */
+.day.vacation {
+background: repeating-linear-gradient(
+45deg,
+#fff8e7,
+#fff8e7 4px,
+#ffefc5 4px,
+#ffefc5 8px
+);
+}
+.day.vacation:hover { background: #ffe9a8; }
+
+/* Termine, die wegen Urlaub ausgefallen sind */
+.modal-event.cancelled {
+opacity: 0.55; border-left-color: var(–ink-mute);
+}
+.modal-event.cancelled .modal-event-title { text-decoration: line-through; color: var(–ink-dim); }
+.modal-event.cancelled .modal-event-hours { color: var(–ink-mute); text-decoration: line-through; }
+.modal-event-cancel-tag {
+font-family: ‘Inter’, sans-serif; font-size: 10px; font-weight: 600;
+background: #fff3cd; color: #8b6914; padding: 2px 7px;
+border: 1px solid #d4a72c; letter-spacing: 0.03em;
+}
+
+table.list tr.cancelled td { opacity: 0.6; }
+table.list tr.cancelled .row-title-text { text-decoration: line-through; color: var(–ink-dim); }
+.cancel-badge {
+display: inline-block; font-family: ‘Inter’, sans-serif; font-size: 10px;
+font-weight: 600; background: #fff3cd; color: #8b6914;
+padding: 2px 7px; border: 1px solid #d4a72c; letter-spacing: 0.03em;
+margin-left: 8px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="accent-bar"></div>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">
+        <div class="brand-logo-mark">S</div>
+        <div class="brand-logo-text">SCHAEFFLER</div>
+      </div>
+      <div class="brand-text">
+        <div class="brand-text-1">Operations Planning</div>
+        <div class="brand-text-2">Jahresplanung — Prüfung · Kalibrierung · Regeltermine</div>
+      </div>
+    </div>
+    <div class="year-control">
+      <button class="year-btn" id="yearPrev">‹</button>
+      <div class="year-display" id="yearDisplay">2026</div>
+      <button class="year-btn" id="yearNext">›</button>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ghost" id="btnTemplate" title="Excel-Vorlage zum Eintragen herunterladen">Vorlage</button>
+      <button class="btn btn-ghost" id="btnImportXlsx">Excel-Import</button>
+      <input type="file" id="fileImportXlsx" accept=".xlsx,.xls" style="display:none">
+      <button class="btn btn-ghost" id="btnExport">JSON Export</button>
+      <button class="btn btn-ghost" id="btnImport">JSON Import</button>
+      <input type="file" id="fileImport" accept=".json" style="display:none">
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <section class="main">
+    <div class="view-tabs">
+      <button class="view-tab active" data-view="year">Jahreskalender</button>
+      <button class="view-tab" data-view="analytics">Aufwands-Analyse</button>
+      <button class="view-tab" data-view="list">Terminliste</button>
+    </div>
+    <div class="year-view active" id="view-year"><div class="year-grid" id="yearGrid"></div></div>
+    <div class="analytics" id="view-analytics">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="analytics-section">
+        <h2>Monatliche Aufwände</h2>
+        <div class="sub">Stunden pro Segment · <span id="analyticsYear">—</span></div>
+        <div class="bar-chart">
+          <div class="bars" id="barsChart"></div>
+          <div class="bar-labels" id="barLabels"></div>
+        </div>
+      </div>
+      <div class="analytics-section">
+        <h2>Aufwands-Matrix</h2>
+        <div class="sub">Stunden · Segment × Monat</div>
+        <div class="matrix-wrap"><table class="matrix" id="matrixTable"></table></div>
+      </div>
+      <div class="analytics-section">
+        <h2>Aufschlüsselung nach Typ</h2>
+        <div class="sub">Stunden je Prüfverfahren / Kalibrierung</div>
+        <div class="matrix-wrap"><table class="matrix" id="typeTable"></table></div>
+      </div>
+    </div>
+    <div class="list-view" id="view-list">
+      <div class="list-filters">
+        <select id="filterType">
+          <option value="">Alle Typen</option>
+          <option value="schulung">Prüfwerker-Schulung</option>
+          <option value="kalibrierung">Geräte-Kalibrierung</option>
+          <option value="regel">Regeltermin</option>
+        </select>
+        <select id="filterSeg"><option value="">Alle Segmente</option></select>
+        <input type="text" id="filterSearch" placeholder="Suche…" style="flex:1;min-width:180px;">
+      </div>
+      <table class="list" id="listTable">
+        <thead><tr>
+          <th>Datum</th><th>Typ / Verfahren</th><th>Segment</th>
+          <th>Bezeichnung</th><th style="text-align:right;">Std.</th><th></th>
+        </tr></thead>
+        <tbody id="listBody"></tbody>
+      </table>
+      <div id="listMobile"></div>
+    </div>
+  </section>
+
+  <aside class="side">
+    <div class="side-section">
+      <h3>Neuer Termin</h3>
+      <div class="form-row">
+        <label>Typ</label>
+        <select id="f-type">
+          <option value="schulung">Prüfwerker-Schulung</option>
+          <option value="kalibrierung">Geräte-Kalibrierung</option>
+          <option value="regel">Regeltermin</option>
+        </select>
+      </div>
+      <div class="form-row" id="row-schulung-subtype">
+        <label>Prüfverfahren</label>
+        <select id="f-schulung-sub">
+          <option value="ultraschall">Ultraschallprüfung — 24 h</option>
+          <option value="wirbelstrom_riss">Wirbelstromprüfung Riss — 16 h</option>
+          <option value="wirbelstrom_gefuege">Wirbelstromprüfung Gefüge — 16 h</option>
+          <option value="magnetpulver">Magnetpulverprüfung — 16 h</option>
+          <option value="nitalaetzen">Nitalätzen — 8 h</option>
+          <option value="custom">Andere (manuell)</option>
+        </select>
+      </div>
+      <div class="form-row hidden" id="row-kal-subtype">
+        <label>Kalibrierungs-Art</label>
+        <select id="f-kal-sub">
+          <option value="pruefmechanik">Prüfmechanik</option>
+          <option value="pruefelektronik">Prüfelektronik</option>
+          <option value="magnetpulveranlage">Magnetpulverprüfanlage — 4 h</option>
+          <option value="uv_lampen">UV-Lampen — 0,75 h</option>
+          <option value="referenzteile">Referenzteile — 0,5 h</option>
+          <option value="custom">Andere (manuell)</option>
+        </select>
+      </div>
+      <div class="form-row hidden" id="row-kal-mode">
+        <label>Kalibrierung</label>
+        <select id="f-kal-mode">
+          <option value="intern">Intern</option>
+          <option value="extern">Extern (Aufwand intern = 1 h)</option>
+        </select>
+      </div>
+      <div class="form-row hidden" id="row-kanaele">
+        <label>Anzahl Kanäle <span style="color:var(--ink-mute);text-transform:none;letter-spacing:0;">(intern: 2,5 h / Kanal)</span></label>
+        <input type="number" id="f-kanaele" min="1" step="1" value="1">
+      </div>
+      <div class="form-row hidden" id="row-mechanik-dauer">
+        <label>Dauer laut Anlage (Stunden)</label>
+        <input type="number" id="f-mechanik-dauer" min="0" step="0.25" value="4">
+      </div>
+      <div class="form-row">
+        <label>Bezeichnung / Anlage</label>
+        <input type="text" id="f-title" placeholder="z.B. Wälzlagerprüfanlage WS-3">
+      </div>
+      <div class="form-row">
+        <label>Segment(e) <span style="color:var(--ink-mute);font-weight:400;">— mehrere möglich, Aufwand wird gleichmäßig verteilt</span></label>
+        <div class="seg-picker" id="f-segment-picker"></div>
+        <div id="f-segment-info" class="seg-info"></div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-row"><label>Datum</label><input type="date" id="f-date"></div>
+        <div class="form-row">
+          <label>Wiederholung</label>
+          <select id="f-repeat">
+            <option value="none">Einmalig</option>
+            <option value="weekly">Wöchentlich (7 Tage)</option>
+            <option value="biweekly">Alle 2 Wochen (14 Tage)</option>
+            <option value="monthly">Monatlich</option>
+            <option value="bimonthly">Alle 2 Monate</option>
+            <option value="quarterly">Alle 3 Monate (quartalsweise)</option>
+            <option value="halfyearly">Halbjährlich</option>
+            <option value="yearly">Jährlich</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row hidden" id="row-hours-manual">
+        <label>Stunden (manuell)</label>
+        <input type="number" id="f-hours-manual" step="0.25" min="0" value="1">
+      </div>
+      <div class="hours-preview">
+        <span class="lbl">Berechneter Aufwand</span>
+        <span class="val" id="hoursPreview">— h</span>
+      </div>
+      <div class="form-row"><label>Notiz (optional)</label><textarea id="f-note"></textarea></div>
+      <button class="btn btn-primary" id="btnAdd" style="width:100%;">Termin hinzufügen</button>
+    </div>
+    <div class="side-section">
+      <h3>Urlaube / Ausfallzeiten</h3>
+      <div style="font-size:11px;color:var(--ink-dim);margin-bottom:10px;line-height:1.4;">
+        Während dieser Zeiträume fallen <strong>Regeltermine automatisch aus</strong>. Schulungen und Kalibrierungen bleiben.
+      </div>
+      <div class="form-row-2">
+        <div class="form-row"><label>Von</label><input type="date" id="u-from"></div>
+        <div class="form-row"><label>Bis</label><input type="date" id="u-to"></div>
+      </div>
+      <div class="form-row">
+        <label>Bezeichnung (optional)</label>
+        <input type="text" id="u-label" placeholder="z.B. Sommerurlaub, Krankheit">
+      </div>
+      <button class="btn btn-primary" id="btnAddVacation" style="width:100%;margin-bottom:14px;">+ Urlaubszeit hinzufügen</button>
+      <div id="vacationList" style="display:flex;flex-direction:column;gap:6px;"></div>
+    </div>
+
+```
+<div class="side-section">
+  <h3>Legende — Typ</h3>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot" style="background:var(--c-schulung)"></span>Schulung</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--c-kalibrierung)"></span>Kalibrierung</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--c-regel)"></span>Regeltermin</div>
+  </div>
+</div>
+<div class="side-section">
+  <h3>Legende — Segmente</h3>
+  <div class="legend" id="segLegend"></div>
+</div>
+```
+
+  </aside>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">—</div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-date" id="modalDate"></div>
+    <div class="modal-events" id="modalEvents" style="margin-top:16px;"></div>
+    <button class="btn btn-ghost" id="modalAddHere" style="width:100%;margin-top:8px;">+ Termin für dieses Datum</button>
+  </div>
+</div>
+
+<script>
+const SEGMENTS = [
+  { id: 4 }, { id: 6 }, { id: 7 }, { id: 11 }, { id: 12 }, { id: 14 }, { id: 15 }
+];
+const SEG_COLOR_MAP = { 4:'#00893D', 6:'#c75300', 7:'#1a4d8c', 11:'#6b3fa0', 12:'#b8860b', 14:'#00756b', 15:'#a8324a' };
+const TYPE_LABEL = { schulung:'Schulung', kalibrierung:'Kalibrierung', regel:'Regeltermin' };
+const TYPE_COLOR = { schulung:'#1a4d8c', kalibrierung:'#00893D', regel:'#c75300' };
+const MONTHS_DE = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const MONTHS_SHORT = ['JAN','FEB','MRZ','APR','MAI','JUN','JUL','AUG','SEP','OKT','NOV','DEZ'];
+const WEEKDAYS = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+
+const SCHULUNG_SUBS = {
+  ultraschall: { label: 'Ultraschallprüfung', hours: 24 },
+  wirbelstrom_riss: { label: 'Wirbelstromprüfung Riss', hours: 16 },
+  wirbelstrom_gefuege: { label: 'Wirbelstromprüfung Gefüge', hours: 16 },
+  magnetpulver: { label: 'Magnetpulverprüfung', hours: 16 },
+  nitalaetzen: { label: 'Nitalätzen', hours: 8 },
+  custom: { label: 'Andere', hours: null },
+};
+const KAL_SUBS = {
+  pruefmechanik: { label: 'Prüfmechanik', hours: null },
+  pruefelektronik: { label: 'Prüfelektronik', hours: null },
+  magnetpulveranlage: { label: 'Magnetpulverprüfanlage', hours: 4 },
+  uv_lampen: { label: 'UV-Lampen', hours: 0.75 },
+  referenzteile: { label: 'Referenzteile', hours: 0.5 },
+  custom: { label: 'Andere', hours: null },
+};
+const REPEAT_LABEL = {
+  none:'einmalig', weekly:'wöchentlich', biweekly:'2-wöchig',
+  monthly:'monatlich', bimonthly:'2-monatig', quarterly:'quartalsweise',
+  halfyearly:'halbjährlich', yearly:'jährlich'
+};
+
+let state = { currentYear: new Date().getFullYear(), events: [], vacations: [] };
+const STORAGE_KEY = 'jahresplan.v2';
+const STORAGE_KEY_OLD = 'jahresplan.v1';
+
+// Storage-Layer: localStorage (funktioniert in jedem Browser, auch lokal)
+// + window.storage als Fallback (Claude.ai-Umgebung)
+const storage = {
+  async get(key) {
+    try {
+      const v = localStorage.getItem(key);
+      if (v != null) return { value: v };
+    } catch(e) {}
+    if (typeof window !== 'undefined' && window.storage && window.storage.get) {
+      try { return await window.storage.get(key); } catch(e) {}
+    }
+    return null;
+  },
+  async set(key, value) {
+    let ok = false;
+    try { localStorage.setItem(key, value); ok = true; } catch(e) { console.warn('localStorage write failed', e); }
+    if (typeof window !== 'undefined' && window.storage && window.storage.set) {
+      try { await window.storage.set(key, value); ok = true; } catch(e) {}
+    }
+    return ok;
+  }
+};
+
+async function loadState() {
+  try {
+    const res = await storage.get(STORAGE_KEY);
+    if (res && res.value) {
+      const parsed = JSON.parse(res.value);
+      state.events = parsed.events || [];
+      state.vacations = parsed.vacations || [];
+      return;
+    }
+  } catch(e) {}
+  try {
+    const old = await storage.get(STORAGE_KEY_OLD);
+    if (old && old.value) {
+      state.events = ((JSON.parse(old.value).events) || []).map(e => ({ ...e, subtype: e.subtype || 'custom' }));
+    }
+  } catch(e2) {}
+}
+async function saveState() {
+  try { await storage.set(STORAGE_KEY, JSON.stringify({ events: state.events, vacations: state.vacations })); }
+  catch(e) { console.error('Save failed', e); }
+}
+function uid() { return 'e_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function expandEvents(year) {
+  const result = [];
+  const yStart = new Date(year, 0, 1);
+  const yEnd = new Date(year, 11, 31);
+  for (const ev of state.events) {
+    const base = new Date(ev.date + 'T00:00:00');
+    if (ev.repeat === 'none' || !ev.repeat) {
+      if (base.getFullYear() === year) result.push({ ...ev, _date: ev.date });
+      continue;
+    }
+    let cursor = new Date(base);
+    let safety = 3000, i = 0;
+    while (cursor < yStart && i < safety) { cursor = stepDate(cursor, ev.repeat); i++; }
+    while (cursor <= yEnd && i < safety) {
+      if (cursor >= yStart) result.push({ ...ev, _date: fmtDate(cursor) });
+      cursor = stepDate(cursor, ev.repeat); i++;
+    }
+  }
+  return result;
+}
+function stepDate(d, rep) {
+  const n = new Date(d);
+  switch (rep) {
+    case 'weekly': n.setDate(n.getDate() + 7); break;
+    case 'biweekly': n.setDate(n.getDate() + 14); break;
+    case 'monthly': n.setMonth(n.getMonth() + 1); break;
+    case 'bimonthly': n.setMonth(n.getMonth() + 2); break;
+    case 'quarterly': n.setMonth(n.getMonth() + 3); break;
+    case 'halfyearly': n.setMonth(n.getMonth() + 6); break;
+    case 'yearly': n.setFullYear(n.getFullYear() + 1); break;
+  }
+  return n;
+}
+function fmtDate(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function parseDateLocal(s) { return new Date(s + 'T00:00:00'); }
+
+// ============ VACATION HELPERS ============
+function isDateInVacation(dateStr) {
+  for (const v of state.vacations) {
+    if (dateStr >= v.from && dateStr <= v.to) return v;
+  }
+  return null;
+}
+function isCancelled(ev) {
+  if (ev.type !== 'regel') return false;
+  return !!isDateInVacation(ev._date || ev.date);
+}
+function effectiveHours(ev) {
+  return isCancelled(ev) ? 0 : Number(ev.hours || 0);
+}
+
+// ============ MULTI-SEGMENT HELPERS ============
+// Liefert Array der Segment-IDs eines Events (kompatibel zu alten Single-Segment-Events)
+function getEventSegments(ev) {
+  if (Array.isArray(ev.segments) && ev.segments.length) return ev.segments;
+  if (ev.segment != null) return [Number(ev.segment)];
+  return [];
+}
+// Stunden, die auf EIN Segment entfallen (gleichmäßig verteilt)
+function hoursPerSegment(ev) {
+  const segs = getEventSegments(ev);
+  if (!segs.length) return 0;
+  return effectiveHours(ev) / segs.length;
+}
+
+function computeHours(form) {
+  if (form.type === 'schulung') {
+    if (form.subtype && form.subtype !== 'custom' && SCHULUNG_SUBS[form.subtype]) {
+      return SCHULUNG_SUBS[form.subtype].hours;
+    }
+    return Number(form.hoursManual || 0);
+  }
+  if (form.type === 'kalibrierung') {
+    if (form.mode === 'extern') return 1;
+    if (form.subtype === 'pruefelektronik') return Math.max(0, Number(form.kanaele || 0)) * 2.5;
+    if (form.subtype === 'pruefmechanik') return Number(form.mechanikDauer || 0);
+    if (form.subtype === 'magnetpulveranlage') return 4;
+    if (form.subtype === 'uv_lampen') return 0.75;
+    if (form.subtype === 'referenzteile') return 0.5;
+    return Number(form.hoursManual || 0);
+  }
+  return Number(form.hoursManual || 0);
+}
+
+function getFormSnapshot() {
+  const type = document.getElementById('f-type').value;
+  return {
+    type,
+    subtype: type === 'schulung' ? document.getElementById('f-schulung-sub').value
+      : type === 'kalibrierung' ? document.getElementById('f-kal-sub').value : null,
+    mode: document.getElementById('f-kal-mode').value,
+    kanaele: document.getElementById('f-kanaele').value,
+    mechanikDauer: document.getElementById('f-mechanik-dauer').value,
+    hoursManual: document.getElementById('f-hours-manual').value,
+  };
+}
+
+function updateFormVisibility() {
+  const type = document.getElementById('f-type').value;
+  const kalSub = document.getElementById('f-kal-sub').value;
+  const kalMode = document.getElementById('f-kal-mode').value;
+  const schulSub = document.getElementById('f-schulung-sub').value;
+  document.getElementById('row-schulung-subtype').classList.toggle('hidden', type !== 'schulung');
+  document.getElementById('row-kal-subtype').classList.toggle('hidden', type !== 'kalibrierung');
+  document.getElementById('row-kal-mode').classList.toggle('hidden', type !== 'kalibrierung');
+  document.getElementById('row-kanaele').classList.toggle('hidden', !(type === 'kalibrierung' && kalSub === 'pruefelektronik' && kalMode === 'intern'));
+  document.getElementById('row-mechanik-dauer').classList.toggle('hidden', !(type === 'kalibrierung' && kalSub === 'pruefmechanik' && kalMode === 'intern'));
+  let showManual = false;
+  if (type === 'regel') showManual = true;
+  if (type === 'schulung' && schulSub === 'custom') showManual = true;
+  if (type === 'kalibrierung' && kalSub === 'custom' && kalMode === 'intern') showManual = true;
+  document.getElementById('row-hours-manual').classList.toggle('hidden', !showManual);
+  updateHoursPreview();
+}
+
+function updateHoursPreview() {
+  const h = computeHours(getFormSnapshot());
+  document.getElementById('hoursPreview').textContent = (h ? h.toFixed(2) : '0.00') + ' h';
+  if (typeof updateSegmentInfo === 'function') updateSegmentInfo();
+}
+
+['f-type','f-schulung-sub','f-kal-sub','f-kal-mode','f-kanaele','f-mechanik-dauer','f-hours-manual'].forEach(id => {
+  document.getElementById(id).addEventListener('change', updateFormVisibility);
+  document.getElementById(id).addEventListener('input', updateHoursPreview);
+});
+
+function escapeHtml(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function subtypeLabel(ev) {
+  if (ev.type === 'schulung' && ev.subtype && SCHULUNG_SUBS[ev.subtype]) return SCHULUNG_SUBS[ev.subtype].label;
+  if (ev.type === 'kalibrierung' && ev.subtype && KAL_SUBS[ev.subtype]) {
+    let l = KAL_SUBS[ev.subtype].label;
+    if (ev.mode === 'extern') l += ' (extern)';
+    else if (ev.subtype === 'pruefelektronik' && ev.kanaele) l += ' · ' + ev.kanaele + ' Kan.';
+    return l;
+  }
+  return '';
+}
+
+function renderYearCalendar() {
+  const grid = document.getElementById('yearGrid');
+  grid.innerHTML = '';
+  const year = state.currentYear;
+  const expanded = expandEvents(year);
+  const byDate = {};
+  for (const ev of expanded) (byDate[ev._date] = byDate[ev._date] || []).push(ev);
+  const todayStr = fmtDate(new Date());
+  for (let m = 0; m < 12; m++) {
+    const monthEl = document.createElement('div');
+    monthEl.className = 'month';
+    const head = document.createElement('div'); head.className = 'month-head';
+    head.innerHTML = '<div class="month-name">' + MONTHS_DE[m] + '</div><div class="month-num">' + String(m+1).padStart(2,'0') + ' / ' + year + '</div>';
+    monthEl.appendChild(head);
+    const wd = document.createElement('div'); wd.className = 'weekdays';
+    for (const w of WEEKDAYS) wd.innerHTML += '<div>' + w + '</div>';
+    monthEl.appendChild(wd);
+    const days = document.createElement('div'); days.className = 'days';
+    const first = new Date(year, m, 1);
+    let startDow = (first.getDay() + 6) % 7;
+    for (let i = 0; i < startDow; i++) {
+      const e = document.createElement('div'); e.className = 'day empty'; days.appendChild(e);
+    }
+    const dim = new Date(year, m+1, 0).getDate();
+    for (let d = 1; d <= dim; d++) {
+      const dayEl = document.createElement('div');
+      dayEl.className = 'day';
+      const dow = new Date(year, m, d).getDay();
+      if (dow === 0 || dow === 6) dayEl.classList.add('weekend');
+      const dateStr = year + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      if (dateStr === todayStr) dayEl.classList.add('today');
+      const vac = isDateInVacation(dateStr);
+      if (vac) dayEl.classList.add('vacation');
+      dayEl.innerHTML = '<span class="day-num">' + d + '</span>';
+      if (vac) dayEl.title = 'Urlaub: ' + (vac.label || '') + ' (' + vac.from + ' – ' + vac.to + ')';
+      const evts = byDate[dateStr];
+      if (evts && evts.length) {
+        const dots = document.createElement('div'); dots.className = 'day-dots';
+        for (const ev of evts.slice(0, 4)) {
+          const dot = document.createElement('span'); dot.className = 'day-dot';
+          if (isCancelled(ev)) {
+            dot.style.background = '#c0c0bb';
+            dot.style.outline = '1px solid #8b6914';
+          } else {
+            dot.style.background = TYPE_COLOR[ev.type];
+          }
+          dots.appendChild(dot);
+        }
+        dayEl.appendChild(dots);
+      }
+      dayEl.addEventListener('click', () => openDayModal(dateStr, evts || []));
+      days.appendChild(dayEl);
+    }
+    monthEl.appendChild(days);
+    grid.appendChild(monthEl);
+  }
+}
+
+function openDayModal(dateStr, evts) {
+  const d = parseDateLocal(dateStr);
+  document.getElementById('modalTitle').textContent = d.getDate() + '. ' + MONTHS_DE[d.getMonth()];
+  const vac = isDateInVacation(dateStr);
+  let dateLine = WEEKDAYS[(d.getDay()+6)%7] + ' · ' + dateStr;
+  if (vac) dateLine += ' · URLAUB' + (vac.label ? ' (' + vac.label + ')' : '');
+  document.getElementById('modalDate').textContent = dateLine;
+  const list = document.getElementById('modalEvents');
+  list.innerHTML = '';
+  if (vac) {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'background:#fff8e7;border:1px solid #d4a72c;border-left-width:4px;padding:10px 14px;font-size:12px;color:#5c4a0a;margin-bottom:12px;';
+    banner.innerHTML = '<strong>Urlaubszeit aktiv</strong> — Regeltermine an diesem Tag fallen automatisch aus. Schulungen und Kalibrierungen bleiben planmäßig.';
+    list.appendChild(banner);
+  }
+  if (!evts.length) {
+    const empty = document.createElement('div');
+    empty.style.cssText = 'color:var(--ink-mute);font-family:JetBrains Mono,monospace;font-size:12px;padding:8px 0;';
+    empty.textContent = 'Keine Termine';
+    list.appendChild(empty);
+  } else {
+    for (const ev of evts) {
+      const sub = subtypeLabel(ev);
+      const cancelled = isCancelled(ev);
+      const segs = getEventSegments(ev);
+      const segLabel = segs.length === 1
+        ? 'Seg ' + segs[0]
+        : 'Seg ' + segs.join('+') + ' · ' + (effectiveHours(ev)/segs.length).toFixed(2) + 'h je Seg.';
+      const row = document.createElement('div');
+      row.className = 'modal-event' + (cancelled ? ' cancelled' : '');
+      row.style.borderLeftColor = cancelled ? '#a0a09a' : TYPE_COLOR[ev.type];
+      row.innerHTML = '<span class="modal-event-type">' + TYPE_LABEL[ev.type] + (sub ? ' · ' + sub : '') + ' · ' + segLabel + '</span>'
+        + '<span class="modal-event-title">' + escapeHtml(ev.title) + '</span>'
+        + (cancelled ? '<span class="modal-event-cancel-tag">AUSGEFALLEN</span>' : '')
+        + '<span class="modal-event-hours">' + Number(ev.hours).toFixed(2) + 'h</span>';
+      list.appendChild(row);
+    }
+  }
+  document.getElementById('modalAddHere').onclick = () => {
+    document.getElementById('f-date').value = dateStr;
+    closeModal();
+    document.getElementById('f-title').focus();
+  };
+  document.getElementById('modalOverlay').classList.add('active');
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+document.getElementById('modalClose').onclick = closeModal;
+document.getElementById('modalOverlay').onclick = e => { if (e.target.id === 'modalOverlay') closeModal(); };
+
+function renderAnalytics() {
+  const year = state.currentYear;
+  document.getElementById('analyticsYear').textContent = year;
+  const expanded = expandEvents(year);
+  // Effektive Stunden (ausgefallene Termine zählen mit 0)
+  const totalH = expanded.reduce((s,e)=>s+effectiveHours(e),0);
+  const hSchulung = expanded.filter(e=>e.type==='schulung').reduce((s,e)=>s+effectiveHours(e),0);
+  const hKal = expanded.filter(e=>e.type==='kalibrierung').reduce((s,e)=>s+effectiveHours(e),0);
+  const hReg = expanded.filter(e=>e.type==='regel').reduce((s,e)=>s+effectiveHours(e),0);
+  const cntSchulung = expanded.filter(e=>e.type==='schulung').length;
+  const cntKal = expanded.filter(e=>e.type==='kalibrierung').length;
+  const cntReg = expanded.filter(e=>e.type==='regel').length;
+  // Ausgefallene Termine zählen
+  const cancelledEvents = expanded.filter(e => isCancelled(e));
+  const hCancelled = cancelledEvents.reduce((s,e)=>s+Number(e.hours||0), 0);
+
+  let statsHtml =
+    '<div class="stat-card"><div class="stat-label">Effektiver Aufwand ' + year + '</div><div class="stat-value">' + totalH.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + expanded.length + ' Termine · ' + (totalH/8).toFixed(1) + ' MT</div></div>'
+    + '<div class="stat-card blue"><div class="stat-label">Prüfwerker-Schulungen</div><div class="stat-value">' + hSchulung.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntSchulung + ' Termine</div></div>'
+    + '<div class="stat-card"><div class="stat-label">Geräte-Kalibrierungen</div><div class="stat-value">' + hKal.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntKal + ' Termine</div></div>'
+    + '<div class="stat-card orange"><div class="stat-label">Regeltermine</div><div class="stat-value">' + hReg.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntReg + ' Termine (inkl. ausgefallene)</div></div>';
+  if (cancelledEvents.length > 0) {
+    statsHtml += '<div class="stat-card" style="border-color:#d4a72c;background:#fff8e7;"><div class="stat-label" style="color:#8b6914;">Ausgefallen (Urlaub)</div><div class="stat-value" style="color:#8b6914;">' + hCancelled.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub" style="color:#8b6914;">' + cancelledEvents.length + ' Regeltermine</div></div>';
+  }
+  document.getElementById('statsGrid').innerHTML = statsHtml;
+
+  const matrix = {};
+  for (const seg of SEGMENTS) matrix[seg.id] = new Array(12).fill(0);
+  for (const ev of expanded) {
+    const mi = parseDateLocal(ev._date).getMonth();
+    const segs = getEventSegments(ev);
+    if (!segs.length) continue;
+    const perSeg = effectiveHours(ev) / segs.length;
+    for (const sId of segs) {
+      if (matrix[sId] !== undefined) matrix[sId][mi] += perSeg;
+    }
+  }
+  let html = '<thead><tr><th>Segment</th>';
+  for (const m of MONTHS_SHORT) html += '<th>' + m + '</th>';
+  html += '<th>∑</th></tr></thead><tbody>';
+  for (const seg of SEGMENTS) {
+    const row = matrix[seg.id];
+    const sum = row.reduce((a,b)=>a+b,0);
+    html += '<tr><td><span class="seg-badge" style="color:' + SEG_COLOR_MAP[seg.id] + ';border-color:' + SEG_COLOR_MAP[seg.id] + '">SEG ' + seg.id + '</span></td>';
+    for (const v of row) html += '<td class="' + (v===0?'zero':'') + '">' + (v===0?'—':v.toFixed(1)) + '</td>';
+    html += '<td class="total">' + sum.toFixed(1) + '</td></tr>';
+  }
+  html += '<tr class="total-row"><td>Σ Monat</td>';
+  const monthTotals = new Array(12).fill(0);
+  for (const seg of SEGMENTS) for (let i=0;i<12;i++) monthTotals[i] += matrix[seg.id][i];
+  for (const v of monthTotals) html += '<td class="' + (v===0?'zero':'') + '">' + (v===0?'—':v.toFixed(1)) + '</td>';
+  const grand = monthTotals.reduce((a,b)=>a+b,0);
+  html += '<td class="total">' + grand.toFixed(1) + '</td></tr></tbody>';
+  document.getElementById('matrixTable').innerHTML = html;
+
+  const typeBreakdown = {};
+  for (const ev of expanded) {
+    let key;
+    if (ev.type === 'schulung') {
+      key = 'Schulung — ' + ((SCHULUNG_SUBS[ev.subtype] && SCHULUNG_SUBS[ev.subtype].label) || ev.subtype || '—');
+    } else if (ev.type === 'kalibrierung') {
+      key = 'Kalibrierung — ' + ((KAL_SUBS[ev.subtype] && KAL_SUBS[ev.subtype].label) || ev.subtype || '—') + (ev.mode === 'extern' ? ' (extern)' : '');
+    } else {
+      key = 'Regeltermin';
+    }
+    if (!typeBreakdown[key]) typeBreakdown[key] = { count: 0, hours: 0 };
+    typeBreakdown[key].count++;
+    typeBreakdown[key].hours += effectiveHours(ev);
+  }
+  let th = '<thead><tr><th>Typ / Verfahren</th><th>Anzahl</th><th>Stunden</th><th>Anteil</th></tr></thead><tbody>';
+  const entries = Object.entries(typeBreakdown).sort((a,b)=>b[1].hours-a[1].hours);
+  if (!entries.length) {
+    th += '<tr><td colspan="4" style="text-align:center;color:var(--ink-mute);padding:20px;">keine Daten</td></tr>';
+  } else {
+    for (const [k,v] of entries) {
+      const pct = totalH > 0 ? (v.hours/totalH*100).toFixed(1) : '0.0';
+      th += '<tr><td>' + escapeHtml(k) + '</td><td>' + v.count + '</td><td>' + v.hours.toFixed(1) + '</td><td>' + pct + ' %</td></tr>';
+    }
+    th += '<tr class="total-row"><td>Σ</td><td>' + expanded.length + '</td><td class="total">' + totalH.toFixed(1) + '</td><td>100 %</td></tr>';
+  }
+  th += '</tbody>';
+  document.getElementById('typeTable').innerHTML = th;
+
+  const bars = document.getElementById('barsChart');
+  const barLabels = document.getElementById('barLabels');
+  bars.innerHTML = ''; barLabels.innerHTML = '';
+  const maxMonth = Math.max(1, ...monthTotals);
+  for (let m = 0; m < 12; m++) {
+    const col = document.createElement('div'); col.className = 'bar-col';
+    const total = monthTotals[m];
+    let tipParts = ['<strong>' + MONTHS_DE[m] + '</strong> — ' + total.toFixed(1) + 'h'];
+    for (const seg of SEGMENTS) {
+      const v = matrix[seg.id][m];
+      if (v > 0) {
+        const segEl = document.createElement('div');
+        segEl.className = 'bar-seg';
+        segEl.style.background = SEG_COLOR_MAP[seg.id];
+        segEl.style.height = ((v/maxMonth)*220) + 'px';
+        col.appendChild(segEl);
+        tipParts.push('Seg ' + seg.id + ': ' + v.toFixed(1) + 'h');
+      }
+    }
+    const tip = document.createElement('div'); tip.className = 'bar-tip'; tip.innerHTML = tipParts.join('<br>');
+    col.appendChild(tip);
+    bars.appendChild(col);
+    const lab = document.createElement('div'); lab.className = 'bar-label';
+    lab.innerHTML = MONTHS_SHORT[m] + '<div class="bar-total">' + (total > 0 ? total.toFixed(1) : '—') + '</div>';
+    barLabels.appendChild(lab);
+  }
+}
+
+function renderList() {
+  const tbody = document.getElementById('listBody');
+  const mobile = document.getElementById('listMobile');
+  const type = document.getElementById('filterType').value;
+  const seg = document.getElementById('filterSeg').value;
+  const search = document.getElementById('filterSearch').value.toLowerCase();
+  const expanded = expandEvents(state.currentYear).sort((a,b)=>a._date.localeCompare(b._date));
+  const rows = expanded.filter(ev => {
+    if (type && ev.type !== type) return false;
+    if (seg && !getEventSegments(ev).includes(Number(seg))) return false;
+    if (search) {
+      const hay = (ev.title + ' ' + subtypeLabel(ev)).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    return true;
+  });
+  if (!rows.length) {
+    const empty = '<div class="empty-hint"><em>Keine Termine</em>Füge einen Termin hinzu.</div>';
+    tbody.innerHTML = '<tr><td colspan="6">' + empty + '</td></tr>';
+    if (mobile) mobile.innerHTML = empty;
+    return;
+  }
+
+  // Pre-compute pro Zeile
+  const rowData = rows.map(ev => {
+    const d = parseDateLocal(ev._date);
+    const dateFmt = String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + d.getFullYear();
+    const dow = WEEKDAYS[(d.getDay()+6)%7];
+    const sub = subtypeLabel(ev);
+    const cancelled = isCancelled(ev);
+    const segs = getEventSegments(ev);
+    const segBadges = '<span class="seg-badges-multi">'
+      + segs.map(sId => '<span class="seg-badge" style="color:' + SEG_COLOR_MAP[sId] + ';border-color:' + SEG_COLOR_MAP[sId] + '">SEG ' + sId + '</span>').join('')
+      + '</span>';
+    const totalH = Number(ev.hours||0);
+    const perSeg = segs.length > 1 ? (totalH / segs.length) : null;
+    return { ev, d, dateFmt, dow, sub, cancelled, segs, segBadges, totalH, perSeg };
+  });
+
+  // Desktop-Tabelle
+  tbody.innerHTML = rowData.map(({ ev, dateFmt, dow, sub, cancelled, segBadges, totalH, perSeg }) => {
+    let hoursDisplay;
+    if (cancelled) {
+      hoursDisplay = '<span style="text-decoration:line-through;color:var(--ink-mute);">' + totalH.toFixed(2) + '</span> <span style="color:#8b6914;font-weight:700;">0.00</span>';
+    } else if (perSeg != null) {
+      hoursDisplay = totalH.toFixed(2) + '<div style="font-size:10px;color:var(--ink-dim);font-weight:400;margin-top:2px;">' + perSeg.toFixed(2) + ' / Seg.</div>';
+    } else {
+      hoursDisplay = totalH.toFixed(2);
+    }
+    return '<tr data-id="' + ev.id + '"' + (cancelled ? ' class="cancelled"' : '') + '>'
+      + '<td class="mono">' + dateFmt + ' <span style="color:var(--ink-mute);margin-left:6px;">' + dow + '</span></td>'
+      + '<td><span class="type-badge type-' + ev.type + '">' + TYPE_LABEL[ev.type] + '</span>' + (sub ? '<div style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--ink-dim);margin-top:3px;">' + escapeHtml(sub) + '</div>' : '') + '</td>'
+      + '<td>' + segBadges + '</td>'
+      + '<td><span class="row-title-text">' + escapeHtml(ev.title) + '</span>' + (ev.note ? '<div style="color:var(--ink-mute);font-size:11px;margin-top:2px;">' + escapeHtml(ev.note) + '</div>' : '') + (ev.repeat && ev.repeat !== 'none' ? '<span style="margin-left:8px;font-family:JetBrains Mono,monospace;font-size:10px;color:var(--ink-mute);">↻ ' + (REPEAT_LABEL[ev.repeat] || ev.repeat) + '</span>' : '') + (cancelled ? '<span class="cancel-badge">URLAUB · AUSGEFALLEN</span>' : '') + '</td>'
+      + '<td class="mono" style="text-align:right;">' + hoursDisplay + '</td>'
+      + '<td style="text-align:right;"><button class="row-del" data-del="' + ev.id + '" title="Serie löschen">✕</button></td>'
+      + '</tr>';
+  }).join('');
+
+  // Mobile-Cards
+  if (mobile) {
+    mobile.innerHTML = rowData.map(({ ev, dateFmt, dow, sub, cancelled, segBadges, totalH, perSeg }) => {
+      const borderColor = cancelled ? '#a0a09a' : TYPE_COLOR[ev.type];
+      let hoursDisplay;
+      if (cancelled) {
+        hoursDisplay = '<span style="text-decoration:line-through;color:var(--ink-mute);font-size:13px;">' + totalH.toFixed(2) + '</span> <span style="color:#8b6914;">0.00 h</span>';
+      } else {
+        hoursDisplay = totalH.toFixed(2) + ' h';
+      }
+      const perSegLine = (!cancelled && perSeg != null)
+        ? '<div style="font-size:10px;color:var(--ink-dim);text-align:right;">' + perSeg.toFixed(2) + ' h / Seg.</div>'
+        : '';
+      return '<div class="list-card' + (cancelled ? ' cancelled' : '') + '" style="border-left-color:' + borderColor + '">'
+        + '<div class="list-card-row1">'
+        +   '<span class="list-card-date">' + dateFmt + ' · ' + dow + '</span>'
+        +   '<div style="text-align:right;"><span class="list-card-hours">' + hoursDisplay + '</span>' + perSegLine + '</div>'
+        + '</div>'
+        + '<div class="list-card-title">' + escapeHtml(ev.title) + '</div>'
+        + (ev.note ? '<div style="color:var(--ink-dim);font-size:11px;">' + escapeHtml(ev.note) + '</div>' : '')
+        + '<div class="list-card-meta">'
+        +   '<span class="type-badge type-' + ev.type + '">' + TYPE_LABEL[ev.type] + '</span>'
+        +   (sub ? '<span style="font-size:11px;color:var(--ink-dim);">' + escapeHtml(sub) + '</span>' : '')
+        +   segBadges
+        +   (ev.repeat && ev.repeat !== 'none' ? '<span style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--ink-mute);">↻ ' + (REPEAT_LABEL[ev.repeat] || ev.repeat) + '</span>' : '')
+        +   (cancelled ? '<span class="cancel-badge">URLAUB · AUSGEFALLEN</span>' : '')
+        + '</div>'
+        + '<div class="list-card-actions"><button class="row-del" data-del-m="' + ev.id + '" title="Serie löschen">✕</button></div>'
+        + '</div>';
+    }).join('');
+  }
+
+  const delHandler = id => {
+    if (confirm('Termin löschen? Bei Wiederholungen wird die gesamte Serie entfernt.')) {
+      state.events = state.events.filter(e => e.id !== id);
+      saveState(); renderAll();
+    }
+  };
+  tbody.querySelectorAll('[data-del]').forEach(b => { b.onclick = () => delHandler(b.dataset.del); });
+  if (mobile) mobile.querySelectorAll('[data-del-m]').forEach(b => { b.onclick = () => delHandler(b.dataset.delM); });
+}
+
+let selectedSegments = new Set();
+
+function renderSideSegments() {
+  // Multi-Select Pills für Formular
+  const picker = document.getElementById('f-segment-picker');
+  picker.innerHTML = SEGMENTS.map(s =>
+    '<span class="seg-pill" data-seg="' + s.id + '" style="--seg-bg:' + SEG_COLOR_MAP[s.id] + ';">SEG ' + s.id + '</span>'
+  ).join('');
+  picker.querySelectorAll('.seg-pill').forEach(p => {
+    p.onclick = () => {
+      const id = Number(p.dataset.seg);
+      if (selectedSegments.has(id)) {
+        selectedSegments.delete(id);
+        p.classList.remove('active');
+      } else {
+        selectedSegments.add(id);
+        p.classList.add('active');
+      }
+      updateSegmentInfo();
+    };
+  });
+
+  // Filter-Dropdown für Listen-Ansicht
+  const fSeg = document.getElementById('filterSeg');
+  fSeg.innerHTML = '<option value="">Alle Segmente</option>' +
+    SEGMENTS.map(s => '<option value="' + s.id + '">Segment ' + s.id + '</option>').join('');
+
+  // Legende
+  const lg = document.getElementById('segLegend');
+  lg.innerHTML = SEGMENTS.map(s =>
+    '<div class="legend-item"><span class="legend-dot" style="background:' + SEG_COLOR_MAP[s.id] + '"></span>Segment ' + s.id + '</div>'
+  ).join('');
+
+  updateSegmentInfo();
+}
+
+function updateSegmentInfo() {
+  const info = document.getElementById('f-segment-info');
+  if (!info) return;
+  const n = selectedSegments.size;
+  const totalH = computeHours(getFormSnapshot());
+  if (n === 0) {
+    info.innerHTML = 'Mindestens 1 Segment auswählen.';
+    return;
+  }
+  if (n === 1) {
+    info.innerHTML = '1 Segment · voller Aufwand';
+    return;
+  }
+  const perSeg = totalH > 0 ? (totalH / n).toFixed(2) : '0.00';
+  info.innerHTML = n + ' Segmente · <strong>' + perSeg + ' h</strong> pro Segment (' + totalH.toFixed(2) + ' h gesamt)';
+}
+
+function clearSegmentSelection() {
+  selectedSegments.clear();
+  document.querySelectorAll('#f-segment-picker .seg-pill').forEach(p => p.classList.remove('active'));
+  updateSegmentInfo();
+}
+
+// ============ VACATION-HANDLER ============
+function renderVacationList() {
+  const wrap = document.getElementById('vacationList');
+  if (!wrap) return;
+  if (!state.vacations || !state.vacations.length) {
+    wrap.innerHTML = '<div style="color:var(--ink-mute);font-size:11px;padding:6px 0;">Keine Urlaubszeiten angelegt.</div>';
+    return;
+  }
+  // sortiert nach Startdatum
+  const sorted = [...state.vacations].sort((a,b) => a.from.localeCompare(b.from));
+  wrap.innerHTML = sorted.map(v => {
+    const fromD = parseDateLocal(v.from);
+    const toD = parseDateLocal(v.to);
+    const fmtDE = d => String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + d.getFullYear();
+    const days = Math.round((toD - fromD) / 86400000) + 1;
+    return '<div class="vac-item">'
+      + '<div class="vac-item-info">'
+      + '<div class="vac-item-range">' + fmtDE(fromD) + ' – ' + fmtDE(toD) + ' <span style="color:var(--ink-mute);font-weight:400;">(' + days + ' Tage)</span></div>'
+      + (v.label ? '<div class="vac-item-label">' + escapeHtml(v.label) + '</div>' : '')
+      + '</div>'
+      + '<button class="vac-item-del" data-vac-del="' + v.id + '" title="Urlaub löschen">✕</button>'
+      + '</div>';
+  }).join('');
+  wrap.querySelectorAll('[data-vac-del]').forEach(b => {
+    b.onclick = () => {
+      const id = b.dataset.vacDel;
+      if (confirm('Urlaubszeit löschen? Bisher ausgefallene Regeltermine sind dann wieder eingeplant.')) {
+        state.vacations = state.vacations.filter(v => v.id !== id);
+        saveState(); renderAll();
+      }
+    };
+  });
+}
+
+document.getElementById('btnAddVacation').addEventListener('click', () => {
+  const from = document.getElementById('u-from').value;
+  const to = document.getElementById('u-to').value;
+  const label = document.getElementById('u-label').value.trim();
+  if (!from || !to) { alert('Von- und Bis-Datum sind Pflicht.'); return; }
+  if (from > to) { alert('Bis-Datum muss nach Von-Datum liegen.'); return; }
+  state.vacations.push({ id: 'v_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7), from, to, label });
+  saveState();
+  document.getElementById('u-from').value = '';
+  document.getElementById('u-to').value = '';
+  document.getElementById('u-label').value = '';
+  renderAll();
+});
+
+document.getElementById('btnAdd').addEventListener('click', () => {
+  const type = document.getElementById('f-type').value;
+  const title = document.getElementById('f-title').value.trim();
+  const date = document.getElementById('f-date').value;
+  const segments = Array.from(selectedSegments).sort((a,b)=>a-b);
+  const repeat = document.getElementById('f-repeat').value;
+  const note = document.getElementById('f-note').value.trim();
+  const snap = getFormSnapshot();
+  const hours = computeHours(snap);
+  if (!title) { alert('Bezeichnung fehlt'); return; }
+  if (!date) { alert('Datum fehlt'); return; }
+  if (!segments.length) { alert('Bitte mindestens 1 Segment auswählen.'); return; }
+  if (!hours || hours <= 0) { alert('Stunden müssen > 0 sein'); return; }
+  const ev = {
+    id: uid(), type, title, date, segments, hours, repeat, note,
+    subtype: snap.subtype || null,
+    mode: type === 'kalibrierung' ? snap.mode : null,
+    kanaele: (type === 'kalibrierung' && snap.subtype === 'pruefelektronik' && snap.mode === 'intern') ? Number(snap.kanaele) : null,
+    mechanikDauer: (type === 'kalibrierung' && snap.subtype === 'pruefmechanik' && snap.mode === 'intern') ? Number(snap.mechanikDauer) : null,
+  };
+  state.events.push(ev);
+  saveState();
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-note').value = '';
+  clearSegmentSelection();
+  renderAll();
+});
+
+document.getElementById('f-date').value = fmtDate(new Date());
+
+document.querySelectorAll('.view-tab').forEach(t => {
+  t.onclick = () => {
+    document.querySelectorAll('.view-tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const v = t.dataset.view;
+    document.getElementById('view-year').classList.toggle('active', v==='year');
+    document.getElementById('view-analytics').classList.toggle('active', v==='analytics');
+    document.getElementById('view-list').classList.toggle('active', v==='list');
+    if (v==='analytics') renderAnalytics();
+    if (v==='list') renderList();
+  };
+});
+
+document.getElementById('yearPrev').onclick = () => { state.currentYear--; updateYear(); };
+document.getElementById('yearNext').onclick = () => { state.currentYear++; updateYear(); };
+function updateYear() {
+  document.getElementById('yearDisplay').textContent = state.currentYear;
+  renderAll();
+}
+
+document.getElementById('btnExport').onclick = () => {
+  const blob = new Blob([JSON.stringify({ events: state.events }, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'jahresplan_' + state.currentYear + '.json';
+  a.click();
+};
+document.getElementById('btnImport').onclick = () => document.getElementById('fileImport').click();
+document.getElementById('fileImport').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const data = JSON.parse(r.result);
+      if (!Array.isArray(data.events)) throw new Error();
+      if (confirm(data.events.length + ' Termine importieren?')) {
+        for (const ev of data.events) { if (!ev.id) ev.id = uid(); state.events.push(ev); }
+        saveState(); renderAll();
+      }
+    } catch { alert('Ungültige Datei'); }
+  };
+  r.readAsText(f);
+};
+
+// ============ EXCEL IMPORT ============
+function parseExcelDate(v) {
+  if (v == null || v === '') return null;
+  // Excel-Datum (Zahl)
+  if (typeof v === 'number') {
+    const d = XLSX.SSF.parse_date_code(v);
+    if (!d) return null;
+    return d.y + '-' + String(d.m).padStart(2,'0') + '-' + String(d.d).padStart(2,'0');
+  }
+  // String
+  const s = String(v).trim();
+  // ISO YYYY-MM-DD
+  let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (m) return m[1] + '-' + m[2].padStart(2,'0') + '-' + m[3].padStart(2,'0');
+  // DD.MM.YYYY
+  m = s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if (m) return m[3] + '-' + m[2].padStart(2,'0') + '-' + m[1].padStart(2,'0');
+  // DD/MM/YYYY
+  m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (m) return m[3] + '-' + m[2].padStart(2,'0') + '-' + m[1].padStart(2,'0');
+  return null;
+}
+
+function normalizeRepeat(v) {
+  if (v == null || v === '') return 'none';
+  const s = String(v).trim().toLowerCase();
+  const valid = ['none','weekly','biweekly','monthly','bimonthly','quarterly','halfyearly','yearly'];
+  if (valid.includes(s)) return s;
+  // deutsche Begriffe
+  const map = {
+    'einmalig':'none', 'wöchentlich':'weekly', 'woechentlich':'weekly',
+    '2-wöchig':'biweekly', '2-wochen':'biweekly', '14-tägig':'biweekly', '14-taegig':'biweekly',
+    'monatlich':'monthly', '2-monatig':'bimonthly',
+    'quartalsweise':'quarterly', 'vierteljährlich':'quarterly', 'viertel':'quarterly',
+    'halbjährlich':'halfyearly', 'halbjaehrlich':'halfyearly',
+    'jährlich':'yearly', 'jaehrlich':'yearly'
+  };
+  return map[s] || 'none';
+}
+
+function importExcelRows(rows) {
+  const errors = [];
+  const newEvents = [];
+  rows.forEach((r, idx) => {
+    const lineNo = idx + 1;
+    // Spalten-Mapping (Vorlage hat exakte Spaltennamen)
+    const date = parseExcelDate(r['Datum']);
+    const type = String(r['Typ'] || '').trim().toLowerCase();
+    const subtypeRaw = String(r['Verfahren / Art'] || r['Verfahren'] || '').trim().toLowerCase();
+    const title = String(r['Bezeichnung / Anlage'] || r['Bezeichnung'] || '').trim();
+    // Segment kann eine Zahl (4) oder Liste (4,6,11 oder 4;6;11 oder "4 6 11") sein
+    const segmentRaw = String(r['Segment'] != null ? r['Segment'] : '').trim();
+    const segments = segmentRaw
+      .split(/[,;\s]+/)
+      .filter(x => x !== '')
+      .map(x => Number(x))
+      .filter(n => !isNaN(n));
+    const mode = String(r['Kalibrierung'] || '').trim().toLowerCase() || null;
+    const kanaele = r['Anzahl Kanäle'] != null && r['Anzahl Kanäle'] !== '' ? Number(r['Anzahl Kanäle']) : null;
+    const mechanikDauer = r['Dauer Anlage (h)'] != null && r['Dauer Anlage (h)'] !== '' ? Number(r['Dauer Anlage (h)']) : null;
+    const hoursManual = r['Stunden manuell'] != null && r['Stunden manuell'] !== '' ? Number(r['Stunden manuell']) : null;
+    const repeat = normalizeRepeat(r['Wiederholung']);
+    const note = String(r['Notiz'] || '').trim();
+
+    // Validierung
+    if (!date) { errors.push('Zeile ' + lineNo + ': Datum fehlt oder ungültig'); return; }
+    if (!['schulung','kalibrierung','regel'].includes(type)) {
+      errors.push('Zeile ' + lineNo + ': Typ muss schulung, kalibrierung oder regel sein'); return;
+    }
+    if (!title) { errors.push('Zeile ' + lineNo + ': Bezeichnung fehlt'); return; }
+    if (!segments.length) {
+      errors.push('Zeile ' + lineNo + ': Mindestens 1 Segment erforderlich'); return;
+    }
+    const invalidSegs = segments.filter(s => !SEGMENTS.find(x => x.id === s));
+    if (invalidSegs.length) {
+      errors.push('Zeile ' + lineNo + ': Ungültige Segmente: ' + invalidSegs.join(', ')); return;
+    }
+
+    let subtype = subtypeRaw || null;
+    if (type === 'schulung' && subtype && !SCHULUNG_SUBS[subtype]) {
+      errors.push('Zeile ' + lineNo + ': Unbekanntes Schulungsverfahren "' + subtype + '"'); return;
+    }
+    if (type === 'kalibrierung' && subtype && !KAL_SUBS[subtype]) {
+      errors.push('Zeile ' + lineNo + ': Unbekannte Kalibrierungs-Art "' + subtype + '"'); return;
+    }
+
+    // Modus normalisieren
+    let normMode = null;
+    if (type === 'kalibrierung') {
+      if (mode === 'extern') normMode = 'extern';
+      else normMode = 'intern';
+    }
+
+    // Stunden berechnen
+    const snap = {
+      type, subtype,
+      mode: normMode,
+      kanaele: kanaele || 0,
+      mechanikDauer: mechanikDauer || 0,
+      hoursManual: hoursManual || 0
+    };
+    const hours = computeHours(snap);
+    if (!hours || hours <= 0) {
+      errors.push('Zeile ' + lineNo + ': Stunden konnten nicht ermittelt werden (Wert wäre 0). Prüfe Verfahren/Kanäle/Dauer/manuelle Stunden.');
+      return;
+    }
+
+    newEvents.push({
+      id: uid(), type, title, date, segments: segments.sort((a,b)=>a-b), hours, repeat, note,
+      subtype: subtype || null,
+      mode: normMode,
+      kanaele: (type === 'kalibrierung' && subtype === 'pruefelektronik' && normMode === 'intern') ? kanaele : null,
+      mechanikDauer: (type === 'kalibrierung' && subtype === 'pruefmechanik' && normMode === 'intern') ? mechanikDauer : null,
+    });
+  });
+
+  return { newEvents, errors };
+}
+
+document.getElementById('btnImportXlsx').onclick = () => document.getElementById('fileImportXlsx').click();
+document.getElementById('fileImportXlsx').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const data = new Uint8Array(r.result);
+      const wb = XLSX.read(data, { type: 'array', cellDates: false });
+      const sheetName = wb.SheetNames.includes('Termine') ? 'Termine' : wb.SheetNames[0];
+      const ws = wb.Sheets[sheetName];
+      // Header in Zeile 2 der Vorlage, Hinweise in Zeile 3, Daten ab Zeile 4
+      // -> wir lesen ab Range A2 und überspringen Zeile 3 (Hinweise)
+      const rawRows = XLSX.utils.sheet_to_json(ws, { range: 1, defval: '', raw: true });
+      // Filter: erste Datenzeile ist die Hinweis-Zeile -> erkennen an "Pflicht" oder leerem Datum aber Text in Hinweis
+      // Einfacher: Zeile entfernen, wenn 'Datum'-Wert genau "Pflicht..." enthält
+      const rows = rawRows.filter(r => {
+        const d = r['Datum'];
+        if (typeof d === 'string' && (d.toLowerCase().includes('pflicht') || d.toLowerCase().includes('format'))) return false;
+        // leere Zeilen raus
+        if (!d && !r['Typ'] && !r['Bezeichnung / Anlage'] && !r['Bezeichnung']) return false;
+        return true;
+      });
+
+      if (!rows.length) { alert('Keine Datenzeilen im Sheet "Termine" gefunden.'); return; }
+
+      const { newEvents, errors } = importExcelRows(rows);
+
+      let msg = newEvents.length + ' Termine erkannt.\n';
+      if (errors.length) {
+        msg += '\n' + errors.length + ' Fehler:\n' + errors.slice(0, 10).join('\n');
+        if (errors.length > 10) msg += '\n… und ' + (errors.length - 10) + ' weitere.';
+        msg += '\n\nFehlerhafte Zeilen werden übersprungen. Trotzdem importieren?';
+      } else {
+        msg += '\nKeine Fehler. Importieren?';
+      }
+
+      if (newEvents.length === 0) { alert('Keine importierbaren Zeilen.\n\n' + (errors.join('\n') || '')); return; }
+
+      if (confirm(msg)) {
+        for (const ev of newEvents) state.events.push(ev);
+        saveState(); renderAll();
+        alert(newEvents.length + ' Termine importiert.');
+      }
+    } catch(err) {
+      alert('Fehler beim Lesen der Excel-Datei: ' + err.message);
+      console.error(err);
+    }
+    e.target.value = '';
+  };
+  r.readAsArrayBuffer(f);
+};
+
+// ============ EXCEL VORLAGE DOWNLOAD ============
+document.getElementById('btnTemplate').onclick = () => {
+  // Erstelle Vorlage on-the-fly mit SheetJS
+  const wb = XLSX.utils.book_new();
+
+  const headers = [
+    'Datum', 'Typ', 'Verfahren / Art', 'Bezeichnung / Anlage', 'Segment',
+    'Kalibrierung', 'Anzahl Kanäle', 'Dauer Anlage (h)', 'Stunden manuell',
+    'Wiederholung', 'Notiz'
+  ];
+  const hints = [
+    'TT.MM.JJJJ oder JJJJ-MM-TT',
+    'schulung | kalibrierung | regel',
+    'Siehe Hinweise-Blatt',
+    'Pflicht. Freitext',
+    '4, 6, 7, 11, 12, 14, 15',
+    'intern | extern (nur bei kalibrierung)',
+    'Nur bei Prüfelektronik intern',
+    'Nur bei Prüfmechanik intern',
+    'Nur bei Regeltermin oder "custom"',
+    'none | weekly | biweekly | monthly | bimonthly | quarterly | halfyearly | yearly',
+    'Optional'
+  ];
+  const examples = [
+    ['15.01.2026', 'schulung', 'ultraschall', 'US-Schulung Q1 2026', 4, '', '', '', '', 'yearly', 'Recheck-Pflicht'],
+    ['20.01.2026', 'kalibrierung', 'pruefelektronik', 'Wirbelstromanlage WS-3', 7, 'intern', 8, '', '', 'halfyearly', '8 Kanäle'],
+    ['22.01.2026', 'kalibrierung', 'pruefmechanik', 'US-Anlage Achsen', 11, 'intern', '', 6.5, '', 'yearly', ''],
+    ['10.02.2026', 'kalibrierung', 'magnetpulveranlage', 'MPI-Anlage Halle 4', 12, 'intern', '', '', '', 'halfyearly', ''],
+    ['10.02.2026', 'kalibrierung', 'uv_lampen', 'UV-Lampe MPI Halle 4', 12, 'intern', '', '', '', 'quarterly', ''],
+    ['12.02.2026', 'kalibrierung', 'referenzteile', 'Referenzring Ø 80', 14, 'intern', '', '', '', 'yearly', ''],
+    ['05.03.2026', 'kalibrierung', 'pruefelektronik', 'US-Elektronik Modul A', 6, 'extern', '', '', '', 'yearly', 'Hersteller vor Ort'],
+    ['02.01.2026', 'regel', '', 'Wochenbesprechung Prüflabor', 15, '', '', '', 1.0, 'weekly', ''],
+    ['08.01.2026', 'regel', '', 'Schichtübergabe Prüfung', 4, '', '', '', 0.5, 'biweekly', '14-tägig'],
+    ['15.01.2026', 'regel', '', 'Quartalsmeeting QS', 7, '', '', '', 2.0, 'quarterly', ''],
+  ];
+  const aoa = [['JAHRESPLANUNG — TERMIN-IMPORT'], headers, hints, ...examples];
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: headers.length - 1 } }];
+  ws['!cols'] = [
+    { wch: 13 }, { wch: 14 }, { wch: 26 }, { wch: 32 }, { wch: 11 },
+    { wch: 14 }, { wch: 12 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 30 }
+  ];
+  ws['!rows'] = [{ hpt: 24 }, { hpt: 22 }, { hpt: 30 }];
+  XLSX.utils.book_append_sheet(wb, ws, 'Termine');
+
+  // Hinweise-Sheet
+  const hintRows = [
+    ['HINWEISE & GÜLTIGE WERTE'],
+    [],
+    ['TYP'],
+    ['schulung', 'Prüfwerker-Schulung'],
+    ['kalibrierung', 'Geräte-Kalibrierung'],
+    ['regel', 'Regeltermin'],
+    [],
+    ['VERFAHREN BEI SCHULUNG'],
+    ['ultraschall', 'Ultraschallprüfung — automatisch 24 h'],
+    ['wirbelstrom_riss', 'Wirbelstromprüfung Riss — automatisch 16 h'],
+    ['wirbelstrom_gefuege', 'Wirbelstromprüfung Gefüge — automatisch 16 h'],
+    ['magnetpulver', 'Magnetpulverprüfung — automatisch 16 h'],
+    ['nitalaetzen', 'Nitalätzen — automatisch 8 h'],
+    ['custom', 'Andere — Stunden manuell in Spalte I eintragen'],
+    [],
+    ['VERFAHREN BEI KALIBRIERUNG'],
+    ['pruefmechanik', 'Prüfmechanik — Dauer in Spalte H eintragen (intern)'],
+    ['pruefelektronik', 'Prüfelektronik — Anzahl Kanäle in Spalte G (× 2,5 h intern)'],
+    ['magnetpulveranlage', 'Magnetpulverprüfanlage — automatisch 4 h'],
+    ['uv_lampen', 'UV-Lampen — automatisch 0,75 h'],
+    ['referenzteile', 'Referenzteile — automatisch 0,5 h'],
+    ['custom', 'Andere — Stunden manuell in Spalte I (intern)'],
+    [],
+    ['KALIBRIERUNGS-MODUS'],
+    ['intern', 'Intern — Aufwand wird nach Verfahren berechnet'],
+    ['extern', 'Extern — Aufwand intern automatisch 1 h'],
+    [],
+    ['SEGMENT', '4, 6, 7, 11, 12, 14, 15'],
+    [],
+    ['WIEDERHOLUNG'],
+    ['none', 'Einmalig'],
+    ['weekly', 'Wöchentlich (alle 7 Tage)'],
+    ['biweekly', 'Alle 2 Wochen (14 Tage)'],
+    ['monthly', 'Monatlich'],
+    ['bimonthly', 'Alle 2 Monate'],
+    ['quarterly', 'Quartalsweise (alle 3 Monate)'],
+    ['halfyearly', 'Halbjährlich'],
+    ['yearly', 'Jährlich'],
+    [],
+    ['STUNDEN-BERECHNUNG'],
+    ['Schulung mit Verfahren', 'Stunden aus Verfahrensliste (24/16/16/16/8 h)'],
+    ['Schulung "custom"', 'Spalte I (Stunden manuell)'],
+    ['Kalibrierung extern', 'IMMER 1 h'],
+    ['Kal. intern Prüfelektronik', 'Spalte G × 2,5 h'],
+    ['Kal. intern Prüfmechanik', 'Spalte H (Dauer Anlage)'],
+    ['Kal. intern Magnetpulver', '4 h'],
+    ['Kal. intern UV-Lampen', '0,75 h'],
+    ['Kal. intern Referenzteile', '0,5 h'],
+    ['Regel', 'IMMER Spalte I (Stunden manuell)'],
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(hintRows);
+  ws2['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }];
+  ws2['!cols'] = [{ wch: 28 }, { wch: 55 }];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Hinweise');
+
+  XLSX.writeFile(wb, 'jahresplan_vorlage.xlsx');
+};
+
+['filterType','filterSeg','filterSearch'].forEach(id => {
+  document.getElementById(id).addEventListener('input', renderList);
+});
+
+function renderAll() {
+  renderYearCalendar();
+  renderVacationList();
+  if (document.getElementById('view-analytics').classList.contains('active')) renderAnalytics();
+  if (document.getElementById('view-list').classList.contains('active')) renderList();
+}
+
+(async () => {
+  await loadState();
+  document.getElementById('yearDisplay').textContent = state.currentYear;
+  renderSideSegments();
+  updateFormVisibility();
+  renderAll();
+})();
+
+</script>
+
+</body>
+</html>
