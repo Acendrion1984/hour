@@ -105,6 +105,23 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo34hiaul0fcc",
+      "type": "schulung",
+      "title": "Bau 50 - Raum silber",
+      "date": "2026-05-11",
+      "segments": [
+        4,
+        6
+      ],
+      "hours": 16,
+      "repeat": "none",
+      "note": "",
+      "subtype": "wirbelstrom_riss",
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -122,7 +139,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-17T16:27:29.785Z",
+    "lastModified": "2026-04-17T16:28:41.551Z",
     "source": "jahresplan-app"
   }
 }
