@@ -154,6 +154,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo34ntpof3uw1",
+      "type": "kalibrierung",
+      "title": "Flexitest Advanced",
+      "date": "2026-03-02",
+      "segments": [
+        12
+      ],
+      "hours": 6,
+      "repeat": "none",
+      "note": "Crash durch unautorisierte Benutzung",
+      "subtype": "custom",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -171,7 +187,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-17T16:31:51.373Z",
+    "lastModified": "2026-04-17T16:33:36.275Z",
     "source": "jahresplan-app"
   }
 }
