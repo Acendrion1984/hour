@@ -140,9 +140,10 @@ margin-bottom: -2px; transition: all 0.15s;
 @media (max-width: 1400px) { .year-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 1100px) {
 .year-grid { grid-template-columns: repeat(2, 1fr); }
-.layout { grid-template-columns: 1fr; }
-.side { border-top: 1px solid var(–border-line); max-height:none; }
+.layout { grid-template-columns: 1fr 320px; }
+.side { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; }
 }
+@media (max-width: 820px) { .layout { grid-template-columns: 1fr 260px; } }
 @media (max-width: 700px) { .year-grid { grid-template-columns: 1fr; } }
 
 .month {
@@ -479,158 +480,153 @@ flex-wrap: nowrap;
 .btn { font-size: 11px; padding: 7px 11px; white-space: nowrap; flex-shrink: 0; }
 }
 
-/* Phone */
+/* Phone — 2-Spalten-Layout bleibt, kompaktere Darstellung */
 @media (max-width: 700px) {
 body { font-size: 14px; }
 
-```
-/* Layout: Sidebar wird zu Bottom-Sheet */
-.layout {
-  grid-template-columns: 1fr;
-  min-height: auto;
-}
-.main {
-  padding: 14px 12px;
-  border-right: none;
-  border-bottom: 1px solid var(--border-line);
-  padding-bottom: 80px; /* Platz für FAB */
-}
+/* Layout: schmälere Sidebar, beide Spalten bleiben nebeneinander */
+.layout { grid-template-columns: 1fr 220px; min-height: auto; }
+.main { padding: 10px 8px; border-right: 1px solid var(--border-line); }
 .side {
-  padding: 18px 14px;
-  max-height: none;
-  border-top: 6px solid var(--schaeffler-green);
+  padding: 12px 8px;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  max-height: 100vh;
+  overflow-y: auto;
+  border-top: 4px solid var(--schaeffler-green);
 }
 
 /* Brand kompakter */
-.brand-logo { display: none; } /* nur Marker und Text raus, "S" + "SCHAEFFLER" wegnehmen */
+.brand-logo { display: none; }
 .brand { gap: 0; }
 .brand-text-1 { display: none; }
-.brand-text-2 { font-size: 14px; font-weight: 700; }
+.brand-text-2 { font-size: 12px; font-weight: 700; }
 
 /* Year display */
-.year-display { font-size: 18px; min-width: 60px; }
-.year-btn { width: 36px; height: 36px; font-size: 18px; }
+.year-display { font-size: 16px; min-width: 52px; }
+.year-btn { width: 30px; height: 30px; font-size: 16px; }
 
 /* Tabs scrollbar */
 .view-tabs {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   flex-wrap: nowrap;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .view-tabs::-webkit-scrollbar { height: 0; }
 .view-tab {
-  padding: 12px 14px;
-  font-size: 13px;
+  padding: 10px 8px;
+  font-size: 11px;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-/* Year-Kalender: 1 Spalte, Monate mit größeren Tagen */
-.year-grid { grid-template-columns: 1fr; gap: 14px; }
-.month { padding: 12px; }
-.month-name { font-size: 18px; }
+/* Year-Kalender: 1 Spalte */
+.year-grid { grid-template-columns: 1fr; gap: 10px; }
+.month { padding: 8px; }
+.month-name { font-size: 14px; }
 .day {
-  font-size: 12px;
-  min-height: 36px;
-  padding: 4px 2px 3px;
+  font-size: 10px;
+  min-height: 28px;
+  padding: 2px 1px 2px;
 }
-.day-num { font-size: 12px; font-weight: 500; }
-.day-dot { width: 6px; height: 6px; }
-.weekdays { font-size: 10px; }
-.weekdays > div { padding: 4px 0; }
+.day-num { font-size: 10px; font-weight: 500; }
+.day-dot { width: 4px; height: 4px; }
+.weekdays { font-size: 9px; }
+.weekdays > div { padding: 2px 0; }
 
-/* Side Panel: Inputs größer für Touch */
-.form-row label { font-size: 12px; }
+/* Side Panel: kompakt */
+.side h3 { font-size: 10px; margin-bottom: 8px; padding-bottom: 6px; }
+.side-section { margin-bottom: 14px; }
+.form-row label { font-size: 10px; }
 .form-row input, .form-row select, .form-row textarea {
-  padding: 12px 12px;
-  font-size: 16px; /* verhindert iOS-Auto-Zoom */
+  padding: 7px 6px;
+  font-size: 13px;
 }
+.form-row textarea { min-height: 32px; }
+.form-row { margin-bottom: 7px; }
 .form-row-2 { grid-template-columns: 1fr; gap: 0; }
-.form-row-2 > .form-row { margin-bottom: 12px; }
+.form-row-2 > .form-row { margin-bottom: 7px; }
 
-/* Segment-Pills größer und besser tappbar */
-.seg-picker { padding: 10px; gap: 8px; }
-.seg-pill { padding: 10px 14px; font-size: 13px; min-width: 64px; text-align: center; }
+/* Segment-Pills */
+.seg-picker { padding: 5px; gap: 4px; min-height: 34px; }
+.seg-pill { padding: 5px 4px; font-size: 10px; min-width: 36px; text-align: center; }
 
-/* Hours Preview prominenter */
-.hours-preview {
-  padding: 14px 14px;
-  border-left-width: 5px;
-}
-.hours-preview .val { font-size: 22px; }
+/* Hours Preview */
+.hours-preview { padding: 8px 8px; border-left-width: 3px; margin-bottom: 7px; }
+.hours-preview .lbl { font-size: 10px; }
+.hours-preview .val { font-size: 14px; }
 
-/* Buttons full-width */
-.btn { padding: 10px 14px; font-size: 12px; }
-.btn-primary { padding: 14px 16px; font-size: 14px; min-height: 48px; }
+/* Buttons */
+.btn { padding: 6px 7px; font-size: 11px; }
+.btn-primary { padding: 10px 8px; font-size: 12px; min-height: 38px; }
 
 /* Stats horizontal scrollbar */
 .stats-grid {
   display: flex;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  gap: 12px;
-  margin-bottom: 24px;
-  padding-bottom: 6px;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 4px;
   scroll-snap-type: x mandatory;
 }
-.stats-grid::-webkit-scrollbar { height: 4px; }
+.stats-grid::-webkit-scrollbar { height: 3px; }
 .stat-card {
-  min-width: 220px;
+  min-width: 170px;
   flex-shrink: 0;
   scroll-snap-align: start;
-  padding: 16px;
+  padding: 12px;
 }
-.stat-value { font-size: 26px; }
+.stat-value { font-size: 22px; }
 
 /* Analytics-Sections kompakter */
-.analytics-section h2 { font-size: 18px; }
-.analytics-section .sub { font-size: 11px; margin-bottom: 14px; }
-.matrix-wrap { font-size: 11px; }
-table.matrix th, table.matrix td { padding: 8px 8px; font-size: 11px; }
-.bar-chart { padding: 16px 12px; }
-.bars { height: 180px; gap: 4px; }
-.bar-label { font-size: 9px; }
-.bar-total { font-size: 10px; }
+.analytics-section h2 { font-size: 16px; }
+.analytics-section .sub { font-size: 10px; margin-bottom: 10px; }
+.matrix-wrap { font-size: 10px; }
+table.matrix th, table.matrix td { padding: 5px 5px; font-size: 10px; }
+.bar-chart { padding: 12px 8px; }
+.bars { height: 150px; gap: 3px; }
+.bar-label { font-size: 8px; }
+.bar-total { font-size: 9px; }
 
 /* Liste — mobile als Cards statt Tabelle */
-.list-filters { gap: 6px; }
+.list-filters { gap: 5px; }
 .list-filters select, .list-filters input {
-  padding: 10px 12px; font-size: 14px; flex: 1; min-width: 0;
+  padding: 7px 7px; font-size: 13px; flex: 1; min-width: 0;
 }
 table.list { display: none; }
-#listMobile { display: flex; flex-direction: column; gap: 10px; }
+#listMobile { display: flex; flex-direction: column; gap: 8px; }
 
-/* Modal full-width-bottom */
-.modal-overlay { align-items: flex-end; padding: 0; }
+/* Modal */
+.modal-overlay { align-items: center; padding: 8px; }
 .modal {
-  width: 100%; max-width: 100%; max-height: 85vh;
+  width: 100%; max-width: 92vw; max-height: 90vh;
   border-top: 4px solid var(--schaeffler-green);
-  border-left: none; border-right: none; border-bottom: none;
-  padding: 22px 18px;
+  padding: 16px 12px;
 }
-.modal-title { font-size: 18px; }
-.modal-event { padding: 14px 12px; flex-wrap: wrap; gap: 6px; }
+.modal-title { font-size: 16px; }
+.modal-event { padding: 10px 10px; flex-wrap: wrap; gap: 4px; }
 .modal-event-type { width: 100%; font-size: 10px; }
-.modal-event-title { font-size: 13px; }
-.modal-event-hours { font-size: 14px; }
+.modal-event-title { font-size: 12px; }
+.modal-event-hours { font-size: 13px; }
 
-/* Vacation-Form vertikal */
-.vac-item { padding: 10px 12px; }
-.vac-item-range { font-size: 12px; }
-```
-
+/* Vacation */
+.vac-item { padding: 7px 8px; }
+.vac-item-range { font-size: 10px; }
 }
 
 /* sehr kleine Geräte — alles noch enger */
 @media (max-width: 380px) {
-.header-inner { padding: 10px 10px; }
-.main { padding: 10px 8px; }
-.side { padding: 16px 10px; }
-.brand-text-2 { font-size: 12px; }
-.year-display { font-size: 16px; min-width: 52px; }
-.seg-pill { padding: 9px 10px; font-size: 12px; min-width: 54px; }
-.stat-card { min-width: 200px; }
+.layout { grid-template-columns: 1fr 180px; }
+.header-inner { padding: 10px 8px; }
+.main { padding: 8px 6px; }
+.side { padding: 10px 6px; }
+.brand-text-2 { font-size: 11px; }
+.year-display { font-size: 14px; min-width: 48px; }
+.seg-pill { padding: 4px 3px; font-size: 9px; min-width: 32px; }
+.stat-card { min-width: 150px; }
 }
 
 /* Karten-Liste für Mobil (vom JS gefüllt) */
@@ -914,20 +910,18 @@ margin-left: 8px;
       <div id="vacationList" style="display:flex;flex-direction:column;gap:6px;"></div>
     </div>
 
-```
-<div class="side-section">
-  <h3>Legende — Typ</h3>
-  <div class="legend">
-    <div class="legend-item"><span class="legend-dot" style="background:var(--c-schulung)"></span>Schulung</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--c-kalibrierung)"></span>Kalibrierung</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--c-regel)"></span>Regeltermin</div>
-  </div>
-</div>
-<div class="side-section">
-  <h3>Legende — Segmente</h3>
-  <div class="legend" id="segLegend"></div>
-</div>
-```
+    <div class="side-section">
+      <h3>Legende — Typ</h3>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot" style="background:var(--c-schulung)"></span>Schulung</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--c-kalibrierung)"></span>Kalibrierung</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--c-regel)"></span>Regeltermin</div>
+      </div>
+    </div>
+    <div class="side-section">
+      <h3>Legende — Segmente</h3>
+      <div class="legend" id="segLegend"></div>
+    </div>
 
   </aside>
 </div>
@@ -1022,6 +1016,16 @@ const REPEAT_LABEL = {
   monthly:'monatlich', bimonthly:'2-monatig', quarterly:'quartalsweise',
   halfyearly:'halbjährlich', yearly:'jährlich'
 };
+
+// Standard-Arbeitstag: 7 h; Schulungstag: 8 h (16 h = 2 Tage, 24 h = 3 Tage)
+const HOURS_PER_WORKDAY = 7;
+const HOURS_PER_SCHULUNGSTAG = 8;
+
+function computeDays(hours, type) {
+  if (!hours || hours <= 0) return 1;
+  if (type === 'schulung') return Math.ceil(hours / HOURS_PER_SCHULUNGSTAG);
+  return Math.ceil(hours / HOURS_PER_WORKDAY);
+}
 
 let state = { currentYear: new Date().getFullYear(), events: [], vacations: [] };
 const STORAGE_KEY = 'jahresplan.v2';
@@ -1191,8 +1195,13 @@ function updateFormVisibility() {
 }
 
 function updateHoursPreview() {
-  const h = computeHours(getFormSnapshot());
-  document.getElementById('hoursPreview').textContent = (h ? h.toFixed(2) : '0.00') + ' h';
+  const snap = getFormSnapshot();
+  const h = computeHours(snap);
+  const days = computeDays(h, snap.type);
+  let txt = (h ? h.toFixed(2) : '0.00') + ' h';
+  if (h > 0 && days > 1) txt += ' · ' + days + ' Tage';
+  else if (h > 0) txt += ' · 1 Tag';
+  document.getElementById('hoursPreview').textContent = txt;
   if (typeof updateSegmentInfo === 'function') updateSegmentInfo();
 }
 
@@ -1220,7 +1229,21 @@ function renderYearCalendar() {
   const year = state.currentYear;
   const expanded = expandEvents(year);
   const byDate = {};
-  for (const ev of expanded) (byDate[ev._date] = byDate[ev._date] || []).push(ev);
+  for (const ev of expanded) {
+    (byDate[ev._date] = byDate[ev._date] || []).push(ev);
+    // Multi-Tage: Folgetage im Kalender markieren
+    const span = ev.daysSpan || 1;
+    if (span > 1) {
+      let cur = new Date(ev._date + 'T00:00:00');
+      for (let di = 1; di < span; di++) {
+        cur.setDate(cur.getDate() + 1);
+        const ds = fmtDate(cur);
+        if (ds.slice(0, 4) === String(year)) {
+          (byDate[ds] = byDate[ds] || []).push({ ...ev, _continuation: true });
+        }
+      }
+    }
+  }
   const todayStr = fmtDate(new Date());
   for (let m = 0; m < 12; m++) {
     const monthEl = document.createElement('div');
@@ -1294,7 +1317,8 @@ function openDayModal(dateStr, evts) {
     list.appendChild(empty);
   } else {
     for (const ev of evts) {
-      const sub = subtypeLabel(ev);
+      const isCont = ev._continuation;
+      const sub = isCont ? '' : subtypeLabel(ev);
       const cancelled = isCancelled(ev);
       const segs = getEventSegments(ev);
       const segLabel = segs.length === 1
@@ -1302,11 +1326,16 @@ function openDayModal(dateStr, evts) {
         : 'Seg ' + segs.join('+') + ' · ' + (effectiveHours(ev)/segs.length).toFixed(2) + 'h je Seg.';
       const row = document.createElement('div');
       row.className = 'modal-event' + (cancelled ? ' cancelled' : '');
-      row.style.borderLeftColor = cancelled ? '#a0a09a' : TYPE_COLOR[ev.type];
-      row.innerHTML = '<span class="modal-event-type">' + TYPE_LABEL[ev.type] + (sub ? ' · ' + sub : '') + ' · ' + segLabel + '</span>'
+      row.style.borderLeftColor = isCont ? '#b0c4de' : cancelled ? '#a0a09a' : TYPE_COLOR[ev.type];
+      const days = ev.daysSpan || 1;
+      const daysLabel = days > 1 ? ' · ' + days + ' Tage' : '';
+      const typeInfo = isCont
+        ? '↩ Folgetag'
+        : (TYPE_LABEL[ev.type] + (sub ? ' · ' + sub : '') + ' · ' + segLabel);
+      row.innerHTML = '<span class="modal-event-type">' + typeInfo + '</span>'
         + '<span class="modal-event-title">' + escapeHtml(ev.title) + '</span>'
         + (cancelled ? '<span class="modal-event-cancel-tag">AUSGEFALLEN</span>' : '')
-        + '<span class="modal-event-hours">' + Number(ev.hours).toFixed(2) + 'h</span>';
+        + '<span class="modal-event-hours">' + (isCont ? '↩' : Number(ev.hours).toFixed(2) + 'h' + daysLabel) + '</span>';
       list.appendChild(row);
     }
   }
@@ -1338,7 +1367,7 @@ function renderAnalytics() {
   const hCancelled = cancelledEvents.reduce((s,e)=>s+Number(e.hours||0), 0);
 
   let statsHtml =
-    '<div class="stat-card"><div class="stat-label">Effektiver Aufwand ' + year + '</div><div class="stat-value">' + totalH.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + expanded.length + ' Termine · ' + (totalH/8).toFixed(1) + ' MT</div></div>'
+    '<div class="stat-card"><div class="stat-label">Effektiver Aufwand ' + year + '</div><div class="stat-value">' + totalH.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + expanded.length + ' Termine · ' + (totalH/7).toFixed(1) + ' AT (à 7 h)</div></div>'
     + '<div class="stat-card blue"><div class="stat-label">Prüfwerker-Schulungen</div><div class="stat-value">' + hSchulung.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntSchulung + ' Termine</div></div>'
     + '<div class="stat-card"><div class="stat-label">Geräte-Kalibrierungen</div><div class="stat-value">' + hKal.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntKal + ' Termine</div></div>'
     + '<div class="stat-card orange"><div class="stat-label">Regeltermine</div><div class="stat-value">' + hReg.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntReg + ' Termine (inkl. ausgefallene)</div></div>';
@@ -1653,8 +1682,9 @@ document.getElementById('btnAdd').addEventListener('click', () => {
   if (!date) { alert('Datum fehlt'); return; }
   if (!segments.length) { alert('Bitte mindestens 1 Segment auswählen.'); return; }
   if (!hours || hours <= 0) { alert('Stunden müssen > 0 sein'); return; }
+  const daysSpan = computeDays(hours, type);
   const ev = {
-    id: uid(), type, title, date, segments, hours, repeat, note,
+    id: uid(), type, title, date, segments, hours, daysSpan, repeat, note,
     subtype: snap.subtype || null,
     mode: type === 'kalibrierung' ? snap.mode : null,
     kanaele: (type === 'kalibrierung' && snap.subtype === 'pruefelektronik' && snap.mode === 'intern') ? Number(snap.kanaele) : null,
@@ -1822,7 +1852,7 @@ function importExcelRows(rows) {
     }
 
     newEvents.push({
-      id: uid(), type, title, date, segments: segments.sort((a,b)=>a-b), hours, repeat, note,
+      id: uid(), type, title, date, segments: segments.sort((a,b)=>a-b), hours, daysSpan: computeDays(hours, type), repeat, note,
       subtype: subtype || null,
       mode: normMode,
       kanaele: (type === 'kalibrierung' && subtype === 'pruefelektronik' && normMode === 'intern') ? kanaele : null,
