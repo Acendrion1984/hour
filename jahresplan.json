@@ -1,0 +1,74 @@
+{
+  "events": [
+    {
+      "id": "e_mo341p90pe9w1",
+      "type": "regel",
+      "title": "Segment Shopfloor",
+      "date": "2026-01-12",
+      "segments": [
+        11
+      ],
+      "hours": 1,
+      "repeat": "biweekly",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
+    },
+    {
+      "id": "e_mo342ef9k3bun",
+      "type": "regel",
+      "title": "Segment Shopfloor",
+      "date": "2026-01-21",
+      "segments": [
+        12
+      ],
+      "hours": 1,
+      "repeat": "biweekly",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
+    },
+    {
+      "id": "e_mo346zgpz2qrb",
+      "type": "regel",
+      "title": "Shopfloor",
+      "date": "2026-01-21",
+      "segments": [
+        4,
+        6,
+        11,
+        12,
+        14
+      ],
+      "hours": 0.5,
+      "repeat": "weekly",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
+    }
+  ],
+  "vacations": [
+    {
+      "id": "v_mo342tgzucxf5",
+      "from": "2026-04-06",
+      "to": "2026-04-10",
+      "label": ""
+    },
+    {
+      "id": "v_mo3434v5o6kuz",
+      "from": "2026-01-01",
+      "to": "2026-01-06",
+      "label": ""
+    }
+  ],
+  "_meta": {
+    "lastModified": "2026-04-17T16:23:19.704Z",
+    "source": "jahresplan-app"
+  }
+}
