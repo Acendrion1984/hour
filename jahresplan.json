@@ -69,6 +69,24 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo34fe8gv6813",
+      "type": "schulung",
+      "title": "Bau 50 - Raum silber",
+      "date": "2026-02-02",
+      "segments": [
+        4,
+        6,
+        12
+      ],
+      "hours": 8,
+      "repeat": "none",
+      "note": "",
+      "subtype": "nitalaetzen",
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -86,7 +104,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-17T16:25:41.211Z",
+    "lastModified": "2026-04-17T16:27:03.234Z",
     "source": "jahresplan-app"
   }
 }
