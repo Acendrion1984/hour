@@ -267,24 +267,6 @@
       "mechanikDauer": null
     },
     {
-      "id": "e_mo4pkcsg4f1az",
-      "type": "vorfall",
-      "title": "PRI Nachbearbeitung",
-      "date": "2026-01-12",
-      "segments": [
-        11
-      ],
-      "hours": 20,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null,
-      "dateEnd": "2026-01-14",
-      "multiday": true
-    },
-    {
       "id": "e_mo4pl1tbbwran",
       "type": "vorfall",
       "title": "NH 5 Inbetriebnahme",
@@ -648,7 +630,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:19:34.041Z",
+    "lastModified": "2026-04-18T21:52:35.718Z",
     "source": "jahresplan-app"
   }
 }
