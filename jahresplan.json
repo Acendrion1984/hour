@@ -249,6 +249,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pipuj73x9t",
+      "type": "vorfall",
+      "title": "Seigerungen",
+      "date": "2026-01-09",
+      "segments": [
+        11
+      ],
+      "hours": 7,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -284,7 +300,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:04:49.190Z",
+    "lastModified": "2026-04-18T19:05:16.101Z",
     "source": "jahresplan-app"
   }
 }
