@@ -805,6 +805,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-02-27",
       "multiday": true
+    },
+    {
+      "id": "e_mo4wa60rihnuv",
+      "type": "regel",
+      "title": "Technoligiefreigabe Ewelix",
+      "date": "2026-04-14",
+      "segments": [
+        7
+      ],
+      "hours": 7,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -840,7 +856,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:13:45.775Z",
+    "lastModified": "2026-04-18T22:14:34.468Z",
     "source": "jahresplan-app"
   }
 }
