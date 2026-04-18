@@ -634,24 +634,6 @@
       "multiday": true
     },
     {
-      "id": "e_mo4vsp29pu3ze",
-      "type": "vorfall",
-      "title": "100% Prüfung  - montierte Lager",
-      "date": "2026-03-10",
-      "segments": [
-        4
-      ],
-      "hours": 48,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null,
-      "dateEnd": "2026-03-27",
-      "multiday": true
-    },
-    {
       "id": "e_mo4vuec67s4xb",
       "type": "vorfall",
       "title": "Schleifbrand Reklamation TORO",
@@ -703,7 +685,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:02:18.756Z",
+    "lastModified": "2026-04-18T22:02:47.034Z",
     "source": "jahresplan-app"
   }
 }
