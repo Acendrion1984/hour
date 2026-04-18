@@ -366,6 +366,28 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4ppq85chj3b",
+      "type": "schulung",
+      "title": "Bau 50 - Raum silber",
+      "date": "2026-01-19",
+      "segments": [
+        4,
+        6,
+        11,
+        12,
+        15
+      ],
+      "hours": 16,
+      "repeat": "none",
+      "note": "",
+      "subtype": "wirbelstrom_riss",
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-01-20",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -401,7 +423,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:09:43.449Z",
+    "lastModified": "2026-04-18T19:10:43.182Z",
     "source": "jahresplan-app"
   }
 }
