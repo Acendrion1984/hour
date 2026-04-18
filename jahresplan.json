@@ -350,6 +350,22 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pog52762ib",
+      "type": "kalibrierung",
+      "title": "UT RZFP.TORO.23988-WPOS",
+      "date": "2026-01-16",
+      "segments": [
+        14
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": "Testkörper",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -385,7 +401,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:08:53.612Z",
+    "lastModified": "2026-04-18T19:09:43.449Z",
     "source": "jahresplan-app"
   }
 }
