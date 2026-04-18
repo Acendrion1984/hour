@@ -907,6 +907,28 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4wofkz3bemz",
+      "type": "regel",
+      "title": "Beutreuung ZfP",
+      "date": "2026-04-06",
+      "segments": [
+        4,
+        6,
+        11,
+        12,
+        14
+      ],
+      "hours": 18,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-04-17",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -942,7 +964,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:24:35.774Z",
+    "lastModified": "2026-04-18T22:25:40.039Z",
     "source": "jahresplan-app"
   }
 }
