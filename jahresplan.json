@@ -838,6 +838,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4wdtiv8z241",
+      "type": "regel",
+      "title": "Dokumente F-696044.PRL-WPOS-LP",
+      "date": "2026-04-16",
+      "segments": [
+        11
+      ],
+      "hours": 6,
+      "repeat": "none",
+      "note": "GE Dokumente erstellt",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -873,7 +889,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:15:23.294Z",
+    "lastModified": "2026-04-18T22:17:24.895Z",
     "source": "jahresplan-app"
   }
 }
