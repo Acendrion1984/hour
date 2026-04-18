@@ -299,6 +299,25 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4plv7gb5era",
+      "type": "vorfall",
+      "title": "Planung Ätzschulungen",
+      "date": "2026-01-15",
+      "segments": [
+        4,
+        6,
+        11,
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -334,7 +353,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:07:04.922Z",
+    "lastModified": "2026-04-18T19:07:43.015Z",
     "source": "jahresplan-app"
   }
 }
