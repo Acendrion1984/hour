@@ -251,22 +251,6 @@
       "mechanikDauer": null
     },
     {
-      "id": "e_mo4pipuj73x9t",
-      "type": "vorfall",
-      "title": "Seigerungen",
-      "date": "2026-01-09",
-      "segments": [
-        11
-      ],
-      "hours": 7,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null
-    },
-    {
       "id": "e_mo4pl1tbbwran",
       "type": "vorfall",
       "title": "NH 5 Inbetriebnahme",
@@ -647,7 +631,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T21:54:19.736Z",
+    "lastModified": "2026-04-18T21:55:32.706Z",
     "source": "jahresplan-app"
   }
 }
