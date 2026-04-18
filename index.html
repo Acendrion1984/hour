@@ -277,6 +277,8 @@
   }
   .stat-card.blue::before { background: var(--c-schulung); }
   .stat-card.orange::before { background: var(--c-regel); }
+  .stat-card.red::before { background: #a8324a; }
+  .stat-card.purple::before { background: #6b3fa0; }
   .stat-label {
     font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.05em;
     text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; font-weight: 500;
@@ -309,23 +311,115 @@
   table.matrix td.zero { color: var(--ink-mute); }
 
   /* ============ BAR CHART ============ */
-  .bar-chart { background: #fff; border: 1px solid var(--border-line); padding: 24px; }
-  .bars { display: flex; align-items: flex-end; gap: 8px; height: 240px; padding: 0 4px; border-bottom: 1px solid var(--border-line); position: relative; }
-  .bars::before, .bars::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.04); }
-  .bars::before { top: 33%; } .bars::after { top: 66%; }
-  .bar-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 1px; position: relative; min-width: 0; }
-  .bar-col:hover .bar-tip { opacity: 1; }
-  .bar-seg { width: 100%; transition: opacity 0.15s; min-height: 1px; }
-  .bar-seg:hover { opacity: 0.85; }
-  .bar-tip {
-    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
-    background: var(--ink); color: #fff; border: none; padding: 8px 12px; font-size: 11px;
-    white-space: nowrap; opacity: 0; pointer-events: none; z-index: 10; margin-bottom: 6px;
-    font-family: 'Inter', sans-serif;
+  /* ============ BAR CHART ============ */
+  .bar-chart {
+    background: #fff; border: 1px solid var(--border-line); padding: 24px 24px 20px;
   }
-  .bar-labels { display: flex; gap: 8px; padding: 10px 4px 0; }
-  .bar-label { flex: 1; text-align: center; font-family: 'Inter', sans-serif; font-size: 11px; color: var(--ink-dim); font-weight: 500; }
-  .bar-total { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink); margin-top: 4px; font-weight: 700; }
+  .bar-chart-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 16px; gap: 12px; flex-wrap: wrap;
+  }
+  .bar-chart-info {
+    flex: 1; min-width: 200px;
+    background: var(--bg-soft); border: 1px solid var(--border-line);
+    padding: 10px 14px; font-size: 12px; line-height: 1.5;
+    min-height: 56px;
+  }
+  .bar-chart-info .info-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .bar-chart-info .info-month {
+    font-weight: 600; color: var(--ink); font-size: 13px;
+  }
+  .bar-chart-info .info-segs {
+    margin-top: 4px;
+    display: flex; flex-wrap: wrap; gap: 4px 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-mid);
+  }
+  .bar-chart-info .info-seg-item {
+    display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  }
+  .bar-chart-info .info-seg-dot {
+    width: 9px; height: 9px; flex-shrink: 0;
+  }
+
+  /* Container der scrollen kann */
+  .bar-chart-scroll {
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .bar-chart-scroll::-webkit-scrollbar { height: 6px; }
+  .bar-chart-scroll::-webkit-scrollbar-thumb { background: var(--border-strong); }
+
+  .bar-chart-grid {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 6px;
+    min-width: 100%;
+  }
+
+  .bar-yaxis {
+    display: flex; flex-direction: column; justify-content: space-between;
+    height: 240px; padding-bottom: 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--ink-dim); text-align: right;
+    padding-right: 4px;
+  }
+  .bar-yaxis div { line-height: 1; }
+
+  .bars-wrap { display: flex; flex-direction: column; }
+
+  .bars {
+    display: flex; align-items: flex-end; gap: 6px;
+    height: 240px; padding: 0;
+    border-bottom: 1px solid var(--border-line);
+    border-left: 1px solid var(--border-line);
+    position: relative;
+  }
+  .bars::before, .bars::after, .bars > .grid-line {
+    content: ""; position: absolute; left: 0; right: 0; height: 1px;
+    background: rgba(0,0,0,0.05); pointer-events: none;
+  }
+  .bars::before { top: 33%; }
+  .bars::after { top: 66%; }
+
+  .bar-col {
+    flex: 1; min-width: 24px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    gap: 1px; position: relative; cursor: pointer;
+    padding: 0 1px;
+  }
+  .bar-col.active { background: rgba(0,137,61,0.06); }
+  .bar-col.active::after {
+    content: ""; position: absolute; top: -2px; left: 0; right: 0; height: 2px;
+    background: var(--schaeffler-green);
+  }
+  .bar-seg { width: 100%; transition: opacity 0.15s; min-height: 1px; }
+  .bar-col:hover .bar-seg { opacity: 0.85; }
+
+  .bar-labels {
+    display: flex; gap: 6px; padding: 8px 0 0; padding-left: 1px;
+  }
+  .bar-label {
+    flex: 1; min-width: 24px; text-align: center;
+    font-family: 'Inter', sans-serif; font-size: 11px;
+    color: var(--ink-dim); font-weight: 500;
+    padding: 0 1px;
+  }
+  .bar-label.active { color: var(--schaeffler-green-dark); font-weight: 700; }
+  .bar-total {
+    text-align: center; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink); margin-top: 3px; font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .bar-chart-hint {
+    margin-top: 10px; font-size: 11px; color: var(--ink-dim);
+    text-align: center; font-style: italic;
+  }
 
   /* ============ LIST ============ */
   .list-filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
@@ -349,6 +443,8 @@
   .type-schulung { color: var(--c-schulung); border-color: var(--c-schulung); background: rgba(26,77,140,0.06); }
   .type-kalibrierung { color: var(--c-kalibrierung); border-color: var(--c-kalibrierung); background: var(--schaeffler-green-light); }
   .type-regel { color: var(--c-regel); border-color: var(--c-regel); background: rgba(199,83,0,0.06); }
+  .type-vorfall { color: #a8324a; border-color: #a8324a; background: rgba(168,50,74,0.06); }
+  .type-optimierung { color: #6b3fa0; border-color: #6b3fa0; background: rgba(107,63,160,0.06); }
   .seg-badge {
     display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
     padding: 3px 8px; background: #fff; border: 1px solid; letter-spacing: 0.02em; font-weight: 600;
@@ -586,10 +682,19 @@
     .analytics-section .sub { font-size: 11px; margin-bottom: 14px; }
     .matrix-wrap { font-size: 11px; }
     table.matrix th, table.matrix td { padding: 8px 8px; font-size: 11px; }
-    .bar-chart { padding: 16px 12px; }
-    .bars { height: 180px; gap: 4px; }
-    .bar-label { font-size: 9px; }
+    .bar-chart { padding: 14px 12px 16px; }
+    .bar-chart-header { gap: 8px; margin-bottom: 12px; }
+    .bar-chart-info { padding: 9px 12px; font-size: 11px; min-height: 50px; min-width: 0; }
+    .bar-chart-info .info-month { font-size: 12px; }
+    .bar-chart-info .info-segs { font-size: 10px; gap: 3px 8px; }
+    .bar-chart-grid { grid-template-columns: 30px 1fr; gap: 4px; }
+    .bar-yaxis { font-size: 9px; height: 200px; }
+    .bars { height: 200px; gap: 2px; }
+    .bars > .bar-col { min-width: 32px; padding: 0; }
+    .bar-labels { gap: 2px; padding: 6px 0 0; }
+    .bar-label { font-size: 10px; min-width: 32px; padding: 0; }
     .bar-total { font-size: 10px; }
+    .bar-chart-hint { font-size: 10px; }
 
     /* Liste — mobile als Cards statt Tabelle */
     .list-filters { gap: 6px; }
@@ -629,8 +734,8 @@
     .stat-card { min-width: 200px; }
   }
 
-  /* Karten-Liste für Mobil (vom JS gefüllt) */
-  #listMobile { display: none; }
+  /* Mobile-Listen-Container: standardmäßig versteckt, in Mobile-Media-Query eingeblendet */
+  #listMobile { display: none; flex-direction: column; gap: 10px; }
   .list-card {
     background: #fff;
     border: 1px solid var(--border-line);
@@ -747,7 +852,7 @@
         <span class="dot"></span>
         <span id="syncStatusText">Sync aus</span>
       </div>
-      <button class="btn btn-ghost" id="btnTemplate" title="Excel-Vorlage zum Eintragen herunterladen">Vorlage</button>
+      <button class="btn btn-ghost" id="btnExportXlsx" title="Aktuelle Termine als Excel-Datei herunterladen">Excel-Export</button>
       <button class="btn btn-ghost" id="btnImportXlsx">Excel-Import</button>
       <input type="file" id="fileImportXlsx" accept=".xlsx,.xls" style="display:none">
       <button class="btn btn-ghost" id="btnExport">JSON Export</button>
@@ -771,8 +876,22 @@
         <h2>Monatliche Aufwände</h2>
         <div class="sub">Stunden pro Segment · <span id="analyticsYear">—</span></div>
         <div class="bar-chart">
-          <div class="bars" id="barsChart"></div>
-          <div class="bar-labels" id="barLabels"></div>
+          <div class="bar-chart-header">
+            <div class="bar-chart-info" id="barChartInfo">
+              <div class="info-label">Tippe einen Monat für Details</div>
+              <div class="info-month">—</div>
+            </div>
+          </div>
+          <div class="bar-chart-scroll">
+            <div class="bar-chart-grid">
+              <div class="bar-yaxis" id="barYaxis"></div>
+              <div class="bars-wrap">
+                <div class="bars" id="barsChart"></div>
+                <div class="bar-labels" id="barLabels"></div>
+              </div>
+            </div>
+          </div>
+          <div class="bar-chart-hint">Tippe einen Monat für die Aufteilung nach Segment.</div>
         </div>
       </div>
       <div class="analytics-section">
@@ -793,6 +912,8 @@
           <option value="schulung">Prüfwerker-Schulung</option>
           <option value="kalibrierung">Geräte-Kalibrierung</option>
           <option value="regel">Regeltermin</option>
+          <option value="vorfall">ZfP Vorfall</option>
+          <option value="optimierung">ZfP Anlagenoptimierung</option>
         </select>
         <select id="filterSeg"><option value="">Alle Segmente</option></select>
         <input type="text" id="filterSearch" placeholder="Suche…" style="flex:1;min-width:180px;">
@@ -817,29 +938,31 @@
           <option value="schulung">Prüfwerker-Schulung</option>
           <option value="kalibrierung">Geräte-Kalibrierung</option>
           <option value="regel">Regeltermin</option>
+          <option value="vorfall">ZfP Vorfall</option>
+          <option value="optimierung">ZfP Anlagenoptimierung</option>
         </select>
       </div>
       <div class="form-row" id="row-schulung-subtype">
-        <label>Prüfverfahren</label>
-        <select id="f-schulung-sub">
+        <label>Prüfverfahren <span style="color:var(--ink-mute);font-weight:400;">— wählen oder freitext</span></label>
+        <input list="dl-schulung-sub" id="f-schulung-sub" placeholder="z.B. Ultraschallprüfung" autocomplete="off">
+        <datalist id="dl-schulung-sub">
           <option value="ultraschall">Ultraschallprüfung — 24 h</option>
           <option value="wirbelstrom_riss">Wirbelstromprüfung Riss — 16 h</option>
           <option value="wirbelstrom_gefuege">Wirbelstromprüfung Gefüge — 16 h</option>
           <option value="magnetpulver">Magnetpulverprüfung — 16 h</option>
           <option value="nitalaetzen">Nitalätzen — 8 h</option>
-          <option value="custom">Andere (manuell)</option>
-        </select>
+        </datalist>
       </div>
       <div class="form-row hidden" id="row-kal-subtype">
-        <label>Kalibrierungs-Art</label>
-        <select id="f-kal-sub">
+        <label>Kalibrierungs-Art <span style="color:var(--ink-mute);font-weight:400;">— wählen oder freitext</span></label>
+        <input list="dl-kal-sub" id="f-kal-sub" placeholder="z.B. Prüfmechanik" autocomplete="off">
+        <datalist id="dl-kal-sub">
           <option value="pruefmechanik">Prüfmechanik</option>
-          <option value="pruefelektronik">Prüfelektronik</option>
+          <option value="pruefelektronik">Prüfelektronik (Kanal-basiert)</option>
           <option value="magnetpulveranlage">Magnetpulverprüfanlage — 4 h</option>
           <option value="uv_lampen">UV-Lampen — 0,75 h</option>
           <option value="referenzteile">Referenzteile — 0,5 h</option>
-          <option value="custom">Andere (manuell)</option>
-        </select>
+        </datalist>
       </div>
       <div class="form-row hidden" id="row-kal-mode">
         <label>Kalibrierung</label>
@@ -866,23 +989,29 @@
         <div id="f-segment-info" class="seg-info"></div>
       </div>
       <div class="form-row-2">
-        <div class="form-row"><label>Datum</label><input type="date" id="f-date"></div>
+        <div class="form-row"><label>Datum (von)</label><input type="date" id="f-date"></div>
         <div class="form-row">
-          <label>Wiederholung</label>
-          <select id="f-repeat">
-            <option value="none">Einmalig</option>
-            <option value="weekly">Wöchentlich (7 Tage)</option>
-            <option value="biweekly">Alle 2 Wochen (14 Tage)</option>
-            <option value="monthly">Monatlich</option>
-            <option value="bimonthly">Alle 2 Monate</option>
-            <option value="quarterly">Alle 3 Monate (quartalsweise)</option>
-            <option value="halfyearly">Halbjährlich</option>
-            <option value="yearly">Jährlich</option>
-          </select>
+          <label>Bis-Datum <span style="color:var(--ink-mute);font-weight:400;">(optional, für Mehrtages-Termine)</span></label>
+          <input type="date" id="f-date-end" placeholder="">
         </div>
       </div>
+      <div id="multiday-info" class="seg-info hidden" style="margin-top:-6px;margin-bottom:10px;"></div>
+      <div class="form-row">
+        <label>Wiederholung <span style="color:var(--ink-mute);font-weight:400;">— wählen oder freitext (z.B. "alle 5 Tage")</span></label>
+        <input list="dl-repeat" id="f-repeat" placeholder="Einmalig" autocomplete="off">
+        <datalist id="dl-repeat">
+          <option value="none">Einmalig</option>
+          <option value="weekly">Wöchentlich (7 Tage)</option>
+          <option value="biweekly">Alle 2 Wochen (14 Tage)</option>
+          <option value="monthly">Monatlich</option>
+          <option value="bimonthly">Alle 2 Monate</option>
+          <option value="quarterly">Alle 3 Monate</option>
+          <option value="halfyearly">Halbjährlich</option>
+          <option value="yearly">Jährlich</option>
+        </datalist>
+      </div>
       <div class="form-row hidden" id="row-hours-manual">
-        <label>Stunden (manuell)</label>
+        <label>Stunden (manuell, gesamt)</label>
         <input type="number" id="f-hours-manual" step="0.25" min="0" value="1">
       </div>
       <div class="hours-preview">
@@ -915,6 +1044,8 @@
         <div class="legend-item"><span class="legend-dot" style="background:var(--c-schulung)"></span>Schulung</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--c-kalibrierung)"></span>Kalibrierung</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--c-regel)"></span>Regeltermin</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#a8324a"></span>ZfP Vorfall</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#6b3fa0"></span>ZfP Anlagenoptimierung</div>
       </div>
     </div>
     <div class="side-section">
@@ -987,8 +1118,20 @@ const SEGMENTS = [
   { id: 4 }, { id: 6 }, { id: 7 }, { id: 11 }, { id: 12 }, { id: 14 }, { id: 15 }
 ];
 const SEG_COLOR_MAP = { 4:'#00893D', 6:'#c75300', 7:'#1a4d8c', 11:'#6b3fa0', 12:'#b8860b', 14:'#00756b', 15:'#a8324a' };
-const TYPE_LABEL = { schulung:'Schulung', kalibrierung:'Kalibrierung', regel:'Regeltermin' };
-const TYPE_COLOR = { schulung:'#1a4d8c', kalibrierung:'#00893D', regel:'#c75300' };
+const TYPE_LABEL = {
+  schulung: 'Schulung',
+  kalibrierung: 'Kalibrierung',
+  regel: 'Regeltermin',
+  vorfall: 'ZfP Vorfall',
+  optimierung: 'ZfP Anlagenoptimierung'
+};
+const TYPE_COLOR = {
+  schulung: '#1a4d8c',
+  kalibrierung: '#00893D',
+  regel: '#c75300',
+  vorfall: '#a8324a',
+  optimierung: '#6b3fa0'
+};
 const MONTHS_DE = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 const MONTHS_SHORT = ['JAN','FEB','MRZ','APR','MAI','JUN','JUL','AUG','SEP','OKT','NOV','DEZ'];
 const WEEKDAYS = ['Mo','Di','Mi','Do','Fr','Sa','So'];
@@ -1071,17 +1214,52 @@ function expandEvents(year) {
   const result = [];
   const yStart = new Date(year, 0, 1);
   const yEnd = new Date(year, 11, 31);
+
+  // Hilfsfunktion: gibt für einen einzelnen Anker-Tag (start) ggf. mehrere Werktage zurück (Mehrtages)
+  function expandStartToInstances(startDate, ev) {
+    // startDate ist Date-Objekt
+    if (!ev.dateEnd || !ev.multiday) {
+      // Single-Day
+      return [{ date: fmtDate(startDate), hours: Number(ev.hours||0) }];
+    }
+    // Mehrtages: Bis-Datum relativ zum Original berechnen (dauer in Tagen)
+    const origStart = parseDateLocal(ev.date);
+    const origEnd = parseDateLocal(ev.dateEnd);
+    const durationDays = Math.round((origEnd - origStart) / 86400000);
+    const newEnd = new Date(startDate);
+    newEnd.setDate(newEnd.getDate() + durationDays);
+    const days = workdaysBetween(fmtDate(startDate), fmtDate(newEnd));
+    if (!days.length) return [];
+    const perDay = Number(ev.hours||0) / days.length;
+    return days.map(d => ({ date: d, hours: perDay }));
+  }
+
   for (const ev of state.events) {
-    const base = new Date(ev.date + 'T00:00:00');
+    const base = parseDateLocal(ev.date);
     if (ev.repeat === 'none' || !ev.repeat) {
-      if (base.getFullYear() === year) result.push({ ...ev, _date: ev.date });
+      const instances = expandStartToInstances(base, ev);
+      for (const inst of instances) {
+        const d = parseDateLocal(inst.date);
+        if (d.getFullYear() === year) {
+          result.push({ ...ev, _date: inst.date, _instanceHours: inst.hours, _isMultidayInstance: ev.multiday });
+        }
+      }
       continue;
     }
+    // Wiederholung: jede Wiederholung kann selbst Mehrtages sein
     let cursor = new Date(base);
     let safety = 3000, i = 0;
     while (cursor < yStart && i < safety) { cursor = stepDate(cursor, ev.repeat); i++; }
     while (cursor <= yEnd && i < safety) {
-      if (cursor >= yStart) result.push({ ...ev, _date: fmtDate(cursor) });
+      if (cursor >= yStart || (ev.multiday && cursor.getFullYear() === year - 1)) {
+        const instances = expandStartToInstances(cursor, ev);
+        for (const inst of instances) {
+          const d = parseDateLocal(inst.date);
+          if (d.getFullYear() === year) {
+            result.push({ ...ev, _date: inst.date, _instanceHours: inst.hours, _isMultidayInstance: ev.multiday });
+          }
+        }
+      }
       cursor = stepDate(cursor, ev.repeat); i++;
     }
   }
@@ -1115,7 +1293,10 @@ function isCancelled(ev) {
   return !!isDateInVacation(ev._date || ev.date);
 }
 function effectiveHours(ev) {
-  return isCancelled(ev) ? 0 : Number(ev.hours || 0);
+  if (isCancelled(ev)) return 0;
+  // Bei Mehrtages-Instanzen: anteilige Stunden statt Gesamt
+  if (ev._instanceHours != null) return Number(ev._instanceHours || 0);
+  return Number(ev.hours || 0);
 }
 
 // ============ MULTI-SEGMENT HELPERS ============
@@ -1151,12 +1332,32 @@ function computeHours(form) {
   return Number(form.hoursManual || 0);
 }
 
+// ============ MEHRTAGES-HELPER ============
+function isWeekend(d) {
+  const dow = d.getDay();
+  return dow === 0 || dow === 6;
+}
+// Liefert Werktage (Mo-Fr) zwischen from und to (inklusive), als ISO-Date-Strings
+function workdaysBetween(fromStr, toStr) {
+  const result = [];
+  const start = parseDateLocal(fromStr);
+  const end = parseDateLocal(toStr);
+  if (start > end) return result;
+  const cur = new Date(start);
+  let safety = 1000;
+  while (cur <= end && safety-- > 0) {
+    if (!isWeekend(cur)) result.push(fmtDate(cur));
+    cur.setDate(cur.getDate() + 1);
+  }
+  return result;
+}
+
 function getFormSnapshot() {
   const type = document.getElementById('f-type').value;
   return {
     type,
-    subtype: type === 'schulung' ? document.getElementById('f-schulung-sub').value
-      : type === 'kalibrierung' ? document.getElementById('f-kal-sub').value : null,
+    subtype: type === 'schulung' ? document.getElementById('f-schulung-sub').value.trim()
+      : type === 'kalibrierung' ? document.getElementById('f-kal-sub').value.trim() : '',
     mode: document.getElementById('f-kal-mode').value,
     kanaele: document.getElementById('f-kanaele').value,
     mechanikDauer: document.getElementById('f-mechanik-dauer').value,
@@ -1164,33 +1365,65 @@ function getFormSnapshot() {
   };
 }
 
+// Liefert true, wenn der eingegebene Wert ein bekanntes (vordefiniertes) Verfahren ist
+function isKnownSchulung(v) { return v && SCHULUNG_SUBS[v]; }
+function isKnownKal(v) { return v && KAL_SUBS[v]; }
+
 function updateFormVisibility() {
   const type = document.getElementById('f-type').value;
-  const kalSub = document.getElementById('f-kal-sub').value;
+  const kalSub = document.getElementById('f-kal-sub').value.trim();
   const kalMode = document.getElementById('f-kal-mode').value;
-  const schulSub = document.getElementById('f-schulung-sub').value;
+  const schulSub = document.getElementById('f-schulung-sub').value.trim();
   document.getElementById('row-schulung-subtype').classList.toggle('hidden', type !== 'schulung');
   document.getElementById('row-kal-subtype').classList.toggle('hidden', type !== 'kalibrierung');
   document.getElementById('row-kal-mode').classList.toggle('hidden', type !== 'kalibrierung');
   document.getElementById('row-kanaele').classList.toggle('hidden', !(type === 'kalibrierung' && kalSub === 'pruefelektronik' && kalMode === 'intern'));
   document.getElementById('row-mechanik-dauer').classList.toggle('hidden', !(type === 'kalibrierung' && kalSub === 'pruefmechanik' && kalMode === 'intern'));
+  // Manuelle Stunden anzeigen wenn:
+  // - Regeltermin, ZfP Vorfall, ZfP Anlagenoptimierung
+  // - Schulung mit unbekanntem (freitext) Verfahren ODER ohne Verfahren
+  // - Kalibrierung intern mit unbekanntem Verfahren (außer Prüfmechanik/-elektronik die haben eigene Felder)
   let showManual = false;
-  if (type === 'regel') showManual = true;
-  if (type === 'schulung' && schulSub === 'custom') showManual = true;
-  if (type === 'kalibrierung' && kalSub === 'custom' && kalMode === 'intern') showManual = true;
+  if (type === 'regel' || type === 'vorfall' || type === 'optimierung') showManual = true;
+  if (type === 'schulung' && !isKnownSchulung(schulSub)) showManual = true;
+  if (type === 'kalibrierung' && kalMode === 'intern' && !isKnownKal(kalSub)) showManual = true;
   document.getElementById('row-hours-manual').classList.toggle('hidden', !showManual);
   updateHoursPreview();
+  updateMultidayInfo();
 }
 
 function updateHoursPreview() {
   const h = computeHours(getFormSnapshot());
   document.getElementById('hoursPreview').textContent = (h ? h.toFixed(2) : '0.00') + ' h';
   if (typeof updateSegmentInfo === 'function') updateSegmentInfo();
+  updateMultidayInfo();
 }
 
-['f-type','f-schulung-sub','f-kal-sub','f-kal-mode','f-kanaele','f-mechanik-dauer','f-hours-manual'].forEach(id => {
-  document.getElementById(id).addEventListener('change', updateFormVisibility);
-  document.getElementById(id).addEventListener('input', updateHoursPreview);
+function updateMultidayInfo() {
+  const info = document.getElementById('multiday-info');
+  if (!info) return;
+  const from = document.getElementById('f-date').value;
+  const to = document.getElementById('f-date-end').value;
+  if (!from || !to || to <= from) {
+    info.classList.add('hidden');
+    info.textContent = '';
+    return;
+  }
+  const days = workdaysBetween(from, to);
+  if (!days.length) {
+    info.classList.add('hidden'); return;
+  }
+  const totalH = computeHours(getFormSnapshot());
+  const perDay = totalH > 0 ? (totalH / days.length).toFixed(2) : '0.00';
+  info.classList.remove('hidden');
+  info.innerHTML = '<strong>Mehrtages-Termin:</strong> ' + days.length + ' Werktage (Wochenenden übersprungen) · <strong>' + perDay + ' h</strong> pro Tag (' + totalH.toFixed(2) + ' h gesamt)';
+}
+
+['f-type','f-schulung-sub','f-kal-sub','f-kal-mode','f-kanaele','f-mechanik-dauer','f-hours-manual','f-date','f-date-end'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('change', updateFormVisibility);
+  el.addEventListener('input', () => { updateHoursPreview(); updateMultidayInfo(); });
 });
 
 function escapeHtml(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -1289,16 +1522,20 @@ function openDayModal(dateStr, evts) {
       const sub = subtypeLabel(ev);
       const cancelled = isCancelled(ev);
       const segs = getEventSegments(ev);
+      const dayHours = ev._instanceHours != null ? Number(ev._instanceHours) : Number(ev.hours||0);
       const segLabel = segs.length === 1
         ? 'Seg ' + segs[0]
-        : 'Seg ' + segs.join('+') + ' · ' + (effectiveHours(ev)/segs.length).toFixed(2) + 'h je Seg.';
+        : 'Seg ' + segs.join('+') + ' · ' + (dayHours/segs.length).toFixed(2) + 'h je Seg.';
+      const multidayTag = ev._isMultidayInstance
+        ? ' <span style="font-family:Inter;font-size:10px;font-weight:600;color:#1a4d8c;background:#e8f0fa;border:1px solid #1a4d8c;padding:1px 6px;margin-left:4px;">MEHRTAGES</span>'
+        : '';
       const row = document.createElement('div');
       row.className = 'modal-event' + (cancelled ? ' cancelled' : '');
       row.style.borderLeftColor = cancelled ? '#a0a09a' : TYPE_COLOR[ev.type];
-      row.innerHTML = '<span class="modal-event-type">' + TYPE_LABEL[ev.type] + (sub ? ' · ' + sub : '') + ' · ' + segLabel + '</span>'
+      row.innerHTML = '<span class="modal-event-type">' + TYPE_LABEL[ev.type] + (sub ? ' · ' + sub : '') + ' · ' + segLabel + multidayTag + '</span>'
         + '<span class="modal-event-title">' + escapeHtml(ev.title) + '</span>'
         + (cancelled ? '<span class="modal-event-cancel-tag">AUSGEFALLEN</span>' : '')
-        + '<span class="modal-event-hours">' + Number(ev.hours).toFixed(2) + 'h</span>';
+        + '<span class="modal-event-hours">' + dayHours.toFixed(2) + 'h</span>';
       list.appendChild(row);
     }
   }
@@ -1322,9 +1559,13 @@ function renderAnalytics() {
   const hSchulung = expanded.filter(e=>e.type==='schulung').reduce((s,e)=>s+effectiveHours(e),0);
   const hKal = expanded.filter(e=>e.type==='kalibrierung').reduce((s,e)=>s+effectiveHours(e),0);
   const hReg = expanded.filter(e=>e.type==='regel').reduce((s,e)=>s+effectiveHours(e),0);
+  const hVorfall = expanded.filter(e=>e.type==='vorfall').reduce((s,e)=>s+effectiveHours(e),0);
+  const hOpti = expanded.filter(e=>e.type==='optimierung').reduce((s,e)=>s+effectiveHours(e),0);
   const cntSchulung = expanded.filter(e=>e.type==='schulung').length;
   const cntKal = expanded.filter(e=>e.type==='kalibrierung').length;
   const cntReg = expanded.filter(e=>e.type==='regel').length;
+  const cntVorfall = expanded.filter(e=>e.type==='vorfall').length;
+  const cntOpti = expanded.filter(e=>e.type==='optimierung').length;
   // Ausgefallene Termine zählen
   const cancelledEvents = expanded.filter(e => isCancelled(e));
   const hCancelled = cancelledEvents.reduce((s,e)=>s+Number(e.hours||0), 0);
@@ -1333,7 +1574,9 @@ function renderAnalytics() {
     '<div class="stat-card"><div class="stat-label">Effektiver Aufwand ' + year + '</div><div class="stat-value">' + totalH.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + expanded.length + ' Termine · ' + (totalH/8).toFixed(1) + ' MT</div></div>'
     + '<div class="stat-card blue"><div class="stat-label">Prüfwerker-Schulungen</div><div class="stat-value">' + hSchulung.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntSchulung + ' Termine</div></div>'
     + '<div class="stat-card"><div class="stat-label">Geräte-Kalibrierungen</div><div class="stat-value">' + hKal.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntKal + ' Termine</div></div>'
-    + '<div class="stat-card orange"><div class="stat-label">Regeltermine</div><div class="stat-value">' + hReg.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntReg + ' Termine (inkl. ausgefallene)</div></div>';
+    + '<div class="stat-card orange"><div class="stat-label">Regeltermine</div><div class="stat-value">' + hReg.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntReg + ' Termine (inkl. ausgefallene)</div></div>'
+    + '<div class="stat-card red"><div class="stat-label">ZfP Vorfälle</div><div class="stat-value">' + hVorfall.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntVorfall + ' Vorfälle</div></div>'
+    + '<div class="stat-card purple"><div class="stat-label">ZfP Anlagenoptimierung</div><div class="stat-value">' + hOpti.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub">' + cntOpti + ' Termine</div></div>';
   if (cancelledEvents.length > 0) {
     statsHtml += '<div class="stat-card" style="border-color:#d4a72c;background:#fff8e7;"><div class="stat-label" style="color:#8b6914;">Ausgefallen (Urlaub)</div><div class="stat-value" style="color:#8b6914;">' + hCancelled.toFixed(1) + '<span class="stat-unit">h</span></div><div class="stat-sub" style="color:#8b6914;">' + cancelledEvents.length + ' Regeltermine</div></div>';
   }
@@ -1376,7 +1619,7 @@ function renderAnalytics() {
     } else if (ev.type === 'kalibrierung') {
       key = 'Kalibrierung — ' + ((KAL_SUBS[ev.subtype] && KAL_SUBS[ev.subtype].label) || ev.subtype || '—') + (ev.mode === 'extern' ? ' (extern)' : '');
     } else {
-      key = 'Regeltermin';
+      key = TYPE_LABEL[ev.type] || ev.type;
     }
     if (!typeBreakdown[key]) typeBreakdown[key] = { count: 0, hours: 0 };
     typeBreakdown[key].count++;
@@ -1396,32 +1639,109 @@ function renderAnalytics() {
   th += '</tbody>';
   document.getElementById('typeTable').innerHTML = th;
 
+  // ============ BAR CHART ============
   const bars = document.getElementById('barsChart');
   const barLabels = document.getElementById('barLabels');
-  bars.innerHTML = ''; barLabels.innerHTML = '';
-  const maxMonth = Math.max(1, ...monthTotals);
-  for (let m = 0; m < 12; m++) {
-    const col = document.createElement('div'); col.className = 'bar-col';
+  const barYaxis = document.getElementById('barYaxis');
+  const barInfo = document.getElementById('barChartInfo');
+  bars.innerHTML = ''; barLabels.innerHTML = ''; barYaxis.innerHTML = '';
+
+  const maxMonthRaw = Math.max(0, ...monthTotals);
+  // Y-Achse: auf "schöne" Werte runden
+  function niceMax(v) {
+    if (v <= 0) return 10;
+    const exp = Math.pow(10, Math.floor(Math.log10(v)));
+    const n = v / exp;
+    let nice;
+    if (n <= 1) nice = 1;
+    else if (n <= 2) nice = 2;
+    else if (n <= 5) nice = 5;
+    else nice = 10;
+    return nice * exp;
+  }
+  const maxMonth = niceMax(maxMonthRaw);
+  const barHeightPx = window.matchMedia && window.matchMedia('(max-width: 700px)').matches ? 200 : 240;
+
+  // Y-Achsen-Beschriftungen (4 Stufen)
+  const yLabels = [maxMonth, maxMonth*0.66, maxMonth*0.33, 0];
+  for (const v of yLabels) {
+    const div = document.createElement('div');
+    div.textContent = v >= 100 ? Math.round(v) + 'h' : v.toFixed(0) + 'h';
+    barYaxis.appendChild(div);
+  }
+
+  // Helper: Info-Panel aktualisieren
+  function showMonthInfo(m) {
+    if (m == null) {
+      barInfo.innerHTML = '<div class="info-label">Tippe einen Monat für Details</div><div class="info-month">—</div>';
+      return;
+    }
     const total = monthTotals[m];
-    let tipParts = ['<strong>' + MONTHS_DE[m] + '</strong> — ' + total.toFixed(1) + 'h'];
+    let segItems = '';
+    const segData = SEGMENTS.map(seg => ({ id: seg.id, hours: matrix[seg.id][m] }))
+      .filter(x => x.hours > 0)
+      .sort((a,b) => b.hours - a.hours);
+    if (segData.length) {
+      segItems = '<div class="info-segs">' + segData.map(s =>
+        '<span class="info-seg-item"><span class="info-seg-dot" style="background:' + SEG_COLOR_MAP[s.id] + '"></span>SEG ' + s.id + ': ' + s.hours.toFixed(1) + ' h</span>'
+      ).join('') + '</div>';
+    } else {
+      segItems = '<div class="info-segs" style="color:var(--ink-mute);">keine Termine</div>';
+    }
+    barInfo.innerHTML = '<div class="info-label">' + MONTHS_DE[m] + ' ' + state.currentYear + ' — Gesamt: ' + total.toFixed(1) + ' h</div>' + segItems;
+  }
+
+  // Aktuell ausgewählten Monat im State halten
+  let activeMonth = null;
+  // Default: aktueller Monat anzeigen wenn im aktuellen Jahr
+  const today = new Date();
+  if (today.getFullYear() === state.currentYear) {
+    activeMonth = today.getMonth();
+  }
+
+  for (let m = 0; m < 12; m++) {
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    if (m === activeMonth) col.classList.add('active');
+    col.dataset.month = m;
+    const total = monthTotals[m];
+
     for (const seg of SEGMENTS) {
       const v = matrix[seg.id][m];
       if (v > 0) {
         const segEl = document.createElement('div');
         segEl.className = 'bar-seg';
         segEl.style.background = SEG_COLOR_MAP[seg.id];
-        segEl.style.height = ((v/maxMonth)*220) + 'px';
+        segEl.style.height = ((v / maxMonth) * barHeightPx) + 'px';
         col.appendChild(segEl);
-        tipParts.push('Seg ' + seg.id + ': ' + v.toFixed(1) + 'h');
       }
     }
-    const tip = document.createElement('div'); tip.className = 'bar-tip'; tip.innerHTML = tipParts.join('<br>');
-    col.appendChild(tip);
     bars.appendChild(col);
-    const lab = document.createElement('div'); lab.className = 'bar-label';
+
+    const lab = document.createElement('div');
+    lab.className = 'bar-label';
+    if (m === activeMonth) lab.classList.add('active');
+    lab.dataset.monthLabel = m;
     lab.innerHTML = MONTHS_SHORT[m] + '<div class="bar-total">' + (total > 0 ? total.toFixed(1) : '—') + '</div>';
     barLabels.appendChild(lab);
   }
+
+  // Click-Handler für jede Spalte und Label (Touch + Click)
+  function handleBarClick(m) {
+    activeMonth = m;
+    bars.querySelectorAll('.bar-col').forEach(c => c.classList.toggle('active', Number(c.dataset.month) === m));
+    barLabels.querySelectorAll('.bar-label').forEach(l => l.classList.toggle('active', Number(l.dataset.monthLabel) === m));
+    showMonthInfo(m);
+  }
+  bars.querySelectorAll('.bar-col').forEach(c => {
+    c.addEventListener('click', () => handleBarClick(Number(c.dataset.month)));
+  });
+  barLabels.querySelectorAll('.bar-label').forEach(l => {
+    l.addEventListener('click', () => handleBarClick(Number(l.dataset.monthLabel)));
+  });
+
+  // Initial-Anzeige
+  showMonthInfo(activeMonth);
 }
 
 function renderList() {
@@ -1458,13 +1778,16 @@ function renderList() {
     const segBadges = '<span class="seg-badges-multi">'
       + segs.map(sId => '<span class="seg-badge" style="color:' + SEG_COLOR_MAP[sId] + ';border-color:' + SEG_COLOR_MAP[sId] + '">SEG ' + sId + '</span>').join('')
       + '</span>';
-    const totalH = Number(ev.hours||0);
+    // Bei Mehrtages: anteilige Stunden für DIESEN Tag, totalH = anteilig
+    const totalH = ev._instanceHours != null ? Number(ev._instanceHours) : Number(ev.hours||0);
+    const fullEventH = Number(ev.hours||0); // Original-Stunden des Events gesamt
     const perSeg = segs.length > 1 ? (totalH / segs.length) : null;
-    return { ev, d, dateFmt, dow, sub, cancelled, segs, segBadges, totalH, perSeg };
+    const isMultidayInstance = !!ev._isMultidayInstance;
+    return { ev, d, dateFmt, dow, sub, cancelled, segs, segBadges, totalH, fullEventH, perSeg, isMultidayInstance };
   });
 
   // Desktop-Tabelle
-  tbody.innerHTML = rowData.map(({ ev, dateFmt, dow, sub, cancelled, segBadges, totalH, perSeg }) => {
+  tbody.innerHTML = rowData.map(({ ev, dateFmt, dow, sub, cancelled, segBadges, totalH, fullEventH, perSeg, isMultidayInstance }) => {
     let hoursDisplay;
     if (cancelled) {
       hoursDisplay = '<span style="text-decoration:line-through;color:var(--ink-mute);">' + totalH.toFixed(2) + '</span> <span style="color:#8b6914;font-weight:700;">0.00</span>';
@@ -1473,11 +1796,17 @@ function renderList() {
     } else {
       hoursDisplay = totalH.toFixed(2);
     }
+    if (isMultidayInstance) {
+      hoursDisplay += '<div style="font-size:10px;color:#1a4d8c;font-weight:600;margin-top:2px;">Tag von ' + fullEventH.toFixed(1) + 'h ges.</div>';
+    }
+    const multidayBadge = isMultidayInstance
+      ? '<span style="margin-left:6px;font-family:Inter;font-size:10px;font-weight:600;color:#1a4d8c;background:#e8f0fa;border:1px solid #1a4d8c;padding:1px 6px;">MEHRTAGES</span>'
+      : '';
     return '<tr data-id="' + ev.id + '"' + (cancelled ? ' class="cancelled"' : '') + '>'
       + '<td class="mono">' + dateFmt + ' <span style="color:var(--ink-mute);margin-left:6px;">' + dow + '</span></td>'
       + '<td><span class="type-badge type-' + ev.type + '">' + TYPE_LABEL[ev.type] + '</span>' + (sub ? '<div style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--ink-dim);margin-top:3px;">' + escapeHtml(sub) + '</div>' : '') + '</td>'
       + '<td>' + segBadges + '</td>'
-      + '<td><span class="row-title-text">' + escapeHtml(ev.title) + '</span>' + (ev.note ? '<div style="color:var(--ink-mute);font-size:11px;margin-top:2px;">' + escapeHtml(ev.note) + '</div>' : '') + (ev.repeat && ev.repeat !== 'none' ? '<span style="margin-left:8px;font-family:JetBrains Mono,monospace;font-size:10px;color:var(--ink-mute);">↻ ' + (REPEAT_LABEL[ev.repeat] || ev.repeat) + '</span>' : '') + (cancelled ? '<span class="cancel-badge">URLAUB · AUSGEFALLEN</span>' : '') + '</td>'
+      + '<td><span class="row-title-text">' + escapeHtml(ev.title) + '</span>' + multidayBadge + (ev.note ? '<div style="color:var(--ink-mute);font-size:11px;margin-top:2px;">' + escapeHtml(ev.note) + '</div>' : '') + (ev.repeat && ev.repeat !== 'none' ? '<span style="margin-left:8px;font-family:JetBrains Mono,monospace;font-size:10px;color:var(--ink-mute);">↻ ' + (REPEAT_LABEL[ev.repeat] || ev.repeat) + '</span>' : '') + (cancelled ? '<span class="cancel-badge">URLAUB · AUSGEFALLEN</span>' : '') + '</td>'
       + '<td class="mono" style="text-align:right;">' + hoursDisplay + '</td>'
       + '<td style="text-align:right;"><button class="row-del" data-del="' + ev.id + '" title="Serie löschen">✕</button></td>'
       + '</tr>';
@@ -1485,7 +1814,7 @@ function renderList() {
 
   // Mobile-Cards
   if (mobile) {
-    mobile.innerHTML = rowData.map(({ ev, dateFmt, dow, sub, cancelled, segBadges, totalH, perSeg }) => {
+    mobile.innerHTML = rowData.map(({ ev, dateFmt, dow, sub, cancelled, segBadges, totalH, fullEventH, perSeg, isMultidayInstance }) => {
       const borderColor = cancelled ? '#a0a09a' : TYPE_COLOR[ev.type];
       let hoursDisplay;
       if (cancelled) {
@@ -1496,10 +1825,16 @@ function renderList() {
       const perSegLine = (!cancelled && perSeg != null)
         ? '<div style="font-size:10px;color:var(--ink-dim);text-align:right;">' + perSeg.toFixed(2) + ' h / Seg.</div>'
         : '';
+      const multidayLine = isMultidayInstance
+        ? '<div style="font-size:10px;color:#1a4d8c;font-weight:600;text-align:right;">Tag von ' + fullEventH.toFixed(1) + 'h ges.</div>'
+        : '';
+      const multidayBadge = isMultidayInstance
+        ? '<span style="font-family:Inter;font-size:10px;font-weight:600;color:#1a4d8c;background:#e8f0fa;border:1px solid #1a4d8c;padding:2px 7px;">MEHRTAGES</span>'
+        : '';
       return '<div class="list-card' + (cancelled ? ' cancelled' : '') + '" style="border-left-color:' + borderColor + '">'
         + '<div class="list-card-row1">'
         +   '<span class="list-card-date">' + dateFmt + ' · ' + dow + '</span>'
-        +   '<div style="text-align:right;"><span class="list-card-hours">' + hoursDisplay + '</span>' + perSegLine + '</div>'
+        +   '<div style="text-align:right;"><span class="list-card-hours">' + hoursDisplay + '</span>' + perSegLine + multidayLine + '</div>'
         + '</div>'
         + '<div class="list-card-title">' + escapeHtml(ev.title) + '</div>'
         + (ev.note ? '<div style="color:var(--ink-dim);font-size:11px;">' + escapeHtml(ev.note) + '</div>' : '')
@@ -1507,6 +1842,7 @@ function renderList() {
         +   '<span class="type-badge type-' + ev.type + '">' + TYPE_LABEL[ev.type] + '</span>'
         +   (sub ? '<span style="font-size:11px;color:var(--ink-dim);">' + escapeHtml(sub) + '</span>' : '')
         +   segBadges
+        +   multidayBadge
         +   (ev.repeat && ev.repeat !== 'none' ? '<span style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--ink-mute);">↻ ' + (REPEAT_LABEL[ev.repeat] || ev.repeat) + '</span>' : '')
         +   (cancelled ? '<span class="cancel-badge">URLAUB · AUSGEFALLEN</span>' : '')
         + '</div>'
@@ -1632,12 +1968,33 @@ document.getElementById('btnAddVacation').addEventListener('click', () => {
   renderAll();
 });
 
+// Wiederholung: aus Eingabe (Code oder deutscher Text) auf Code mappen
+function normalizeRepeatInput(v) {
+  if (v == null) return 'none';
+  const s = String(v).trim().toLowerCase();
+  if (!s || s === 'einmalig') return 'none';
+  const valid = ['none','weekly','biweekly','monthly','bimonthly','quarterly','halfyearly','yearly'];
+  if (valid.includes(s)) return s;
+  const map = {
+    'wöchentlich':'weekly','woechentlich':'weekly','7 tage':'weekly','wöchentlich (7 tage)':'weekly',
+    '2-wöchig':'biweekly','2 wochen':'biweekly','14-tägig':'biweekly','14-taegig':'biweekly','14 tage':'biweekly','alle 2 wochen (14 tage)':'biweekly',
+    'monatlich':'monthly',
+    '2-monatig':'bimonthly','alle 2 monate':'bimonthly',
+    'quartalsweise':'quarterly','vierteljährlich':'quarterly','viertel':'quarterly','alle 3 monate':'quarterly','alle 3 monate (quartalsweise)':'quarterly',
+    'halbjährlich':'halfyearly','halbjaehrlich':'halfyearly',
+    'jährlich':'yearly','jaehrlich':'yearly'
+  };
+  return map[s] || s; // unbekannte Wiederholung wird als-is behalten (z.B. eigene Codes)
+}
+
 document.getElementById('btnAdd').addEventListener('click', () => {
   const type = document.getElementById('f-type').value;
   const title = document.getElementById('f-title').value.trim();
   const date = document.getElementById('f-date').value;
+  const dateEnd = document.getElementById('f-date-end').value;
   const segments = Array.from(selectedSegments).sort((a,b)=>a-b);
-  const repeat = document.getElementById('f-repeat').value;
+  const repeatRaw = document.getElementById('f-repeat').value;
+  const repeat = normalizeRepeatInput(repeatRaw);
   const note = document.getElementById('f-note').value.trim();
   const snap = getFormSnapshot();
   const hours = computeHours(snap);
@@ -1645,6 +2002,18 @@ document.getElementById('btnAdd').addEventListener('click', () => {
   if (!date) { alert('Datum fehlt'); return; }
   if (!segments.length) { alert('Bitte mindestens 1 Segment auswählen.'); return; }
   if (!hours || hours <= 0) { alert('Stunden müssen > 0 sein'); return; }
+
+  // Mehrtages-Termin? Werktage zwischen date und dateEnd (inklusive)
+  let dateRange = null;
+  if (dateEnd && dateEnd > date) {
+    const days = workdaysBetween(date, dateEnd);
+    if (!days.length) {
+      alert('Im gewählten Zeitraum sind keine Werktage. Bitte Datum prüfen.');
+      return;
+    }
+    dateRange = { from: date, to: dateEnd, days };
+  }
+
   const ev = {
     id: uid(), type, title, date, segments, hours, repeat, note,
     subtype: snap.subtype || null,
@@ -1652,11 +2021,17 @@ document.getElementById('btnAdd').addEventListener('click', () => {
     kanaele: (type === 'kalibrierung' && snap.subtype === 'pruefelektronik' && snap.mode === 'intern') ? Number(snap.kanaele) : null,
     mechanikDauer: (type === 'kalibrierung' && snap.subtype === 'pruefmechanik' && snap.mode === 'intern') ? Number(snap.mechanikDauer) : null,
   };
+  if (dateRange) {
+    ev.dateEnd = dateEnd;
+    ev.multiday = true;
+  }
   state.events.push(ev);
   saveState();
   document.getElementById('f-title').value = '';
   document.getElementById('f-note').value = '';
+  document.getElementById('f-date-end').value = '';
   clearSegmentSelection();
+  updateMultidayInfo();
   renderAll();
 });
 
@@ -1753,10 +2128,10 @@ function importExcelRows(rows) {
     const lineNo = idx + 1;
     // Spalten-Mapping (Vorlage hat exakte Spaltennamen)
     const date = parseExcelDate(r['Datum']);
+    const dateEnd = parseExcelDate(r['Bis-Datum'] || r['Datum bis'] || '');
     const type = String(r['Typ'] || '').trim().toLowerCase();
     const subtypeRaw = String(r['Verfahren / Art'] || r['Verfahren'] || '').trim().toLowerCase();
     const title = String(r['Bezeichnung / Anlage'] || r['Bezeichnung'] || '').trim();
-    // Segment kann eine Zahl (4) oder Liste (4,6,11 oder 4;6;11 oder "4 6 11") sein
     const segmentRaw = String(r['Segment'] != null ? r['Segment'] : '').trim();
     const segments = segmentRaw
       .split(/[,;\s]+/)
@@ -1772,8 +2147,8 @@ function importExcelRows(rows) {
 
     // Validierung
     if (!date) { errors.push('Zeile ' + lineNo + ': Datum fehlt oder ungültig'); return; }
-    if (!['schulung','kalibrierung','regel'].includes(type)) {
-      errors.push('Zeile ' + lineNo + ': Typ muss schulung, kalibrierung oder regel sein'); return;
+    if (!['schulung','kalibrierung','regel','vorfall','optimierung'].includes(type)) {
+      errors.push('Zeile ' + lineNo + ': Typ muss schulung, kalibrierung, regel, vorfall oder optimierung sein'); return;
     }
     if (!title) { errors.push('Zeile ' + lineNo + ': Bezeichnung fehlt'); return; }
     if (!segments.length) {
@@ -1783,14 +2158,12 @@ function importExcelRows(rows) {
     if (invalidSegs.length) {
       errors.push('Zeile ' + lineNo + ': Ungültige Segmente: ' + invalidSegs.join(', ')); return;
     }
+    if (dateEnd && dateEnd <= date) {
+      errors.push('Zeile ' + lineNo + ': Bis-Datum muss nach Datum liegen'); return;
+    }
 
+    // Subtype: freier Text erlaubt. Bei Schulung mit unbekanntem Wert: hoursManual ist Pflicht.
     let subtype = subtypeRaw || null;
-    if (type === 'schulung' && subtype && !SCHULUNG_SUBS[subtype]) {
-      errors.push('Zeile ' + lineNo + ': Unbekanntes Schulungsverfahren "' + subtype + '"'); return;
-    }
-    if (type === 'kalibrierung' && subtype && !KAL_SUBS[subtype]) {
-      errors.push('Zeile ' + lineNo + ': Unbekannte Kalibrierungs-Art "' + subtype + '"'); return;
-    }
 
     // Modus normalisieren
     let normMode = null;
@@ -1801,7 +2174,7 @@ function importExcelRows(rows) {
 
     // Stunden berechnen
     const snap = {
-      type, subtype,
+      type, subtype: subtype || '',
       mode: normMode,
       kanaele: kanaele || 0,
       mechanikDauer: mechanikDauer || 0,
@@ -1809,17 +2182,22 @@ function importExcelRows(rows) {
     };
     const hours = computeHours(snap);
     if (!hours || hours <= 0) {
-      errors.push('Zeile ' + lineNo + ': Stunden konnten nicht ermittelt werden (Wert wäre 0). Prüfe Verfahren/Kanäle/Dauer/manuelle Stunden.');
+      errors.push('Zeile ' + lineNo + ': Stunden konnten nicht ermittelt werden. Bei freiem Verfahren muss "Stunden manuell" gesetzt sein.');
       return;
     }
 
-    newEvents.push({
+    const evObj = {
       id: uid(), type, title, date, segments: segments.sort((a,b)=>a-b), hours, repeat, note,
       subtype: subtype || null,
       mode: normMode,
       kanaele: (type === 'kalibrierung' && subtype === 'pruefelektronik' && normMode === 'intern') ? kanaele : null,
       mechanikDauer: (type === 'kalibrierung' && subtype === 'pruefmechanik' && normMode === 'intern') ? mechanikDauer : null,
-    });
+    };
+    if (dateEnd) {
+      evObj.dateEnd = dateEnd;
+      evObj.multiday = true;
+    }
+    newEvents.push(evObj);
   });
 
   return { newEvents, errors };
@@ -1878,108 +2256,110 @@ document.getElementById('fileImportXlsx').onchange = e => {
 };
 
 // ============ EXCEL VORLAGE DOWNLOAD ============
-document.getElementById('btnTemplate').onclick = () => {
-  // Erstelle Vorlage on-the-fly mit SheetJS
+document.getElementById('btnExportXlsx').onclick = () => {
+  // Echte Termin-Daten als Excel exportieren — gleiche Spaltenstruktur wie Import
   const wb = XLSX.utils.book_new();
 
   const headers = [
-    'Datum', 'Typ', 'Verfahren / Art', 'Bezeichnung / Anlage', 'Segment',
+    'Datum', 'Bis-Datum', 'Typ', 'Verfahren / Art', 'Bezeichnung / Anlage', 'Segment',
     'Kalibrierung', 'Anzahl Kanäle', 'Dauer Anlage (h)', 'Stunden manuell',
-    'Wiederholung', 'Notiz'
+    'Stunden berechnet', 'Wiederholung', 'Notiz'
   ];
-  const hints = [
-    'TT.MM.JJJJ oder JJJJ-MM-TT',
-    'schulung | kalibrierung | regel',
-    'Siehe Hinweise-Blatt',
-    'Pflicht. Freitext',
-    '4, 6, 7, 11, 12, 14, 15',
-    'intern | extern (nur bei kalibrierung)',
-    'Nur bei Prüfelektronik intern',
-    'Nur bei Prüfmechanik intern',
-    'Nur bei Regeltermin oder "custom"',
-    'none | weekly | biweekly | monthly | bimonthly | quarterly | halfyearly | yearly',
-    'Optional'
-  ];
-  const examples = [
-    ['15.01.2026', 'schulung', 'ultraschall', 'US-Schulung Q1 2026', 4, '', '', '', '', 'yearly', 'Recheck-Pflicht'],
-    ['20.01.2026', 'kalibrierung', 'pruefelektronik', 'Wirbelstromanlage WS-3', 7, 'intern', 8, '', '', 'halfyearly', '8 Kanäle'],
-    ['22.01.2026', 'kalibrierung', 'pruefmechanik', 'US-Anlage Achsen', 11, 'intern', '', 6.5, '', 'yearly', ''],
-    ['10.02.2026', 'kalibrierung', 'magnetpulveranlage', 'MPI-Anlage Halle 4', 12, 'intern', '', '', '', 'halfyearly', ''],
-    ['10.02.2026', 'kalibrierung', 'uv_lampen', 'UV-Lampe MPI Halle 4', 12, 'intern', '', '', '', 'quarterly', ''],
-    ['12.02.2026', 'kalibrierung', 'referenzteile', 'Referenzring Ø 80', 14, 'intern', '', '', '', 'yearly', ''],
-    ['05.03.2026', 'kalibrierung', 'pruefelektronik', 'US-Elektronik Modul A', 6, 'extern', '', '', '', 'yearly', 'Hersteller vor Ort'],
-    ['02.01.2026', 'regel', '', 'Wochenbesprechung Prüflabor', 15, '', '', '', 1.0, 'weekly', ''],
-    ['08.01.2026', 'regel', '', 'Schichtübergabe Prüfung', 4, '', '', '', 0.5, 'biweekly', '14-tägig'],
-    ['15.01.2026', 'regel', '', 'Quartalsmeeting QS', 7, '', '', '', 2.0, 'quarterly', ''],
-  ];
-  const aoa = [['JAHRESPLANUNG — TERMIN-IMPORT'], headers, hints, ...examples];
+
+  // Datums-Formatierung: Excel-kompatibel (DD.MM.YYYY)
+  const fmtDE = isoDate => {
+    if (!isoDate) return '';
+    const parts = isoDate.split('-');
+    if (parts.length !== 3) return isoDate;
+    return parts[2] + '.' + parts[1] + '.' + parts[0];
+  };
+
+  // Termin-Zeilen aus state.events bauen
+  const sortedEvents = [...state.events].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+  const rows = sortedEvents.map(ev => {
+    const segs = Array.isArray(ev.segments) ? ev.segments : (ev.segment != null ? [ev.segment] : []);
+    return [
+      fmtDE(ev.date),
+      ev.dateEnd ? fmtDE(ev.dateEnd) : '',
+      ev.type || '',
+      ev.subtype || '',
+      ev.title || '',
+      segs.join(', '),
+      ev.mode || '',
+      ev.kanaele != null ? ev.kanaele : '',
+      ev.mechanikDauer != null ? ev.mechanikDauer : '',
+      // Bei "freien" Verfahren / Regel-/Vorfall-/Optimierungs-Terminen ist hours = manueller Wert
+      // Wir geben ihn unter Stunden manuell aus
+      (ev.type === 'regel' || ev.type === 'vorfall' || ev.type === 'optimierung'
+        || (ev.type === 'schulung' && (!ev.subtype || !SCHULUNG_SUBS[ev.subtype]))
+        || (ev.type === 'kalibrierung' && ev.mode === 'intern' && (!ev.subtype || !KAL_SUBS[ev.subtype]))
+      ) ? Number(ev.hours || 0) : '',
+      Number(ev.hours || 0),
+      ev.repeat && ev.repeat !== 'none' ? ev.repeat : '',
+      ev.note || ''
+    ];
+  });
+
+  // Sheet 1: Termine
+  const aoa = [['JAHRESPLANUNG — TERMINE EXPORT (' + new Date().toLocaleDateString('de-DE') + ')'], headers, ...rows];
   const ws = XLSX.utils.aoa_to_sheet(aoa);
   ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: headers.length - 1 } }];
   ws['!cols'] = [
-    { wch: 13 }, { wch: 14 }, { wch: 26 }, { wch: 32 }, { wch: 11 },
-    { wch: 14 }, { wch: 12 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 30 }
+    { wch: 13 }, { wch: 13 }, { wch: 14 }, { wch: 24 }, { wch: 32 }, { wch: 18 },
+    { wch: 12 }, { wch: 12 }, { wch: 14 }, { wch: 14 }, { wch: 16 }, { wch: 14 }, { wch: 32 }
   ];
-  ws['!rows'] = [{ hpt: 24 }, { hpt: 22 }, { hpt: 30 }];
+  ws['!rows'] = [{ hpt: 24 }, { hpt: 22 }];
+  ws['!freeze'] = { xSplit: 0, ySplit: 2 };
   XLSX.utils.book_append_sheet(wb, ws, 'Termine');
 
-  // Hinweise-Sheet
-  const hintRows = [
-    ['HINWEISE & GÜLTIGE WERTE'],
-    [],
-    ['TYP'],
-    ['schulung', 'Prüfwerker-Schulung'],
-    ['kalibrierung', 'Geräte-Kalibrierung'],
-    ['regel', 'Regeltermin'],
-    [],
-    ['VERFAHREN BEI SCHULUNG'],
-    ['ultraschall', 'Ultraschallprüfung — automatisch 24 h'],
-    ['wirbelstrom_riss', 'Wirbelstromprüfung Riss — automatisch 16 h'],
-    ['wirbelstrom_gefuege', 'Wirbelstromprüfung Gefüge — automatisch 16 h'],
-    ['magnetpulver', 'Magnetpulverprüfung — automatisch 16 h'],
-    ['nitalaetzen', 'Nitalätzen — automatisch 8 h'],
-    ['custom', 'Andere — Stunden manuell in Spalte I eintragen'],
-    [],
-    ['VERFAHREN BEI KALIBRIERUNG'],
-    ['pruefmechanik', 'Prüfmechanik — Dauer in Spalte H eintragen (intern)'],
-    ['pruefelektronik', 'Prüfelektronik — Anzahl Kanäle in Spalte G (× 2,5 h intern)'],
-    ['magnetpulveranlage', 'Magnetpulverprüfanlage — automatisch 4 h'],
-    ['uv_lampen', 'UV-Lampen — automatisch 0,75 h'],
-    ['referenzteile', 'Referenzteile — automatisch 0,5 h'],
-    ['custom', 'Andere — Stunden manuell in Spalte I (intern)'],
-    [],
-    ['KALIBRIERUNGS-MODUS'],
-    ['intern', 'Intern — Aufwand wird nach Verfahren berechnet'],
-    ['extern', 'Extern — Aufwand intern automatisch 1 h'],
-    [],
-    ['SEGMENT', '4, 6, 7, 11, 12, 14, 15'],
-    [],
-    ['WIEDERHOLUNG'],
-    ['none', 'Einmalig'],
-    ['weekly', 'Wöchentlich (alle 7 Tage)'],
-    ['biweekly', 'Alle 2 Wochen (14 Tage)'],
-    ['monthly', 'Monatlich'],
-    ['bimonthly', 'Alle 2 Monate'],
-    ['quarterly', 'Quartalsweise (alle 3 Monate)'],
-    ['halfyearly', 'Halbjährlich'],
-    ['yearly', 'Jährlich'],
-    [],
-    ['STUNDEN-BERECHNUNG'],
-    ['Schulung mit Verfahren', 'Stunden aus Verfahrensliste (24/16/16/16/8 h)'],
-    ['Schulung "custom"', 'Spalte I (Stunden manuell)'],
-    ['Kalibrierung extern', 'IMMER 1 h'],
-    ['Kal. intern Prüfelektronik', 'Spalte G × 2,5 h'],
-    ['Kal. intern Prüfmechanik', 'Spalte H (Dauer Anlage)'],
-    ['Kal. intern Magnetpulver', '4 h'],
-    ['Kal. intern UV-Lampen', '0,75 h'],
-    ['Kal. intern Referenzteile', '0,5 h'],
-    ['Regel', 'IMMER Spalte I (Stunden manuell)'],
-  ];
-  const ws2 = XLSX.utils.aoa_to_sheet(hintRows);
-  ws2['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }];
-  ws2['!cols'] = [{ wch: 28 }, { wch: 55 }];
-  XLSX.utils.book_append_sheet(wb, ws2, 'Hinweise');
+  // Sheet 2: Urlaubszeiten
+  const vacHeaders = ['Von', 'Bis', 'Bezeichnung', 'Tage'];
+  const vacRows = (state.vacations || []).slice().sort((a,b) => (a.from||'').localeCompare(b.from||'')).map(v => {
+    const fromD = parseDateLocal(v.from);
+    const toD = parseDateLocal(v.to);
+    const days = Math.round((toD - fromD) / 86400000) + 1;
+    return [fmtDE(v.from), fmtDE(v.to), v.label || '', days];
+  });
+  const vacAoa = [['URLAUBE / AUSFALLZEITEN'], vacHeaders, ...vacRows];
+  const wsVac = XLSX.utils.aoa_to_sheet(vacAoa);
+  wsVac['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 3 } }];
+  wsVac['!cols'] = [{ wch: 13 }, { wch: 13 }, { wch: 36 }, { wch: 8 }];
+  XLSX.utils.book_append_sheet(wb, wsVac, 'Urlaube');
 
-  XLSX.writeFile(wb, 'jahresplan_vorlage.xlsx');
+  // Sheet 3: Aufwands-Übersicht (Segment × Monat) — aktuelles Jahr
+  const year = state.currentYear;
+  const expanded = expandEvents(year);
+  const matrix = {};
+  for (const seg of SEGMENTS) matrix[seg.id] = new Array(12).fill(0);
+  for (const ev of expanded) {
+    const mi = parseDateLocal(ev._date).getMonth();
+    const segs = getEventSegments(ev);
+    if (!segs.length) continue;
+    const perSeg = effectiveHours(ev) / segs.length;
+    for (const sId of segs) {
+      if (matrix[sId] !== undefined) matrix[sId][mi] += perSeg;
+    }
+  }
+  const matrixHeaders = ['Segment', ...MONTHS_SHORT, 'Σ Jahr'];
+  const matrixRows = SEGMENTS.map(seg => {
+    const row = matrix[seg.id];
+    const sum = row.reduce((a,b) => a+b, 0);
+    return ['SEG ' + seg.id, ...row.map(v => v > 0 ? Number(v.toFixed(2)) : 0), Number(sum.toFixed(2))];
+  });
+  // Σ Monat-Zeile
+  const colTotals = new Array(12).fill(0);
+  for (const seg of SEGMENTS) for (let i = 0; i < 12; i++) colTotals[i] += matrix[seg.id][i];
+  const grand = colTotals.reduce((a,b) => a+b, 0);
+  matrixRows.push(['Σ Monat', ...colTotals.map(v => Number(v.toFixed(2))), Number(grand.toFixed(2))]);
+
+  const matrixAoa = [['AUFWANDS-MATRIX ' + year + ' (Stunden, Mehrtages und Mehrsegment-Termine anteilig)'], matrixHeaders, ...matrixRows];
+  const wsM = XLSX.utils.aoa_to_sheet(matrixAoa);
+  wsM['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: matrixHeaders.length - 1 } }];
+  wsM['!cols'] = [{ wch: 12 }, ...new Array(12).fill({ wch: 8 }), { wch: 10 }];
+  XLSX.utils.book_append_sheet(wb, wsM, 'Aufwand_' + year);
+
+  const filename = 'jahresplan_export_' + new Date().toISOString().slice(0,10) + '.xlsx';
+  XLSX.writeFile(wb, filename);
 };
 
 ['filterType','filterSeg','filterSearch'].forEach(id => {
