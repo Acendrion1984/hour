@@ -650,6 +650,24 @@
       "mechanikDauer": null,
       "dateEnd": "2026-03-27",
       "multiday": true
+    },
+    {
+      "id": "e_mo4vuec67s4xb",
+      "type": "vorfall",
+      "title": "Schleifbrand Reklamation TORO",
+      "date": "2026-03-03",
+      "segments": [
+        11
+      ],
+      "hours": 18,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-03-06",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -685,7 +703,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:00:59.337Z",
+    "lastModified": "2026-04-18T22:02:18.756Z",
     "source": "jahresplan-app"
   }
 }
