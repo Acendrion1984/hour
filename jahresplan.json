@@ -702,6 +702,22 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": 4
+    },
+    {
+      "id": "e_mo4w2fnexpe38",
+      "type": "vorfall",
+      "title": "Anfrage zur Protokollfreigabe vom Segment",
+      "date": "2026-03-05",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "dokument war nicht korrekt und es mussten nachforschungen durchgeführt werden",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -737,7 +753,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:06:56.644Z",
+    "lastModified": "2026-04-18T22:08:33.703Z",
     "source": "jahresplan-app"
   }
 }
