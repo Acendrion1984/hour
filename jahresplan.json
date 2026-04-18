@@ -595,6 +595,24 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4q13udh61o8",
+      "type": "vorfall",
+      "title": "Risse Bahnlager",
+      "date": "2026-01-27",
+      "segments": [
+        11
+      ],
+      "hours": 8,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-01-30",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -630,7 +648,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:18:52.248Z",
+    "lastModified": "2026-04-18T19:19:34.041Z",
     "source": "jahresplan-app"
   }
 }
