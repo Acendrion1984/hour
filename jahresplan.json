@@ -171,22 +171,6 @@
       "mechanikDauer": null
     },
     {
-      "id": "e_mo4pen6sr76f6",
-      "type": "vorfall",
-      "title": "Crash Flexitest",
-      "date": "2026-03-03",
-      "segments": [
-        12
-      ],
-      "hours": 6,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null
-    },
-    {
       "id": "e_mo4pgfl4qf2v9",
       "type": "vorfall",
       "title": "PRI Findings bearbeitet",
@@ -648,7 +632,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T21:56:06.495Z",
+    "lastModified": "2026-04-18T21:57:13.732Z",
     "source": "jahresplan-app"
   }
 }
