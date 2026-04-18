@@ -461,6 +461,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4ptrp0o5r0b",
+      "type": "kalibrierung",
+      "title": "TORO.23988-WPOS --> Wirbelstromprüfung",
+      "date": "2026-01-22",
+      "segments": [
+        11
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": "Testkörper",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -496,7 +512,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:13:14.658Z",
+    "lastModified": "2026-04-18T19:13:51.701Z",
     "source": "jahresplan-app"
   }
 }
