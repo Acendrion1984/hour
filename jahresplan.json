@@ -734,6 +734,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4w4fb2o22yd",
+      "type": "vorfall",
+      "title": "Schleifbrand auf dem Stirnradius (TORO)",
+      "date": "2026-03-24",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -769,7 +785,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:09:12.452Z",
+    "lastModified": "2026-04-18T22:10:06.571Z",
     "source": "jahresplan-app"
   }
 }
