@@ -195,10 +195,16 @@
       "from": "2026-08-03",
       "to": "2026-08-23",
       "label": "Sommerurlaub"
+    },
+    {
+      "id": "v_mo3l4woywrfkj",
+      "from": "2026-12-21",
+      "to": "2026-12-31",
+      "label": "Weihnachten"
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T00:14:16.411Z",
+    "lastModified": "2026-04-18T00:14:47.143Z",
     "source": "jahresplan-app"
   }
 }
