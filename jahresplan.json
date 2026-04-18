@@ -750,6 +750,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4w4yrolhci4",
+      "type": "regel",
+      "title": "Laserparameter für Centerlessschleifen komplett neu ermittelt und validiert.",
+      "date": "2026-03-25",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -785,7 +801,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:10:06.571Z",
+    "lastModified": "2026-04-18T22:10:31.787Z",
     "source": "jahresplan-app"
   }
 }
