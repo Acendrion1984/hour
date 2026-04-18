@@ -561,6 +561,24 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pzaihcpy49",
+      "type": "kalibrierung",
+      "title": "FGB",
+      "date": "2026-01-27",
+      "segments": [
+        11
+      ],
+      "hours": 10,
+      "repeat": "none",
+      "note": "",
+      "subtype": "pruefelektronik",
+      "mode": "intern",
+      "kanaele": 4,
+      "mechanikDauer": null,
+      "dateEnd": "2026-01-29",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -596,7 +614,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:17:02.537Z",
+    "lastModified": "2026-04-18T19:18:09.382Z",
     "source": "jahresplan-app"
   }
 }
