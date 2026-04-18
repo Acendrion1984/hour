@@ -493,6 +493,22 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pv6rfoenlx",
+      "type": "regel",
+      "title": "Operator Audit Melzer Julian",
+      "date": "2026-01-22",
+      "segments": [
+        11
+      ],
+      "hours": 1.25,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -528,7 +544,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:14:31.002Z",
+    "lastModified": "2026-04-18T19:14:57.889Z",
     "source": "jahresplan-app"
   }
 }
