@@ -854,6 +854,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4wev4xowfot",
+      "type": "optimierung",
+      "title": "Inbetriebnahme IBG Ringprüfer",
+      "date": "2026-04-15",
+      "segments": [
+        11
+      ],
+      "hours": 7,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -889,7 +905,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:17:24.895Z",
+    "lastModified": "2026-04-18T22:18:13.637Z",
     "source": "jahresplan-app"
   }
 }
