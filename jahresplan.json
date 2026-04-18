@@ -650,6 +650,24 @@
       "mechanikDauer": null,
       "dateEnd": "2026-03-06",
       "multiday": true
+    },
+    {
+      "id": "e_mo4vw8c8b98pa",
+      "type": "vorfall",
+      "title": "montierte Lager 100% geprüft",
+      "date": "2026-03-10",
+      "segments": [
+        6
+      ],
+      "hours": 30.25,
+      "repeat": "none",
+      "note": "Rückruf der Lager aufgrund fehlerhafter Laboruntersuchung",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-03-27",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -685,7 +703,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:02:47.034Z",
+    "lastModified": "2026-04-18T22:03:44.289Z",
     "source": "jahresplan-app"
   }
 }
