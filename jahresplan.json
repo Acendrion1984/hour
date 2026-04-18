@@ -183,10 +183,16 @@
       "from": "2026-01-01",
       "to": "2026-01-06",
       "label": ""
+    },
+    {
+      "id": "v_mo3l2z5ne4o15",
+      "from": "2026-04-20",
+      "to": "2026-04-20",
+      "label": "Abfeiern"
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-17T21:49:38.383Z",
+    "lastModified": "2026-04-18T00:13:17.026Z",
     "source": "jahresplan-app"
   }
 }
