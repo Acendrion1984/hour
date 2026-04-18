@@ -283,6 +283,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-01-14",
       "multiday": true
+    },
+    {
+      "id": "e_mo4pl1tbbwran",
+      "type": "vorfall",
+      "title": "NH 5 Inbetriebnahme",
+      "date": "2026-01-14",
+      "segments": [
+        11
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -318,7 +334,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:06:32.482Z",
+    "lastModified": "2026-04-18T19:07:04.922Z",
     "source": "jahresplan-app"
   }
 }
