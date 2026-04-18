@@ -528,6 +528,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pwfsc9m7fx",
+      "type": "vorfall",
+      "title": "Bohrungsprüfung am verdächtigen Bauteil",
+      "date": "2026-01-23",
+      "segments": [
+        11
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -563,7 +579,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:15:28.847Z",
+    "lastModified": "2026-04-18T19:15:56.246Z",
     "source": "jahresplan-app"
   }
 }
