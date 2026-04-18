@@ -201,6 +201,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pgxtkwcg8j",
+      "type": "optimierung",
+      "title": "Bauteile bis 2000mm",
+      "date": "2026-01-07",
+      "segments": [
+        11
+      ],
+      "hours": 1,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -236,7 +252,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:03:29.489Z",
+    "lastModified": "2026-04-18T19:03:53.119Z",
     "source": "jahresplan-app"
   }
 }
