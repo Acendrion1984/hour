@@ -439,6 +439,28 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4psz3luqs0x",
+      "type": "regel",
+      "title": "Equipment Fehlerliste SAP",
+      "date": "2026-01-22",
+      "segments": [
+        4,
+        6,
+        7,
+        11,
+        12,
+        14,
+        15
+      ],
+      "hours": 1.5,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -474,7 +496,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:12:38.648Z",
+    "lastModified": "2026-04-18T19:13:14.658Z",
     "source": "jahresplan-app"
   }
 }
