@@ -896,10 +896,16 @@
       "from": "2026-12-21",
       "to": "2026-12-31",
       "label": "Weihnachten"
+    },
+    {
+      "id": "v_mo4wfxj5e5hh4",
+      "from": "2026-03-30",
+      "to": "2026-04-03",
+      "label": ""
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:18:47.320Z",
+    "lastModified": "2026-04-18T22:19:03.401Z",
     "source": "jahresplan-app"
   }
 }
