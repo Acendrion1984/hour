@@ -597,6 +597,23 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4vpdsq8hfqc",
+      "type": "kalibrierung",
+      "title": "Referenzteil Centerlessschleifen",
+      "date": "2026-03-03",
+      "segments": [
+        4,
+        12
+      ],
+      "hours": 7.5,
+      "repeat": "none",
+      "note": "",
+      "subtype": "pruefmechanik",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": 7.5
     }
   ],
   "vacations": [
@@ -632,7 +649,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T21:57:13.732Z",
+    "lastModified": "2026-04-18T21:58:24.769Z",
     "source": "jahresplan-app"
   }
 }
