@@ -388,6 +388,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-01-20",
       "multiday": true
+    },
+    {
+      "id": "e_mo4pqjqxkln4x",
+      "type": "vorfall",
+      "title": "Schleifbrand Centerlessschleifen",
+      "date": "2026-01-21",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -423,7 +439,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:10:43.182Z",
+    "lastModified": "2026-04-18T19:11:21.451Z",
     "source": "jahresplan-app"
   }
 }
