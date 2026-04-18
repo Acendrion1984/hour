@@ -855,6 +855,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-03-27",
       "multiday": true
+    },
+    {
+      "id": "e_mo4wl8yecq0ae",
+      "type": "optimierung",
+      "title": "Ringprüfung IBG Bau 22",
+      "date": "2026-04-08",
+      "segments": [
+        11
+      ],
+      "hours": 7.5,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -890,7 +906,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:22:19.026Z",
+    "lastModified": "2026-04-18T22:23:11.480Z",
     "source": "jahresplan-app"
   }
 }
