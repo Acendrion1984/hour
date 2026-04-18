@@ -887,6 +887,26 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4wn1zq227er",
+      "type": "optimierung",
+      "title": "SAP Testfehler",
+      "date": "2026-04-07",
+      "segments": [
+        4,
+        6,
+        11,
+        12,
+        15
+      ],
+      "hours": 8,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -922,7 +942,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:23:47.291Z",
+    "lastModified": "2026-04-18T22:24:35.774Z",
     "source": "jahresplan-app"
   }
 }
