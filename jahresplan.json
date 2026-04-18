@@ -404,6 +404,23 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pror63oucg",
+      "type": "regel",
+      "title": "Absprache AAW18-24",
+      "date": "2026-01-21",
+      "segments": [
+        11,
+        12
+      ],
+      "hours": 1,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -439,7 +456,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:11:21.451Z",
+    "lastModified": "2026-04-18T19:12:14.590Z",
     "source": "jahresplan-app"
   }
 }
