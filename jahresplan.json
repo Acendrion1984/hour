@@ -854,6 +854,24 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4wig7i6gta0",
+      "type": "regel",
+      "title": "Betreuung ZfP",
+      "date": "2026-03-02",
+      "segments": [
+        12
+      ],
+      "hours": 16.25,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-03-27",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -889,7 +907,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:20:03.172Z",
+    "lastModified": "2026-04-18T22:21:00.920Z",
     "source": "jahresplan-app"
   }
 }
