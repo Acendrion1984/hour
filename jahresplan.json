@@ -544,6 +544,23 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pxuxmebrru",
+      "type": "optimierung",
+      "title": "Datenblätter Magnetpulverprüfung",
+      "date": "2026-01-28",
+      "segments": [
+        11,
+        12
+      ],
+      "hours": 6.5,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -579,7 +596,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:15:56.246Z",
+    "lastModified": "2026-04-18T19:17:02.537Z",
     "source": "jahresplan-app"
   }
 }
