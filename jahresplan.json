@@ -185,6 +185,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pgfl4qf2v9",
+      "type": "vorfall",
+      "title": "PRI Findings bearbeitet",
+      "date": "2026-01-07",
+      "segments": [
+        11
+      ],
+      "hours": 6,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -220,7 +236,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:02:06.023Z",
+    "lastModified": "2026-04-18T19:03:29.489Z",
     "source": "jahresplan-app"
   }
 }
