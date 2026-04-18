@@ -718,6 +718,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4w39jnkc4ob",
+      "type": "vorfall",
+      "title": "Schleifbrand Gehäusescheibe GS.29412",
+      "date": "2026-03-26",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -753,7 +769,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:08:33.703Z",
+    "lastModified": "2026-04-18T22:09:12.452Z",
     "source": "jahresplan-app"
   }
 }
