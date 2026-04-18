@@ -334,6 +334,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pndopxxc5n",
+      "type": "kalibrierung",
+      "title": "VK 1 Kalibriert",
+      "date": "2026-01-16",
+      "segments": [
+        12
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": "Testkörper",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -369,7 +385,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:07:58.350Z",
+    "lastModified": "2026-04-18T19:08:53.612Z",
     "source": "jahresplan-app"
   }
 }
