@@ -169,6 +169,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pen6sr76f6",
+      "type": "vorfall",
+      "title": "Crash Flexitest",
+      "date": "2026-03-03",
+      "segments": [
+        12
+      ],
+      "hours": 6,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -204,7 +220,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T00:14:47.143Z",
+    "lastModified": "2026-04-18T19:02:06.023Z",
     "source": "jahresplan-app"
   }
 }
