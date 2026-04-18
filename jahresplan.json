@@ -509,6 +509,25 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pvunfpy271",
+      "type": "regel",
+      "title": "Eddyfi besuch",
+      "date": "2026-01-23",
+      "segments": [
+        4,
+        6,
+        11,
+        12
+      ],
+      "hours": 5,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -544,7 +563,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:14:57.889Z",
+    "lastModified": "2026-04-18T19:15:28.847Z",
     "source": "jahresplan-app"
   }
 }
