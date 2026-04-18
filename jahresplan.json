@@ -189,10 +189,16 @@
       "from": "2026-04-20",
       "to": "2026-04-20",
       "label": "Abfeiern"
+    },
+    {
+      "id": "v_mo3l48zbgvy6e",
+      "from": "2026-08-03",
+      "to": "2026-08-23",
+      "label": "Sommerurlaub"
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T00:13:17.026Z",
+    "lastModified": "2026-04-18T00:14:16.411Z",
     "source": "jahresplan-app"
   }
 }
