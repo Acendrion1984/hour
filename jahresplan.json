@@ -477,6 +477,22 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pum0jg1k1s",
+      "type": "kalibrierung",
+      "title": "Eddyrobot Referenzteil",
+      "date": "2026-01-22",
+      "segments": [
+        12
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "Referenzteil wurde verloren!",
+      "subtype": "Testkörper",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -512,7 +528,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:13:51.701Z",
+    "lastModified": "2026-04-18T19:14:31.002Z",
     "source": "jahresplan-app"
   }
 }
