@@ -668,6 +668,24 @@
       "mechanikDauer": null,
       "dateEnd": "2026-03-27",
       "multiday": true
+    },
+    {
+      "id": "e_mo4vxeodsz0gc",
+      "type": "vorfall",
+      "title": "100% Prüfung 21310 betreut",
+      "date": "2026-03-10",
+      "segments": [
+        12
+      ],
+      "hours": 10,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-03-13",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -703,7 +721,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:03:44.289Z",
+    "lastModified": "2026-04-18T22:04:39.160Z",
     "source": "jahresplan-app"
   }
 }
