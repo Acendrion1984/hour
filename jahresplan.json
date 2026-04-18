@@ -668,6 +668,24 @@
       "mechanikDauer": null,
       "dateEnd": "2026-03-13",
       "multiday": true
+    },
+    {
+      "id": "e_mo4vzp2rsu14c",
+      "type": "vorfall",
+      "title": "montierte Lager 100% geprüft",
+      "date": "2026-03-10",
+      "segments": [
+        6
+      ],
+      "hours": 22.75,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-03-20",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -703,7 +721,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:05:52.016Z",
+    "lastModified": "2026-04-18T22:06:25.952Z",
     "source": "jahresplan-app"
   }
 }
