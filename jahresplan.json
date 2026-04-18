@@ -595,6 +595,23 @@
       "mechanikDauer": null,
       "dateEnd": "2026-01-30",
       "multiday": true
+    },
+    {
+      "id": "e_mo4vk4pwhfopj",
+      "type": "regel",
+      "title": "Flexitest optimierungen",
+      "date": "2026-01-13",
+      "segments": [
+        4,
+        6
+      ],
+      "hours": 15.25,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -630,7 +647,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T21:52:35.718Z",
+    "lastModified": "2026-04-18T21:54:19.736Z",
     "source": "jahresplan-app"
   }
 }
