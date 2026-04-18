@@ -318,6 +318,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pm71o9mgls",
+      "type": "vorfall",
+      "title": "Eddyrobot Wartung",
+      "date": "2026-01-15",
+      "segments": [
+        12
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -353,7 +369,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:07:43.015Z",
+    "lastModified": "2026-04-18T19:07:58.350Z",
     "source": "jahresplan-app"
   }
 }
