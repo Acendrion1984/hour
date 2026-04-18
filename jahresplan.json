@@ -686,6 +686,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-03-20",
       "multiday": true
+    },
+    {
+      "id": "e_mo4w0crdq3q2k",
+      "type": "kalibrierung",
+      "title": "Linie 4",
+      "date": "2026-03-31",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": "pruefmechanik",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": 4
     }
   ],
   "vacations": [
@@ -721,7 +737,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:06:25.952Z",
+    "lastModified": "2026-04-18T22:06:56.644Z",
     "source": "jahresplan-app"
   }
 }
