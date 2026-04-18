@@ -265,6 +265,24 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo4pkcsg4f1az",
+      "type": "vorfall",
+      "title": "PRI Nachbearbeitung",
+      "date": "2026-01-12",
+      "segments": [
+        11
+      ],
+      "hours": 20,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-01-14",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -300,7 +318,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T19:05:16.101Z",
+    "lastModified": "2026-04-18T19:06:32.482Z",
     "source": "jahresplan-app"
   }
 }
