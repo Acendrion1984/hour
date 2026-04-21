@@ -945,6 +945,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo8oyjeobzljs",
+      "type": "schulung",
+      "title": "Eddyrobot 22313-E1, 20208-E1",
+      "date": "2026-04-21",
+      "segments": [
+        12
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -980,7 +996,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T08:54:26.650Z",
+    "lastModified": "2026-04-21T14:00:39.338Z",
     "source": "jahresplan-app"
   }
 }
