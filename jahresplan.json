@@ -961,6 +961,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo8wkt3rl3a5z",
+      "type": "optimierung",
+      "title": "Eddyrobot 22313-E1, 20208-E1",
+      "date": "2026-04-21",
+      "segments": [
+        12
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -996,7 +1012,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T17:33:35.702Z",
+    "lastModified": "2026-04-21T17:33:55.646Z",
     "source": "jahresplan-app"
   }
 }
