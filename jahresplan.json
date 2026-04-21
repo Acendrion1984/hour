@@ -123,11 +123,27 @@
       "mechanikDauer": null,
       "dateEnd": "2026-02-28",
       "multiday": true
+    },
+    {
+      "id": "e_mo99jppvcxwtv",
+      "type": "vorfall",
+      "title": "Betreuung ZfP",
+      "date": "2026-02-02",
+      "segments": [
+        14
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-21T23:36:27.738Z",
+    "lastModified": "2026-04-21T23:36:59.618Z",
     "source": "jahresplan-app"
   }
 }
