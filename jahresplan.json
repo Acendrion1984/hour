@@ -175,11 +175,27 @@
       "mechanikDauer": null,
       "dateEnd": "2026-02-28",
       "multiday": true
+    },
+    {
+      "id": "e_mo99nmapj36ys",
+      "type": "vorfall",
+      "title": "PRÜFUNG KÄFIG",
+      "date": "2026-02-02",
+      "segments": [
+        11
+      ],
+      "hours": 7,
+      "repeat": "none",
+      "note": "P-191699-08-03  Stunden werden nicht im segment 11 verrechnet!",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-21T23:38:18.184Z",
+    "lastModified": "2026-04-21T23:40:01.800Z",
     "source": "jahresplan-app"
   }
 }
