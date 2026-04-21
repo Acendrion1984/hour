@@ -157,11 +157,29 @@
       "mechanikDauer": null,
       "dateEnd": "2026-02-28",
       "multiday": true
+    },
+    {
+      "id": "e_mo99leckfamdm",
+      "type": "vorfall",
+      "title": "Betreuung ZfP",
+      "date": "2026-02-02",
+      "segments": [
+        4
+      ],
+      "hours": 43,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-02-28",
+      "multiday": true
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-21T23:37:27.574Z",
+    "lastModified": "2026-04-21T23:38:18.184Z",
     "source": "jahresplan-app"
   }
 }
