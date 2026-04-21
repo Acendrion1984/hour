@@ -35,11 +35,27 @@
       "mechanikDauer": null,
       "dateEnd": "2026-01-31",
       "multiday": true
+    },
+    {
+      "id": "e_mo99eq1i5gp9s",
+      "type": "vorfall",
+      "title": "Betreuung",
+      "date": "2026-01-14",
+      "segments": [
+        14
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-21T23:32:33.868Z",
+    "lastModified": "2026-04-21T23:33:06.748Z",
     "source": "jahresplan-app"
   }
 }
