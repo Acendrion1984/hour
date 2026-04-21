@@ -929,6 +929,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-04-17",
       "multiday": true
+    },
+    {
+      "id": "e_mo8e0qy813ejv",
+      "type": "schulung",
+      "title": "Eddyrobot Überprüft",
+      "date": "2026-04-21",
+      "segments": [
+        12
+      ],
+      "hours": 1,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -964,7 +980,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-18T22:25:40.039Z",
+    "lastModified": "2026-04-21T08:54:26.650Z",
     "source": "jahresplan-app"
   }
 }
