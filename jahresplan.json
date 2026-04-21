@@ -1,8 +1,27 @@
 {
-  "events": [],
+  "events": [
+    {
+      "id": "e_mo99cqqt4ms5j",
+      "type": "vorfall",
+      "title": "Betreuung Januar",
+      "date": "2026-01-01",
+      "segments": [
+        11
+      ],
+      "hours": 56,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-01-31",
+      "multiday": true
+    }
+  ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-21T23:29:00.711Z",
+    "lastModified": "2026-04-21T23:31:34.359Z",
     "source": "jahresplan-app"
   }
 }
