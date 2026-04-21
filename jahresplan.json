@@ -947,22 +947,6 @@
       "mechanikDauer": null
     },
     {
-      "id": "e_mo8p00njhznh9",
-      "type": "regel",
-      "title": "Referenzteil Ewelix",
-      "date": "2026-04-21",
-      "segments": [
-        7
-      ],
-      "hours": 1,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null
-    },
-    {
       "id": "e_mo8wkt3rl3a5z",
       "type": "optimierung",
       "title": "Eddyrobot 22313-E1, 20208-E1",
@@ -1044,7 +1028,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T17:34:39.030Z",
+    "lastModified": "2026-04-21T17:35:00.211Z",
     "source": "jahresplan-app"
   }
 }
