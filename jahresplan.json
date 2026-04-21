@@ -281,9 +281,16 @@
       "multiday": true
     }
   ],
-  "vacations": [],
+  "vacations": [
+    {
+      "id": "v_mo99t0ylnkehl",
+      "from": "2026-01-01",
+      "to": "2026-01-06",
+      "label": "Urlaub"
+    }
+  ],
   "_meta": {
-    "lastModified": "2026-04-21T23:43:35.441Z",
+    "lastModified": "2026-04-21T23:44:14.088Z",
     "source": "jahresplan-app"
   }
 }
