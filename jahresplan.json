@@ -287,10 +287,16 @@
       "from": "2026-01-01",
       "to": "2026-01-06",
       "label": "Urlaub"
+    },
+    {
+      "id": "v_mo99t843tocwd",
+      "from": "2026-04-20",
+      "to": "2026-04-20",
+      "label": "Geburtstag"
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T23:44:14.088Z",
+    "lastModified": "2026-04-21T23:44:23.361Z",
     "source": "jahresplan-app"
   }
 }
