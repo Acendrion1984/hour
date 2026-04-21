@@ -993,6 +993,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo8wlqky18etw",
+      "type": "vorfall",
+      "title": "Referenzteil Sondermaterial",
+      "date": "2026-04-21",
+      "segments": [
+        11
+      ],
+      "hours": 3.5,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1028,7 +1044,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T17:34:25.148Z",
+    "lastModified": "2026-04-21T17:34:39.030Z",
     "source": "jahresplan-app"
   }
 }
