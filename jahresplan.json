@@ -931,22 +931,6 @@
       "multiday": true
     },
     {
-      "id": "e_mo8e0qy813ejv",
-      "type": "schulung",
-      "title": "Eddyrobot Überprüft",
-      "date": "2026-04-21",
-      "segments": [
-        12
-      ],
-      "hours": 1,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null
-    },
-    {
       "id": "e_mo8oyjeobzljs",
       "type": "schulung",
       "title": "Eddyrobot 22313-E1, 20208-E1",
@@ -1028,7 +1012,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T14:01:48.343Z",
+    "lastModified": "2026-04-21T17:33:32.486Z",
     "source": "jahresplan-app"
   }
 }
