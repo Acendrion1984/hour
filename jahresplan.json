@@ -931,22 +931,6 @@
       "multiday": true
     },
     {
-      "id": "e_mo8ozb7hd4xwv",
-      "type": "regel",
-      "title": "Referenzteil Sondermaterial",
-      "date": "2026-04-21",
-      "segments": [
-        11
-      ],
-      "hours": 3,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null
-    },
-    {
       "id": "e_mo8wkt3rl3a5z",
       "type": "optimierung",
       "title": "Eddyrobot 22313-E1, 20208-E1",
@@ -1028,7 +1012,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T17:35:00.211Z",
+    "lastModified": "2026-04-21T17:35:03.927Z",
     "source": "jahresplan-app"
   }
 }
