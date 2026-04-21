@@ -977,6 +977,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo8wlfv1ibivc",
+      "type": "optimierung",
+      "title": "Referenzteil Ewelix",
+      "date": "2026-04-21",
+      "segments": [
+        7
+      ],
+      "hours": 1,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1012,7 +1028,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T17:33:55.646Z",
+    "lastModified": "2026-04-21T17:34:25.148Z",
     "source": "jahresplan-app"
   }
 }
