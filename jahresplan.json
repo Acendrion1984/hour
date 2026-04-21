@@ -243,11 +243,29 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mo99rl4o20wvc",
+      "type": "vorfall",
+      "title": "ZfP Betreuung",
+      "date": "2026-03-01",
+      "segments": [
+        4
+      ],
+      "hours": 54,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-03-31",
+      "multiday": true
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-21T23:42:32.610Z",
+    "lastModified": "2026-04-21T23:43:06.922Z",
     "source": "jahresplan-app"
   }
 }
