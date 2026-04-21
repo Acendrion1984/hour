@@ -931,22 +931,6 @@
       "multiday": true
     },
     {
-      "id": "e_mo8oyjeobzljs",
-      "type": "schulung",
-      "title": "Eddyrobot 22313-E1, 20208-E1",
-      "date": "2026-04-21",
-      "segments": [
-        12
-      ],
-      "hours": 2,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null
-    },
-    {
       "id": "e_mo8ozb7hd4xwv",
       "type": "regel",
       "title": "Referenzteil Sondermaterial",
@@ -1012,7 +996,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-21T17:33:32.486Z",
+    "lastModified": "2026-04-21T17:33:35.702Z",
     "source": "jahresplan-app"
   }
 }
