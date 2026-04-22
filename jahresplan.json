@@ -977,11 +977,27 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_moa8y9b054t33",
+      "type": "vorfall",
+      "title": "Schmiedefalte",
+      "date": "2026-04-22",
+      "segments": [
+        12
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-22T16:07:44.381Z",
+    "lastModified": "2026-04-22T16:08:04.733Z",
     "source": "jahresplan-app"
   }
 }
