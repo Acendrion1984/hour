@@ -993,11 +993,27 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_moa8zuas17835",
+      "type": "vorfall",
+      "title": "F-696044.PRL-WPOS (MT/ET/UT) Datenblätter",
+      "date": "2026-04-22",
+      "segments": [
+        11
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-22T16:08:04.733Z",
+    "lastModified": "2026-04-22T16:09:18.602Z",
     "source": "jahresplan-app"
   }
 }
