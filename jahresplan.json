@@ -1009,11 +1009,29 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mobwrb6w4m1m6",
+      "type": "schulung",
+      "title": "Flexitest Softwareupdate",
+      "date": "2026-04-23",
+      "segments": [
+        4,
+        6,
+        12
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-22T16:09:18.602Z",
+    "lastModified": "2026-04-23T20:02:17.554Z",
     "source": "jahresplan-app"
   }
 }
