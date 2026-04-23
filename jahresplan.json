@@ -1027,11 +1027,27 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mobwsepb3hgsl",
+      "type": "optimierung",
+      "title": "Stäubli Rechner",
+      "date": "2026-04-23",
+      "segments": [
+        11
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [],
   "_meta": {
-    "lastModified": "2026-04-23T20:02:17.554Z",
+    "lastModified": "2026-04-23T20:03:08.758Z",
     "source": "jahresplan-app"
   }
 }
