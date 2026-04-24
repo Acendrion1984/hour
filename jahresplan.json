@@ -1067,10 +1067,16 @@
       "from": "2026-03-30",
       "to": "2026-04-05",
       "label": "Urlaub"
+    },
+    {
+      "id": "v_moddbfs72ppf5",
+      "from": "2026-04-20",
+      "to": "2026-04-20",
+      "label": "Geburtstag"
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-24T20:33:15.418Z",
+    "lastModified": "2026-04-24T20:33:36.655Z",
     "source": "jahresplan-app"
   }
 }
