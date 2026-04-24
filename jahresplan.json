@@ -1061,9 +1061,16 @@
       "mechanikDauer": null
     }
   ],
-  "vacations": [],
+  "vacations": [
+    {
+      "id": "v_moddaze9w89q4",
+      "from": "2026-03-30",
+      "to": "2026-04-05",
+      "label": "Urlaub"
+    }
+  ],
   "_meta": {
-    "lastModified": "2026-04-23T20:03:56.808Z",
+    "lastModified": "2026-04-24T20:33:15.418Z",
     "source": "jahresplan-app"
   }
 }
