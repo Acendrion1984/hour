@@ -599,24 +599,6 @@
       "mechanikDauer": null
     },
     {
-      "id": "e_mo4vrrw5rxkz7",
-      "type": "vorfall",
-      "title": "Schleifbrand Centerlessschleifen",
-      "date": "2026-03-10",
-      "segments": [
-        4
-      ],
-      "hours": 48,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null,
-      "dateEnd": "2026-03-27",
-      "multiday": true
-    },
-    {
       "id": "e_mo4vuec67s4xb",
       "type": "vorfall",
       "title": "Schleifbrand Reklamation TORO",
@@ -1062,7 +1044,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-27T19:39:57.734Z",
+    "lastModified": "2026-04-27T19:41:08.150Z",
     "source": "jahresplan-app"
   }
 }
