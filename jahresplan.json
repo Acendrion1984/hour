@@ -1023,6 +1023,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mohlq01embryq",
+      "type": "vorfall",
+      "title": "Schleifbrand",
+      "date": "2026-03-16",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1046,7 +1062,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-27T19:38:51.238Z",
+    "lastModified": "2026-04-27T19:39:57.734Z",
     "source": "jahresplan-app"
   }
 }
