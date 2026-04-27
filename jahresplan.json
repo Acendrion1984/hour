@@ -1039,6 +1039,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-03-30",
       "multiday": true
+    },
+    {
+      "id": "e_mohm0w6bhmbj4",
+      "type": "optimierung",
+      "title": "Barcode Laden ermöglicht",
+      "date": "2026-04-24",
+      "segments": [
+        12
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1062,7 +1078,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-27T19:42:58.089Z",
+    "lastModified": "2026-04-27T19:48:25.936Z",
     "source": "jahresplan-app"
   }
 }
