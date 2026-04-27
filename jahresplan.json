@@ -635,24 +635,6 @@
       "multiday": true
     },
     {
-      "id": "e_mo4vxeodsz0gc",
-      "type": "vorfall",
-      "title": "100% Prüfung 21310 betreut",
-      "date": "2026-03-10",
-      "segments": [
-        12
-      ],
-      "hours": 10,
-      "repeat": "none",
-      "note": "",
-      "subtype": null,
-      "mode": null,
-      "kanaele": null,
-      "mechanikDauer": null,
-      "dateEnd": "2026-03-13",
-      "multiday": true
-    },
-    {
       "id": "e_mo4vzp2rsu14c",
       "type": "vorfall",
       "title": "montierte Lager 100% geprüft",
@@ -1064,7 +1046,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-27T19:37:53.845Z",
+    "lastModified": "2026-04-27T19:38:51.238Z",
     "source": "jahresplan-app"
   }
 }
