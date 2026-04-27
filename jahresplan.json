@@ -1021,6 +1021,24 @@
       "mechanikDauer": null,
       "dateEnd": "2026-03-31",
       "multiday": true
+    },
+    {
+      "id": "e_mohltv7mo0rpn",
+      "type": "vorfall",
+      "title": "Centerlessschleifen",
+      "date": "2026-03-02",
+      "segments": [
+        4
+      ],
+      "hours": 24,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-03-30",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -1044,7 +1062,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-27T19:42:22.915Z",
+    "lastModified": "2026-04-27T19:42:58.089Z",
     "source": "jahresplan-app"
   }
 }
