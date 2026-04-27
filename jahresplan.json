@@ -1138,6 +1138,22 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mohu404jum8ww",
+      "type": "optimierung",
+      "title": "IBG Ringprüfung",
+      "date": "2026-04-28",
+      "segments": [
+        11
+      ],
+      "hours": 7,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1161,7 +1177,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-27T23:34:06.502Z",
+    "lastModified": "2026-04-27T23:34:47.947Z",
     "source": "jahresplan-app"
   }
 }
