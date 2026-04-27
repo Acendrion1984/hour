@@ -1122,6 +1122,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mohu345ghh9y3",
+      "type": "kalibrierung",
+      "title": "Referenzteil Flexitest + TORO (IBG)",
+      "date": "2026-04-27",
+      "segments": [
+        11
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "",
+      "subtype": "Referenzteil",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1145,7 +1161,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-27T23:32:59.880Z",
+    "lastModified": "2026-04-27T23:34:06.502Z",
     "source": "jahresplan-app"
   }
 }
