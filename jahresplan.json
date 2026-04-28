@@ -1186,6 +1186,25 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_moj7rjzml7385",
+      "type": "optimierung",
+      "title": "Update Flexitest",
+      "date": "2026-04-29",
+      "segments": [
+        4,
+        6,
+        11,
+        12
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1209,7 +1228,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-28T22:44:05.430Z",
+    "lastModified": "2026-04-28T22:44:47.960Z",
     "source": "jahresplan-app"
   }
 }
