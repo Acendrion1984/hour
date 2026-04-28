@@ -1154,6 +1154,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_moj7q0f06s7wd",
+      "type": "vorfall",
+      "title": "Schmiedefalte WS.29322-E1",
+      "date": "2026-04-29",
+      "segments": [
+        12
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1177,7 +1193,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-27T23:34:47.947Z",
+    "lastModified": "2026-04-28T22:43:35.939Z",
     "source": "jahresplan-app"
   }
 }
