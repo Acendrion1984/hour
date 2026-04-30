@@ -1240,6 +1240,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_molz6dkqrhu6d",
+      "type": "kalibrierung",
+      "title": "UT Rolle",
+      "date": "2026-04-30",
+      "segments": [
+        14
+      ],
+      "hours": 2,
+      "repeat": "none",
+      "note": "",
+      "subtype": "Testfehler",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1263,7 +1279,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-30T21:07:03.469Z",
+    "lastModified": "2026-04-30T21:07:41.473Z",
     "source": "jahresplan-app"
   }
 }
