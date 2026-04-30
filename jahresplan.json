@@ -1224,6 +1224,22 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_molz5k900updu",
+      "type": "vorfall",
+      "title": "Lasern von Badabdeckung",
+      "date": "2026-04-30",
+      "segments": [
+        11
+      ],
+      "hours": 1.5,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1247,7 +1263,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-30T21:06:33.919Z",
+    "lastModified": "2026-04-30T21:07:03.469Z",
     "source": "jahresplan-app"
   }
 }
