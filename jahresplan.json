@@ -1205,6 +1205,25 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_molz4xg9jfanf",
+      "type": "optimierung",
+      "title": "Flexitest Update",
+      "date": "2026-04-30",
+      "segments": [
+        4,
+        6,
+        11,
+        12
+      ],
+      "hours": 5,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1228,7 +1247,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-28T22:44:47.960Z",
+    "lastModified": "2026-04-30T21:06:33.919Z",
     "source": "jahresplan-app"
   }
 }
