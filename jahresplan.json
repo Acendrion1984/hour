@@ -1315,6 +1315,22 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mptw9ssvna367",
+      "type": "kalibrierung",
+      "title": "IS 500",
+      "date": "2026-05-27",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": "pruefmechanik & prüfelektronik Linie 6",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1344,7 +1360,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:47:40.919Z",
+    "lastModified": "2026-05-31T14:48:14.069Z",
     "source": "jahresplan-app"
   }
 }
