@@ -1404,6 +1404,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-05-15",
       "multiday": true
+    },
+    {
+      "id": "e_mptwg2gry7xir",
+      "type": "kalibrierung",
+      "title": "B320",
+      "date": "2026-05-25",
+      "segments": [
+        12
+      ],
+      "hours": 6,
+      "repeat": "none",
+      "note": "",
+      "subtype": "prüfelektronik Linie 6",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1433,7 +1449,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:51:44.075Z",
+    "lastModified": "2026-05-31T14:53:06.533Z",
     "source": "jahresplan-app"
   }
 }
