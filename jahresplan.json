@@ -1256,6 +1256,28 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mptw1sghb2mbt",
+      "type": "regel",
+      "title": "Schulung Extern MT 3",
+      "date": "2026-05-18",
+      "segments": [
+        4,
+        6,
+        7,
+        11,
+        12
+      ],
+      "hours": 40,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-05-22",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -1279,7 +1301,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-04-30T21:07:41.473Z",
+    "lastModified": "2026-05-31T14:42:00.378Z",
     "source": "jahresplan-app"
   }
 }
