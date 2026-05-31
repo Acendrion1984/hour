@@ -1298,10 +1298,16 @@
       "from": "2026-01-01",
       "to": "2026-01-06",
       "label": "Urlaub"
+    },
+    {
+      "id": "v_mptw38s2xlplw",
+      "from": "2026-06-04",
+      "to": "2026-06-05",
+      "label": "Feiertag + Urlaub"
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:42:00.378Z",
+    "lastModified": "2026-05-31T14:43:08.185Z",
     "source": "jahresplan-app"
   }
 }
