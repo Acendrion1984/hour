@@ -1349,6 +1349,26 @@
       "mechanikDauer": null,
       "dateEnd": "2026-05-08",
       "multiday": true
+    },
+    {
+      "id": "e_mptwc0sbu5kxd",
+      "type": "optimierung",
+      "title": "Flexitest Update",
+      "date": "2026-05-11",
+      "segments": [
+        4,
+        6,
+        12
+      ],
+      "hours": 20,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-05-15",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -1378,7 +1398,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:49:17.465Z",
+    "lastModified": "2026-05-31T14:49:57.732Z",
     "source": "jahresplan-app"
   }
 }
