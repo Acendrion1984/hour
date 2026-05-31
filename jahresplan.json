@@ -1385,6 +1385,25 @@
       "mode": null,
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mptweaub4lnoo",
+      "type": "optimierung",
+      "title": "Centerless Schleifen - Wirbelstromprüfung",
+      "date": "2026-05-11",
+      "segments": [
+        6,
+        12
+      ],
+      "hours": 15,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-05-15",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -1414,7 +1433,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:50:49.267Z",
+    "lastModified": "2026-05-31T14:51:44.075Z",
     "source": "jahresplan-app"
   }
 }
