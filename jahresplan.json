@@ -1278,6 +1278,24 @@
       "mechanikDauer": null,
       "dateEnd": "2026-05-22",
       "multiday": true
+    },
+    {
+      "id": "e_mptw58qnugfpx",
+      "type": "schulung",
+      "title": "Bau 50 - Raum Silber",
+      "date": "2026-06-08",
+      "segments": [
+        11
+      ],
+      "hours": 12,
+      "repeat": "none",
+      "note": "",
+      "subtype": "Magnetpulverprüfung",
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-06-09",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -1307,7 +1325,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:43:08.185Z",
+    "lastModified": "2026-05-31T14:44:41.447Z",
     "source": "jahresplan-app"
   }
 }
