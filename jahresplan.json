@@ -1331,6 +1331,24 @@
       "mode": "intern",
       "kanaele": null,
       "mechanikDauer": null
+    },
+    {
+      "id": "e_mptwb5ptsevim",
+      "type": "optimierung",
+      "title": "IBG Ringprüfer",
+      "date": "2026-05-04",
+      "segments": [
+        11
+      ],
+      "hours": 26,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null,
+      "dateEnd": "2026-05-08",
+      "multiday": true
     }
   ],
   "vacations": [
@@ -1360,7 +1378,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:48:14.069Z",
+    "lastModified": "2026-05-31T14:49:17.465Z",
     "source": "jahresplan-app"
   }
 }
