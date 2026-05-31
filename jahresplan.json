@@ -1299,6 +1299,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-06-30",
       "multiday": true
+    },
+    {
+      "id": "e_mptw937wf8ngp",
+      "type": "kalibrierung",
+      "title": "IS Box",
+      "date": "2026-05-26",
+      "segments": [
+        12
+      ],
+      "hours": 4,
+      "repeat": "none",
+      "note": "",
+      "subtype": "pruefmechanik & prüfelektronik Linie 5",
+      "mode": "intern",
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1328,7 +1344,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:46:40.399Z",
+    "lastModified": "2026-05-31T14:47:40.919Z",
     "source": "jahresplan-app"
   }
 }
