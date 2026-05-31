@@ -1369,6 +1369,22 @@
       "mechanikDauer": null,
       "dateEnd": "2026-05-15",
       "multiday": true
+    },
+    {
+      "id": "e_mptwd4jt9pskj",
+      "type": "vorfall",
+      "title": "Testfehler UT",
+      "date": "2026-05-28",
+      "segments": [
+        14
+      ],
+      "hours": 3,
+      "repeat": "none",
+      "note": "",
+      "subtype": null,
+      "mode": null,
+      "kanaele": null,
+      "mechanikDauer": null
     }
   ],
   "vacations": [
@@ -1398,7 +1414,7 @@
     }
   ],
   "_meta": {
-    "lastModified": "2026-05-31T14:49:57.732Z",
+    "lastModified": "2026-05-31T14:50:49.267Z",
     "source": "jahresplan-app"
   }
 }
